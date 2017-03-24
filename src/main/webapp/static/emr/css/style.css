@@ -1,0 +1,445 @@
+/*.left_m_icon_01{ background-position: 0 0; width: 30px; height: 30px; }
+.left_m_icon_02{ background-position: 0 -31px; width: 30px; height: 30px; }
+.left_m_icon_03{ background-position: 0 -62px; width: 30px; height: 30px; }
+.left_m_icon_04{ background-position: 0 -93px; width: 30px; height: 30px; }
+.left_m_icon_05{ background-position: 0 -124px; width: 30px; height: 30px; }
+.top_icon_01{ background-position: 0 -155px; width: 20px; height: 20px; }
+.top_icon_02{ background-position: 0 -176px; width: 20px; height: 20px; }
+.top_icon_04{ background-position: 0 -197px; width: 20px; height: 20px; }
+.top_icon_05{ background-position: 0 -218px; width: 22px; height: 18px; }*/
+.triangle{
+    position: absolute;
+    right: 15px;
+    top:11px;
+    height: 5px;
+    width: 6px;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+}
+.header{
+    position: relative;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 47px;
+    z-index: 3;
+}
+.header_left{
+    float: left;
+    display: inline;
+    height: 47px;
+}
+.header_left li{
+    float: left;
+    height: 47px;
+    width: 130px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background: url("../images/top_nav_bg.gif") no-repeat right center;
+}
+.header_left li a{
+    display: block;
+    height: 47px;
+    width: 90px;
+    position: relative;
+    margin:0 auto;
+    line-height:47px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 35px;
+}
+
+.header_left li.last{
+    background: none;
+}
+.header_left li a i{
+    position: absolute;
+    left:8px;
+    top:12px;
+    display: inline-block;
+    background: url("../images/icon_sprite.png") no-repeat;
+    width: 20px;
+    height: 20px;
+}
+
+.header_left li a i.t_i_01{
+    background-position: 0 -155px;
+}
+.header_left li a i.t_i_02{
+    background-position: 0 -176px;
+}
+
+.header_right{
+    float: right;
+    height: 47px;
+}
+.header_center{
+    position: absolute;
+    left: 50%;
+    height: 47px;
+    margin-left: -40px;
+}
+.header_center a{
+    position: relative;
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    padding-left: 35px;
+    height: 47px;
+    line-height: 47px;
+}
+.header_center a i{
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    line-height: 0px;
+    font-size: 0px;
+    overflow: hidden;
+    background: url("../images/icon_sprite.png") no-repeat;
+    background-position: 0 -197px;
+    left:8px;
+    top:5px;
+    _margin-top:8px; ;
+}
+.header_doctor_name{
+    float: left;
+    display: inline;
+    margin-top: 10px;
+    width: 100px;
+    text-align: center;
+}
+
+.header_doctor_name li a{
+    position: relative;
+    color: #fff;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+.header_doctor_name li a i{
+    right: 0;
+ }
+.header_doctor_name li a i,.header_system_btn i{
+    background: url("../images/header_triangle_down.png") no-repeat;
+}
+.header_doctor_name li.active a i,.header_system_tool li.active .header_system_btn i{
+    background: url("../images/header_triangle_up.png") no-repeat;
+}
+.header_system_tool{
+    display: inline;
+    float: left;
+    width: 116px;
+    height: 25px;
+    margin-left: 10px;
+    *margin-right: 10px;
+    _margin-right: 0px;
+    margin-top: 10px;
+    z-index: 3;
+}
+.header_system_tool li{
+    position: relative;
+    width: 116px;
+    height: 25px;
+    z-index: 3;
+}
+.header_system_btn{
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    color: #fff;
+    padding: 0 8px;
+    background: url("../images/system_tool_bg.png");
+    z-index: 3;
+}
+
+.header_system_sub{
+    display: none;
+    position: absolute;
+    left: 0;
+    top:20px;
+    width: 100%;
+    height: auto;
+    padding:5px 0;
+    z-index: 10;
+}
+.header_system_sub li{
+    width: 100%;
+    height: 28px;
+}
+.header_system_sub li a{
+    display: block;
+    color: #fff;
+    text-align: center;
+    height: 28px;
+    line-height: 28px;
+    background: #d76c71;
+}
+.header_system_sub li a:hover,.header_system_sub li.active{
+    text-decoration: none;
+    background: #f57b81;
+}
+
+.quite_btn{
+    display: inline;
+    float: left;
+    width: 22px;
+    height: 18px;
+    margin:12px 10px 0 10px;
+    background: url("../images/icon_sprite.png") no-repeat;
+    background-position: 0 -218px;
+}
+/*病人列表*/
+.patient_view{
+    height: 100%;
+    width: 230px;
+    position: absolute;
+    top:0;
+    left: -230px;
+    padding-right: 10px;
+    z-index: 10;
+}
+.patient_list_box{
+
+}
+.patient_btn{
+   position: absolute;
+   top:50%;
+    right: -10px;
+   margin-top: -62px;
+   display: inline-block;
+   width: 19px;
+   height: 135px;
+   z-index: 10;
+   cursor: pointer;
+}
+.patient_btn_show{
+
+}
+
+/*左侧导航*/
+.menu_left{
+    width: 158px;
+    background: #e5e5e5;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.menu_left_ul{
+    margin-left: 15px;
+}
+.menu_left_ul li{
+    width: 143px;
+    height: 90px;
+    margin-bottom: 15px;
+}
+.menu_left_ul li a{
+    display: block;
+    height: 90px;
+    padding-top: 1px;
+}
+.menu_left_ul li a:hover{
+    background: #f3f2f2;
+    text-decoration: none;
+}
+
+
+.menu_left_ul li.active a{
+    background: #fff;
+}
+.menu_left_ul li.active a span{
+    font-size: 16px;
+    color: #f57b81;
+}
+.menu_left_ul li a span{
+    height: 30px;
+    line-height: 30px;
+    color: #333333;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+/*就诊病人左侧*/
+.doctor_left{
+    background: #fbebe9;
+    width: 200px;
+}
+
+.see_people{
+    width: 100%;
+    height: 100%;
+}
+
+.see_people_nav{
+    width: 100%;
+    height: 30px;
+    background: #fff;
+    margin-top: 15px;
+}
+.see_people_nav li{
+    float: left;
+    width: 92px;
+    height: 30px;
+    margin-left: 5px;
+}
+.see_people_nav li a{
+    display: block;
+    width: 100%;
+    height: 30px;
+    line-height:30px;
+    color: #333333;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+.see_people_nav li.active a,.see_people_nav li a:hover{
+    text-decoration: none;
+}
+.see_people_con{
+    background: #fbebe9;
+    width: 100%;
+    height: 100%;
+    padding-top: 1px;
+    overflow: hidden;
+    position: relative;
+}
+.see_people_con .active{
+    display: block;
+    visibility: visible;
+    position: static;
+}
+.search_people{
+    position: relative;
+    width: 177px;
+    height: 27px;
+    margin: 10px auto;
+}
+.search_people input{
+    border: 0;
+    _boder:none;
+    width:167px;
+    padding-left: 10px;
+    height: 27px;
+    color: #333;
+    background: url("../images/search_input_bg.gif") no-repeat;
+}
+.search_people input:focus{
+    outline: 0;
+}
+.search_people a{
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    position: absolute;
+    right: 0;
+    top:0;
+}
+
+.see_people_table{
+    width: 100%;
+    border: 1px solid #FBEBE9;
+}
+.see_people_table th{
+    text-align: center;
+    color: #333333;
+    line-height: 30px;
+    border-bottom: 1px dashed #cdbab8;
+    font-weight: bold;
+}
+.see_people_table td{
+    text-align: center;
+    color: #333333;
+    line-height: 30px;
+    border-bottom: 1px solid #fcf2f1;
+    border-right:1px dashed #cdbab8 ;
+
+}
+.see_people_table tr.hover td{
+    background: #fdd8d8;
+}
+
+.see_people_table td span{
+    vertical-align: middle;
+}
+
+/*.see_people_table td span.red{
+     background: url("../images/red_heart_01.png") center left no-repeat;
+ }
+.see_people_table td span.orange{
+    background: url("../images/orange_heart_01.png") center left no-repeat;
+}*/
+
+
+.see_people_table_box{
+    position: relative;
+    height: 350px;
+    overflow:hidden;
+}
+.see_people_page{
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 10px;
+}
+.see_people_page a{
+    color: #666;
+    margin-right: 3px;
+}
+.see_people_page a:hover,.see_people_page a:active{
+    color: #f57b81;
+}
+
+.see_people_page a.next_page{
+    background: url("../images/next_page_bg.png") no-repeat right center;
+    padding-right: 10px;
+}
+.see_people_page a.pre_page{
+    background: url("../images/pre_page_bg.png") no-repeat left center;
+    padding-left: 10px;
+}
+
+
+/*iframe 布局*/
+.wrap{
+    min-width: 1024px;
+    margin-top: 2px;
+    position: relative;
+    width: 100%;
+}
+.main{
+    position:absolute;
+    width: 100%;
+    top:49px;
+    left: 0;
+    z-index: 1;
+}
+.iframe_left{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 158px;
+}
+.iframe_right{
+     margin-left: 158px;
+}
+
+.iframe_left .see_people_nav{
+    background: #F57B81;
+}
+/*医生首页iframe布局*/
+.doctor_liframe{
+    width: 200px;
+    position: absolute;
+    left: 0;
+    top:0;
+    overflow: hidden;
+}
+.doctor_riframe{
+    margin-left: 215px;
+}

@@ -1,0 +1,165 @@
+@charset "utf-8";
+/* CSS Document */
+/* ====================
+     公共样式
+==================== */
+html{color:#000;background:#FFF; font-family:"微软雅黑",Verdana, Arial; font-size:14px; _background:url(about:blank) fixed;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}
+fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}
+ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+q:before,q:after{content:''}
+abbr,acronym{border:0;font-variant:normal}
+sup{vertical-align:text-top}
+sub{vertical-align:text-bottom}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}
+#yui3-css-stamp.cssreset{display:none}
+.clearfix:after {content: ".";display: block; height: 0;clear: both;visibility: hidden;}
+.clearfix { zoom:1;}  /* for IE/Mac */
+img{ display:block;}
+a,a:link{ text-decoration:none;}
+a:hover{ text-decoration:underline;}
+.tbcol{border-collapse:collapse;border-spacing:0}
+.bold{ font-weight:bold;}
+.center{ text-align:center;}
+.t_left{text-align:left;}
+.t_right{text-align: right;}
+.width980{ width:980px; margin:0 auto;}
+.left{ float:left;}
+.right{ float:right;}
+.ow{ overflow:hidden;}
+.mt3{ margin-top:3px;}
+.mt5{ margin-top:5px;}
+.mt9{ margin-top:9px;}
+.mt10{ margin-top:10px;}
+.mt15{ margin-top:15px;}
+.mt20{ margin-top:20px;}
+.mt25{ margin-top:25px;}
+.mt30{ margin-top:30px;}
+.mt40{ margin-top:40px;}
+.mt50{margin-top:50px;}
+.mt80{margin-top:80px;}
+.mr5{ margin-right:5px;}
+.mr10{ margin-right:10px;}
+.mr15{ margin-right:15px;}
+.mr20{ margin-right:20px;}
+.mr30{ margin-right:30px;}
+.mr50{ margin-right:50px;}
+.mr51{ margin-right:50px;}
+.mr100{ margin-right:100px;}
+.mb10{ margin-bottom:10px;}
+.mb5{ margin-bottom:5px;}
+.mb8{ margin-bottom:8px;}
+.mb12{ margin-bottom:12px;}
+.mb15{margin-bottom:20px;}
+.mb20{margin-bottom:20px;}
+.mb25{ margin-bottom:25px;}
+.mb35{margin-bottom:35px;}
+.mb50{margin-bottom:50px;}
+.ml0{ margin-left:0px;}
+.ml10{margin-left:10px;}
+.ml5{ margin-left:5px;}
+.ml20{ margin-left:20px;}
+.ml33{ margin-left:33px;}
+.ml40{ margin-left:40px;}
+.ml70{ margin-left:70px;}
+.mrf30{ margin-right:-30px;}
+.pt1{ padding-top:1px;}
+.pt10{ padding-top:10px;}
+.pt20{ padding-top:20px;}
+.pt30{ padding-top:30px;}
+.pt40{ padding-top:40px;}
+.pt70{ padding-top:70px;}
+.pr20{ padding-right:20px;}
+.pr25{ padding-right:25px;}
+.pb{ padding-bottom:1px;}
+.pb10{ padding-bottom:10px;}
+.pb15{ padding-bottom:20px;}
+.pb20{ padding-bottom:20px;}
+.pb30{ padding-bottom:30px;}
+.pb40{ padding-bottom:40px;}
+.pl200{ padding-left:200px;}
+.clearfix:after {
+	visibility:hidden;
+	display:block;
+	font-size:0;
+	content:"\20 ";
+	clear:both;
+	height:0
+}
+.clearfix {
+	zoom:1
+}
+.nowrap {
+	white-space:nowrap;
+	word-break:keep-all
+}
+.wrap {
+	white-space:normal;
+	word-break:break-all
+}
+.ellipsis {
+	overflow:hidden;
+	-o-text-overflow:ellipsis;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	word-break:keep-all;
+	word-wrap:normal
+}
+body .hide {
+	display:none
+}
+body .hide2 {
+	visibility:hidden
+}
+body .hide3 {
+	position:absolute;
+	left:-99999px;
+	top:-99999px
+}
+.pr {
+	position:relative
+}
+.fs12{
+	font-size:12px
+}
+.fs14 {
+	font-size:14px
+}
+.fs16 {
+	font-size:16px
+}
+.fs18 {
+	font-size:18px
+}
+.fs20 {
+	font-size:20px
+}
+
+
+/*
+.Care_icon{ background-position: 0 0; width: 15px; height: 14px; }
+.canlender_tright_bg_01{ background-position: 0 -15px; width: 9px; height: 10px; }
+.canlender_tright_bg_02{ background-position: 0 -26px; width: 10px; height: 11px; }
+.edite_hs_icon{ background-position: 0 -38px; width: 14px; height: 16px; }
+.edite_red_icon{ background-position: 0 -55px; width: 14px; height: 16px; }
+.folder_icon01{ background-position: 0 -72px; width: 14px; height: 14px; }
+.folder_icon02{ background-position: 0 -87px; width: 10px; height: 12px; }
+.icon_date_01{ background-position: 0 -100px; width: 16px; height: 16px; }
+.icon_date_02{ background-position: 0 -117px; width: 16px; height: 16px; }
+.icon_delete_01{ background-position: 0 -134px; width: 15px; height: 17px; }
+.icon_detail_01{ background-position: 0 -152px; width: 13px; height: 18px; }
+.icon_detail_02{ background-position: 0 -171px; width: 13px; height: 18px; }
+.login_btn{ background-position: 0 -190px; width: 93px; height: 29px; }
+.more_down_icon{ background-position: 0 -220px; width: 9px; height: 14px; }
+.more_up_icon{ background-position: 0 -235px; width: 9px; height: 14px; }
+.orange_heart_01{ background-position: 0 -250px; width: 15px; height: 14px; }
+.patient_list_bg{ background-position: 0 -265px; width: 19px; height: 135px; }
+.patient_list_bg_02{ background-position: 0 -401px; width: 19px; height: 135px; }
+.reset_btn{ background-position: 0 -537px; width: 93px; height: 29px; }
+.search_bar_btn{ background-position: 0 -567px; width: 27px; height: 27px; }
+.search_input_bg{ background-position: 0 -595px; width: 177px; height: 27px; }
+.see_doctor_01{ background-position: 0 -623px; width: 92px; height: 30px; }
+.see_doctor_02{ background-position: 0 -654px; width: 92px; height: 30px; }
+.system_tool_bg{ background-position: 0 -685px; width: 116px; height: 25px; }
+.table_more_info_btn{ background-position: 0 -711px; width: 19px; height: 33px; }
+*/

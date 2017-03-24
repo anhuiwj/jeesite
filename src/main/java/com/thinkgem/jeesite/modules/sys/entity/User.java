@@ -1,15 +1,7 @@
 /**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.entity;
-
-import java.util.Date;
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,6 +12,12 @@ import com.thinkgem.jeesite.common.supcan.annotation.treelist.cols.SupCol;
 import com.thinkgem.jeesite.common.utils.Collections3;
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户Entity
@@ -53,6 +51,16 @@ public class User extends DataEntity<User> {
 	private Role role;	// 根据角色查询用户条件
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
+	
+	private List<Menu> menuList = Lists.newArrayList(); // 拥有受控资源列表
+	
+	private String orgCode;//机构代码，非持久
+	private String resTreeIds;//受控资源id集，非持久
+	private String roleIds;//角色id集，非持久
+	private String areaCode;//区县Code
+	
+	
+	
 
 	public User() {
 		super();
@@ -273,6 +281,7 @@ public class User extends DataEntity<User> {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
 
 	@JsonIgnore
 	@ExcelField(title="拥有角色", align=1, sort=800, fieldType=RoleListType.class)
@@ -284,24 +293,70 @@ public class User extends DataEntity<User> {
 		this.roleList = roleList;
 	}
 
-	@JsonIgnore
-	public List<String> getRoleIdList() {
-		List<String> roleIdList = Lists.newArrayList();
-		for (Role role : roleList) {
-			roleIdList.add(role.getId());
-		}
-		return roleIdList;
+
+	
+	
+	
+	
+	public List<Menu> getMenuList() {
+		return menuList;
 	}
 
-	public void setRoleIdList(List<String> roleIdList) {
-		roleList = Lists.newArrayList();
-		for (String roleId : roleIdList) {
-			Role role = new Role();
-			role.setId(roleId);
-			roleList.add(role);
+	public void setMenuList(List<Menu> menuList) {
+		this.menuList = menuList;
+	}
+
+	public String getCompanyName() {
+		if(company != null) {
+			return company.getName();
+		} else {
+			return "";
 		}
 	}
+
 	
+
+	public String getOrgCode() {
+		return orgCode;
+	}
+
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
+	}
+	
+	
+
+	public String getResTreeIds() {
+		return resTreeIds;
+	}
+
+	public void setResTreeIds(String resTreeIds) {
+		this.resTreeIds = resTreeIds;
+	}
+
+	public String getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(String roleIds) {
+		this.roleIds = roleIds;
+	}
+	
+	public String getRolesValue() {
+		StringBuffer sb = new StringBuffer();
+		List<Role> list = this.getRoleList();
+		if(list != null && list.size()>0) {
+			for(Role r :list) {
+				sb.append(r.getId()).append(",");
+			}
+			String str = sb.toString();
+			str = str.substring(0,str.length()-1);
+			return str;
+		} else {
+			return "";
+		}
+	}
+
 	/**
 	 * 用户拥有的角色名称字符串, 多个角色名称用','分隔.
 	 */
@@ -313,6 +368,19 @@ public class User extends DataEntity<User> {
 		return isAdmin(this.id);
 	}
 	
+	
+	
+	public String getCompanyCode() {
+		return this.getCompany().getCode();
+	}
+	
+	public String getRealOrgCode() {
+		if(this.getOffice() != null && !"0".equals(this.getOffice().getId())) {
+			return this.getOffice().getCode();
+		}
+		return this.getCompany().getCode();
+	}
+	
 	public static boolean isAdmin(String id){
 		return id != null && "1".equals(id);
 	}
@@ -320,5 +388,13 @@ public class User extends DataEntity<User> {
 	@Override
 	public String toString() {
 		return id;
+	}
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
 	}
 }

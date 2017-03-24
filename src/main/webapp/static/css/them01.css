@@ -1,0 +1,286 @@
+
+/*按钮样式 start*/
+.btn{
+    display: inline-block;
+    border: 0;
+    width: 68px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+.btn:hover{
+    text-decoration: none;
+}
+.save_btn{
+    background: #d76c71;
+}
+.close_btn{
+    background: #efb9bb;
+}
+.appoint_btn,.appoint_btn:active,.appoint_btn:hover,.appoint_btn:visited{
+    display: inline-block;
+    background: #d76c71;
+    height: 21px;
+    line-height: 21px;
+    padding: 0 10px;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: none;
+    border-radius: 8px;
+}
+.f_btn,.f_btn:visited,.f_btn:hover,.f_btn:active{
+    color: #333333;
+    border-radius: 5px;
+    border:1px solid #7dd3e8;
+    background:#fff;
+    line-height: 18px;
+    padding: 1px 5px;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 12px;
+}
+.f_btn_chart,.f_btn_chart:visited,.f_btn_chart:hover,.f_btn_chart:active{
+    display: inline-block;
+    width: 68px;
+    height: 21px;
+    line-height: 21px;
+    text-decoration:none;
+    text-align: center;
+    color: #fff;
+    background: #efb9bb;
+    border-radius: 3px;
+}
+.f_change_icon,.f_input_icon,.f_time_icon,.f_page_icon,.f_searchbar_icon{
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    line-height: 0;
+    font-size: 0;
+    margin: 3px;
+}
+
+.f_change_icon{
+    width: 15px;
+    height: 14px;
+    background: url("../images/f_change_icon.png") no-repeat;
+}
+.f_input_icon{
+    width: 15px;
+    height: 11px;
+    background: url("../images/f_input_icon.png") no-repeat;
+}
+.f_time_icon{
+    width: 12px;
+    height: 12px;
+    background: url("../images/f_time_icon.png") no-repeat;
+}
+.f_page_icon{
+    width: 16px;
+    height: 21px;
+    margin-right: 10px;
+    background: url("../images/f_page_icon.png") no-repeat;
+}
+.f_searchbar_icon{
+    width: 13px;
+    height: 14px;
+    background: url("../images/f_searchbar_icon.png") no-repeat;
+}
+
+/*按钮样式 end*/
+
+.color_f57{ color: #F57B81;cursor: pointer}
+/*框架公共样式 start*/
+.header,.patient_view {
+    background:#F57B81;
+}
+.header{
+    border-bottom: 2px solid #B23453;
+}
+.header_system_btn {
+    background: url('../images/system_tool_bg.png') no-repeat;
+}
+.header_system_tool li.active .header_system_btn{
+    background: url('../images/system_tool_bg_hover.png') no-repeat;
+}
+.header_left li a:hover{
+    background: #ed7177;
+    text-decoration: none;
+}
+.header_left li.active a,.header_system_sub li a {
+    background: #D76C71;
+}
+.header_left li {
+    background: url('../images/top_nav_bg.gif') no-repeat right center;
+}
+
+.menu_left_ul li.active a span {
+    font-size: 16px;
+    color: #F57B81;
+}
+.menu_left_ul li a i{
+    display:block;
+    width: 30px;
+    height: 30px;
+    background: url("../images/icon_sprite.png") no-repeat;
+    margin: 15px auto 10px auto;
+}
+.menu_left_ul li a i.l_m_i_01{ background-position: 0 0;}
+.menu_left_ul li a i.l_m_i_02{ background-position: 0 -31px;}
+.menu_left_ul li a i.l_m_i_03{ background-position: 0 -62px;}
+.menu_left_ul li a i.l_m_i_04{ background-position: 0 -93px;}
+.menu_left_ul li a i.l_m_i_05{ background-position: 0 -124px;}
+.menu_left_ul li a i.l_m_i_06{ background-position: 0 -237px;}
+.menu_left_ul li a i.l_m_i_07{ background-position: 0 -268px;}
+
+.patient_btn{
+    background: url("../images/icon_sprite_01.png") no-repeat;
+    background-position: 0 -265px;
+}
+.patient_btn_show{
+    background: url("../images/icon_sprite_01.png") no-repeat;
+    background-position: 0 -401px;
+}
+
+.see_people_nav li.active a, .see_people_nav li a:hover {
+    background: url("../images/icon_sprite_01.png") no-repeat;
+    background-position: 0 -623px;
+}
+.see_people_nav li a {
+    color: #333;
+    background: url("../images/icon_sprite_01.png") no-repeat;
+    background-position: 0 -654px;
+}
+.search_people a{
+    background: url("../images/icon_sprite_01.png") no-repeat;
+    background-position: 0 -567px;
+}
+.see_people_con {
+    background: #FBEBE9;
+}
+.see_people_table td span.red i{
+    display: inline-block;
+    vertical-align: middle;
+    width: 15px;
+    height: 14px;
+    margin-right: 5px;
+    background: url("../images/icon_sprite_01.png") no-repeat;
+    background-position: 0 0;
+}
+.see_people_table td span.orange i{
+    display: inline-block;
+    vertical-align: middle;
+    width: 15px;
+    height: 14px;
+    margin-right: 5px;
+    background: url("../images/icon_sprite_01.png") no-repeat;
+    background-position: 0 -250px;
+}
+.prenatal_tab_nav{
+    border-bottom: 1px solid #f5f5f5;
+}
+.prenatal_tab_nav li a{
+    background: #f5f5f5;
+    color: #333;
+}
+.prenatal_tab_nav li.active a{
+    background: none;
+    color: #f57b81;
+    border: 1px solid #f5f5f5;
+    border-bottom:1px solid #fff;
+}
+
+
+.prenatal_info_level{
+    height:20px;
+    padding: 5px 0 5px 8px;
+    background: #fdecec;
+    color: #e30a0c;
+}
+.prenatal_info_level i{
+    margin-right: 5px;
+}
+.look_more i{
+  margin-left: 5px;
+}
+
+.prenatal_info_chart_tab_box {
+    border: 2px solid #FFE5E6;
+}
+.prenatal_scroll_div table td.red {
+    color: #EC5D81;
+}
+.waring_p1 {
+    color: #EC5D81;
+    background:#F6F6F6;
+    border-left: 2px solid #EC5D81;
+}
+.folder_left_list_ul li.sub_01 a.sub_a:hover{
+    background: #ffe3e4;
+    color: #f57b81;
+    text-decoration: none;
+}
+
+.folder_left_list_ul li.sub_02 a.sub_a2:hover{
+    background: #ffe3e4;
+    color: #f57b81;
+    text-decoration: none;
+}
+/*框架公共样式 start*/
+
+
+/*页面icon start*/
+.Care_icon,.canlender_tright_bg_01,.canlender_tright_bg_02,.edite_hs_icon,.edite_red_icon,.folder_icon01,.folder_icon02,.icon_date_01,.icon_date_02,
+.icon_delete_01,.icon_detail_01,.icon_detail_02,.login_btn,.more_down_icon,.more_up_icon,.orange_heart_01,.patient_list_bg,.patient_list_bg_02,.reset_btn,
+.search_bar_btn,.search_input_bg,.see_doctor_01,.see_doctor_02,.system_tool_bg,.table_more_info_btn{
+    display: inline-block;
+    vertical-align: middle;
+    background: url("../images/icon_sprite_01.png") no-repeat;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+.Care_icon{ background-position: 0 0; width: 15px; height: 14px; margin-right: 5px;}
+.canlender_tright_bg_01{ background-position: 0 -15px; width: 9px; height: 10px; }
+.canlender_tright_bg_02{ background-position: 0 -26px; width: 10px; height: 11px; }
+.edite_hs_icon{ background-position: 0 -38px; width: 14px; height: 16px; }
+.edite_red_icon{ background-position: 0 -55px; width: 14px; height: 16px; }
+.folder_icon01{ background-position: 0 -72px; width: 14px; height: 14px; }
+.folder_icon02{ background-position: 0 -87px; width: 10px; height: 12px; }
+.icon_date_01{ background-position: 0 -100px; width: 16px; height: 16px; }
+.icon_date_02{ background-position: 0 -117px; width: 16px; height: 16px; }
+.icon_delete_01{ background-position: 0 -134px; width: 15px; height: 17px; }
+.icon_detail_01{ background-position: 0 -152px; width: 13px; height: 18px; }
+.icon_detail_02{ background-position: 0 -171px; width: 13px; height: 18px; }
+.login_btn{ background-position: 0 -190px; width: 93px; height: 29px; }
+.more_down_icon{ background-position: 0 -220px; width: 9px; height: 14px; }
+.more_up_icon{ background-position: 0 -235px; width: 9px; height: 14px; }
+.orange_heart_01{ background-position: 0 -250px; width: 15px; height: 14px; margin-right: 5px; }
+.patient_list_bg{ background-position: 0 -265px; width: 19px; height: 135px; }
+.patient_list_bg_02{ background-position: 0 -401px; width: 19px; height: 135px; }
+.reset_btn{ background-position: 0 -537px; width: 93px; height: 29px; }
+.search_bar_btn{ background-position: 0 -567px; width: 27px; height: 27px; }
+.search_input_bg{ background-position: 0 -595px; width: 177px; height: 27px; }
+.see_doctor_01{ background-position: 0 -623px; width: 92px; height: 30px; }
+.see_doctor_02{ background-position: 0 -654px; width: 92px; height: 30px; }
+.system_tool_bg{ background-position: 0 -685px; width: 116px; height: 25px; }
+.table_more_info_btn{ background-position: 0 -711px; width: 19px; height: 33px; }
+
+/*页面icon start*/
+/*建档管理 start*/
+.filing_small_tip span,.filing_statistical .filing_s_chart span ,.search_filing_info {
+    background:#FEB6BA;
+}
+.filing_table tr.even td {
+    background: #FFFBEE;
+}
+.f_btn_chart, .f_btn_chart:visited, .f_btn_chart:hover, .f_btn_chart:active {
+    color: #FFF;
+    background: #EFB9BB;
+}
+.filing_alert_h3 {
+    color: #F57B81;
+}
+/*建档管理 end*/

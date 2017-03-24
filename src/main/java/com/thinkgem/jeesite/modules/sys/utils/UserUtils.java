@@ -1,29 +1,24 @@
 /**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.utils;
 
-import java.util.List;
-
+import com.google.common.collect.Maps;
+import com.thinkgem.jeesite.common.utils.CacheUtils;
+import com.thinkgem.jeesite.common.utils.SpringContextHolder;
+import com.thinkgem.jeesite.modules.sys.dao.*;
+import com.thinkgem.jeesite.modules.sys.entity.*;
+import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
-import com.thinkgem.jeesite.common.service.BaseService;
-import com.thinkgem.jeesite.common.utils.CacheUtils;
-import com.thinkgem.jeesite.common.utils.SpringContextHolder;
-import com.thinkgem.jeesite.modules.sys.dao.AreaDao;
-import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
-import com.thinkgem.jeesite.modules.sys.dao.OfficeDao;
-import com.thinkgem.jeesite.modules.sys.dao.RoleDao;
-import com.thinkgem.jeesite.modules.sys.dao.UserDao;
-import com.thinkgem.jeesite.modules.sys.entity.Area;
-import com.thinkgem.jeesite.modules.sys.entity.Menu;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
-import com.thinkgem.jeesite.modules.sys.entity.Role;
-import com.thinkgem.jeesite.modules.sys.entity.User;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 
 /**
@@ -43,8 +38,8 @@ public class UserUtils {
 	public static final String USER_CACHE_ID_ = "id_";
 	public static final String USER_CACHE_LOGIN_NAME_ = "ln";
 	public static final String USER_CACHE_LIST_BY_OFFICE_ID_ = "oid_";
-	
-	public static final String CACHE_AUTH_INFO = "authInfo";
+	public static final String CACHE_USER = "cacheUser";
+
 	public static final String CACHE_ROLE_LIST = "roleList";
 	public static final String CACHE_MENU_LIST = "menuList";
 	public static final String CACHE_AREA_LIST = "areaList";
@@ -57,13 +52,39 @@ public class UserUtils {
 	 * @return 取不到返回null
 	 */
 	public static User get(String id){
-		User user = (User)CacheUtils.get(USER_CACHE, USER_CACHE_ID_ + id);
+		User user = (User) CacheUtils.get(USER_CACHE, USER_CACHE_ID_ + id);
 		if (user ==  null){
 			user = userDao.get(id);
 			if (user == null){
 				return null;
 			}
 			user.setRoleList(roleDao.findList(new Role(user)));
+			
+			Menu m = new Menu();
+			m.setUserId(id);
+			
+			
+			List<Menu> menuList = menuDao.findRoleMenuByUserId(m);
+			Map<String,String> map = Maps.newHashMap();
+			if(menuList != null && menuList.size()>0) {
+				for(Menu mt:menuList) {
+					map.put(mt.getId(), null);
+				}
+			}
+			
+			List<Menu> mList = menuDao.findUserMenuList(m);
+			if(mList != null && mList.size()>0) {
+				for(Menu mt:mList) {
+					if(!map.containsKey(mt.getId())) {
+						menuList.add(mt);
+					}
+				}
+			}
+			if(menuList != null && menuList.size()>0) {
+				Collections.sort(menuList);
+			}
+			
+			user.setMenuList(menuList);
 			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
 		}
@@ -76,13 +97,38 @@ public class UserUtils {
 	 * @return 取不到返回null
 	 */
 	public static User getByLoginName(String loginName){
-		User user = (User)CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
+		User user = (User) CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
 		if (user == null){
 			user = userDao.getByLoginName(new User(null, loginName));
 			if (user == null){
 				return null;
 			}
 			user.setRoleList(roleDao.findList(new Role(user)));
+			
+			Menu m = new Menu();
+			m.setUserId(user.getId());
+			
+			List<Menu> menuList = menuDao.findRoleMenuByUserId(m);
+			Map<String,String> map = Maps.newHashMap();
+			if(menuList != null && menuList.size()>0) {
+				for(Menu mt:menuList) {
+					map.put(mt.getId(), null);
+				}
+			}
+			
+			List<Menu> mList = menuDao.findUserMenuList(m);
+			if(mList != null && mList.size()>0) {
+				for(Menu mt:mList) {
+					if(!map.containsKey(mt.getId())) {
+						menuList.add(mt);
+					}
+				}
+			}
+			if(menuList != null && menuList.size()>0) {
+				Collections.sort(menuList);
+			}
+			
+			user.setMenuList(menuList);
 			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
 		}
@@ -93,7 +139,6 @@ public class UserUtils {
 	 * 清除当前用户缓存
 	 */
 	public static void clearCache(){
-		removeCache(CACHE_AUTH_INFO);
 		removeCache(CACHE_ROLE_LIST);
 		removeCache(CACHE_MENU_LIST);
 		removeCache(CACHE_AREA_LIST);
@@ -133,6 +178,23 @@ public class UserUtils {
 	}
 
 	/**
+	 * 根据用户ID获取工号
+	 * @param userId 用户Id
+	 * @return 用户工号
+	 */
+	public static String getWorkNo(String userId){
+        if(StringUtils.isBlank(userId)){
+            return null;
+        }
+        //查询用户
+		User user = UserUtils.get(userId);
+		if(user != null){
+			return user.getNo();
+		}
+		return null;
+	}
+
+	/**
 	 * 获取当前用户角色列表
 	 * @return
 	 */
@@ -144,8 +206,8 @@ public class UserUtils {
 			if (user.isAdmin()){
 				roleList = roleDao.findAllList(new Role());
 			}else{
-				Role role = new Role();
-				role.getSqlMap().put("dsf", BaseService.dataScopeFilter(user.getCurrentUser(), "o", "u"));
+				Role role = new Role(user);
+				//role.getSqlMap().put("dsf", BaseService.dataScopeFilter(user.getCurrentUser(), "o", "u"));
 				roleList = roleDao.findList(role);
 			}
 			putCache(CACHE_ROLE_LIST, roleList);
@@ -167,7 +229,27 @@ public class UserUtils {
 			}else{
 				Menu m = new Menu();
 				m.setUserId(user.getId());
-				menuList = menuDao.findByUserId(m);
+				menuList = menuDao.findRoleMenuByUserId(m);
+				Map<String,String> map = Maps.newHashMap();
+				if(menuList != null && menuList.size()>0) {
+					for(Menu mt:menuList) {
+						map.put(mt.getId(), null);
+					}
+				}
+				
+				List<Menu> mList = menuDao.findUserMenuList(m);
+				if(mList != null && mList.size()>0) {
+					for(Menu mt:mList) {
+						if(!map.containsKey(mt.getId())) {
+							menuList.add(mt);
+						}
+					}
+				}
+				if(menuList != null && menuList.size()>0) {
+					Collections.sort(menuList);
+				}
+				
+				
 			}
 			putCache(CACHE_MENU_LIST, menuList);
 		}
@@ -201,7 +283,7 @@ public class UserUtils {
 				officeList = officeDao.findAllList(new Office());
 			}else{
 				Office office = new Office();
-				office.getSqlMap().put("dsf", BaseService.dataScopeFilter(user, "a", ""));
+				//office.getSqlMap().put("dsf", BaseService.dataScopeFilter(user, "a", ""));
 				officeList = officeDao.findList(office);
 			}
 			putCache(CACHE_OFFICE_LIST, officeList);
@@ -272,27 +354,19 @@ public class UserUtils {
 	}
 	
 	public static Object getCache(String key, Object defaultValue) {
-//		Object obj = getCacheMap().get(key);
+
 		Object obj = getSession().getAttribute(key);
 		return obj==null?defaultValue:obj;
 	}
 
 	public static void putCache(String key, Object value) {
-//		getCacheMap().put(key, value);
+
 		getSession().setAttribute(key, value);
 	}
 
 	public static void removeCache(String key) {
-//		getCacheMap().remove(key);
+
 		getSession().removeAttribute(key);
 	}
-	
-//	public static Map<String, Object> getCacheMap(){
-//		Principal principal = getPrincipal();
-//		if(principal!=null){
-//			return principal.getCacheMap();
-//		}
-//		return new HashMap<String, Object>();
-//	}
 	
 }

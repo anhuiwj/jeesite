@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上海市现制现售水自动售水机信息公开</title>
+<link href="css/index1.css" rel="stylesheet" type="text/css" />
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<link href="css/reset.css" rel="stylesheet" type="text/css" />
+
+
+<link href="autoWaterStyle/css/style.css" rel="stylesheet" type="text/css" />
+<script src="autoWaterStyle/js/jquery.js" type="text/javascript"></script>
+<script src="autoWaterStyle/js/select.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29595807-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); 
+    ga.type = 'text/javascript'; 
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+<div class="main">
+	<!-- 页面头加搜索 begin-->
+	<div class="head">
+    	<p></p>
+    	<div class="search">
+    		<form action="indexSearch.html" method="get">
+        	<p id="today"></p>
+       		<span class="search_left">快速查询</span> <em>区县</em>
+       		<select id="code" name="code" class="password">
+       			<option value="">全部</option>
+              
+              				<option value="310101">黄浦区</option>
+              
+              				<option value="310104">徐汇区</option>
+              
+              				<option value="310105">长宁区</option>
+              
+              				<option value="310106">静安区</option>
+              
+              				<option value="310107">普陀区</option>
+              
+              				<option value="310108">闸北区</option>
+              
+              				<option value="310109">虹口区</option>
+              
+              				<option value="310110">杨浦区</option>
+              
+              				<option value="310112">闵行区</option>
+              
+              				<option value="310113">宝山区</option>
+              
+              				<option value="310114">嘉定区</option>
+              
+              				<option value="310115">浦东新区</option>
+              
+              				<option value="310116">金山区</option>
+              
+              				<option value="310117">松江区</option>
+              
+              				<option value="310118">青浦区</option>
+              
+              				<option value="310120">奉贤区</option>
+              
+              				<option value="310230">崇明县</option>
+              
+            </select>
+        	<em>地址</em><input id="address" name="address" class="search_input" value="" type="text" /><input id="searchBut" name="searchBut" class="search_button" type="submit" value="查询" />
+            </form>
+       	</div>
+    </div>
+    
+    
+<script type="text/javascript">
+	function search(){
+		var code = document.getElementById('sear').value ; 
+		var address = document.getElementById('address').value ; 
+		alert(code + address) ; 
+		window.location.href = "/staticPage/indexSearch.html?code="+code+"&address="+address ; 
+	}
+	
+	function today(){
+	    var d = new Date();
+	    var month = (d.getMonth() + 1)+'' ;
+	    var ri = d.getDate() + '' ;
+	    if(ri.length==1){
+	    	ri = "0"+ri ;
+	    } 
+	    if(month.length==1){
+	    	month = "0"+month ;
+	    }
+	    document.getElementById("today").innerHTML = "信息截止日期："+ d.getFullYear() + "年" + month + "月" + ri +"日";
+	}
+	window.onload = today ; 
+</script>
+	<!-- 页面头加搜索 end-->
+	
+    <div class="mbx">您当前位置：<a href="javascript:goIndex()" >首页</a> » 区县</div>
+    <div class="jydw">
+    	<div class="area">
+       	  <h3><span>区县</span></h3>
+            <ul>
+        
+					<li class="current"><a href="/staticPage/search.html?code=310101">黄浦区</a></li>
+        
+					<li><a href="/staticPage/search.html?code=310104">徐汇区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310105">长宁区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310106">静安区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310107">普陀区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310108">闸北区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310109">虹口区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310110">杨浦区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310112">闵行区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310113">宝山区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310114">嘉定区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310115">浦东新区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310116">金山区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310117">松江区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310118">青浦区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310120">奉贤区</a></li>
+        
+        
+					<li><a href="/staticPage/search.html?code=310230">崇明县</a></li>
+        
+        
+            </ul>
+            <em></em>
+        </div>
+        <div class="jydw_right">
+        	<h3><span>黄浦区自动售水机地址</span></h3>
+            <p><span style="width: 400px">地址</span>   经营单位</p>
+            <dl>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=661807&rand=01" target="_blank">斜土路85弄(出口)</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=757839&rand=01" target="_blank">方斜路269号</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=762775&rand=01" target="_blank">斜土东路265号小区门口</a></span>上海甘霖净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=762774&rand=01" target="_blank">建国东路36弄22号</a></span>上海康鸿净水科技发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658462&rand=01" target="_blank">卢湾合肥路289弄门口</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658463&rand=01" target="_blank">徐家汇路454弄内</a></span>瀚塘活净水技术(上海)有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658464&rand=01" target="_blank">打浦路398弄1号大门绿化</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658466&rand=01" target="_blank">蒙自路210号物业门口</a></span>瀚塘活净水技术(上海)有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658470&rand=01" target="_blank">中山南一路721弄物业</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=734387&rand=01" target="_blank">西藏南路748号（惠达大厦）后门方斜路上</a></span>瀚塘活净水技术(上海)有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659008&rand=01" target="_blank">中山南路1586弄5号</a></span>上海淮涟净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659010&rand=01" target="_blank">牌楼路近大林路</a></span>上海淮涟净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659788&rand=01" target="_blank">厦门路161弄2号后门（厦门路站）</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659012&rand=01" target="_blank">南仓街30弄7号</a></span>上海淮涟净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659013&rand=01" target="_blank">篾竹路204弄口</a></span>上海淮涟净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659017&rand=01" target="_blank">多稼路168号</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659023&rand=01" target="_blank">制造局路567弄门口</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659031&rand=01" target="_blank">大林路208号</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659032&rand=01" target="_blank">河南南路717号</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659041&rand=01" target="_blank">徽宁路419号</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659043&rand=01" target="_blank">斜土路251弄</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658468&rand=01" target="_blank">斜土路118弄4号楼楼下</a></span>瀚塘活净水技术(上海)有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659781&rand=01" target="_blank">黄浦区陆家浜路468号南浦公寓内</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659783&rand=01" target="_blank">南车站路69弄大门口“华教大厦”</a></span>瀚塘活净水技术(上海)有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659789&rand=01" target="_blank">宁波路120弄</a></span>上海港惠净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659803&rand=01" target="_blank">江阴街285号</a></span>上海康鸿净水科技发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659805&rand=01" target="_blank">蓬莱路193号</a></span>上海淮涟净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658475&rand=01" target="_blank">打浦路457弄堂里</a></span>上海港惠净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658482&rand=01" target="_blank">斜土路448号</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658484&rand=01" target="_blank">鲁班路168弄2号楼</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658486&rand=01" target="_blank">龙华东路888弄内</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658488&rand=01" target="_blank">瞿溪路1240弄</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658491&rand=01" target="_blank">陕西南路271弄</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658493&rand=01" target="_blank">打浦路38弄</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658494&rand=01" target="_blank">斜土路298弄</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=676423&rand=01" target="_blank">重庆北路211号</a></span>上海港惠净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659019&rand=01" target="_blank">北京西路240弄</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659015&rand=01" target="_blank">北京西路231号</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659787&rand=01" target="_blank">新昌路87弄门卫室旁边</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659790&rand=01" target="_blank">河南中路575弄</a></span>上海港惠净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658492&rand=01" target="_blank">瑞金二路200弄</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659806&rand=01" target="_blank">曹市弄15弄5号</a></span>上海淮涟净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659804&rand=01" target="_blank">蓬莱路7号</a></span>上海淮涟净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=676413&rand=01" target="_blank">瞿溪路860号</a></span>上海港惠净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659021&rand=01" target="_blank">延安东路158弄</a></span>上海甘霖净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659038&rand=01" target="_blank">东江阴街199号</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659046&rand=01" target="_blank">肇周路建国路口</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658331&rand=01" target="_blank">西藏南路1501弄弄口（弘辉名苑）</a></span>上海长裕环保科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658487&rand=01" target="_blank">陕西南路271弄25号</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659016&rand=01" target="_blank">保屯路99号</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658479&rand=01" target="_blank">打浦路500弄大门口</a></span>上海港惠净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658489&rand=01" target="_blank">中山南一路1109弄西大门</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659039&rand=01" target="_blank">马当路357弄内</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659037&rand=01" target="_blank">重庆南路30号</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=676410&rand=01" target="_blank">巡道街药局弄口</a></span>上海淮涟净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658483&rand=01" target="_blank">鲁班路778弄</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659780&rand=01" target="_blank">大兴街黄家阙路99号门房间左边</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658465&rand=01" target="_blank">卢湾区瞿溪路1072弄</a></span>瀚塘活净水技术(上海)有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658495&rand=01" target="_blank">陕西南路39弄</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658485&rand=01" target="_blank">鲁班路168弄大同花园丽园路大门外</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658471&rand=01" target="_blank">斜土路766弄门卫</a></span>瀚塘活净水技术(上海)有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658490&rand=01" target="_blank">鲁班路509弄健身园地</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658481&rand=01" target="_blank">打浦路80弄</a></span>上海祺家实业发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658474&rand=01" target="_blank">铁道路776弄居委</a></span>上海港惠净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659042&rand=01" target="_blank">瞿溪路937弄</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658496&rand=01" target="_blank">长乐路169弄</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659033&rand=01" target="_blank">肇周路243号</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=658498&rand=01" target="_blank">普育东路24号</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659024&rand=01" target="_blank">西凌小区西凌家宅路111弄大门口</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659018&rand=01" target="_blank">牯岭路145弄</a></span>上海祺家实业发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659022&rand=01" target="_blank">黄浦区、江西中路135弄7号</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659009&rand=01" target="_blank">南车站路194号</a></span>上海淮涟净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659040&rand=01" target="_blank">四牌楼路90号</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659035&rand=01" target="_blank">普育西路88号</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659044&rand=01" target="_blank">学前街路111号</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=676412&rand=01" target="_blank">徐家汇路77弄18号</a></span>上海港惠净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=676420&rand=01" target="_blank">肇周路198号</a></span>上海港惠净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=662022&rand=01" target="_blank">打浦路345弄4号</a></span>上海港惠净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=662749&rand=01" target="_blank">瞿溪路1111弄</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659027&rand=01" target="_blank">中山南路1891-1893门卫旁</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659792&rand=01" target="_blank">黄家蕨路38弄2号</a></span>上海港惠净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659797&rand=01" target="_blank">新昌路389弄8号三德小区</a></span>上海康鸿净水科技发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659800&rand=01" target="_blank">南仓街118号馨园小区</a></span>上海甘霖净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659690&rand=01" target="_blank">斜土路80弄北门卫室旁</a></span>上海淮涟净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659795&rand=01" target="_blank">温州路41弄福海小区</a></span>上海康鸿净水科技发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659796&rand=01" target="_blank">新昌路182号金瓯万国</a></span>上海康鸿净水科技发展有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=659798&rand=01" target="_blank">新闸路166号水景苑</a></span>上海康鸿净水科技发展有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=804979&rand=01" target="_blank">瑞金二路24号</a></span>上海甘霖净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=686750&rand=01" target="_blank">淮海中路622弄门口</a></span>上海甘霖净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=678998&rand=01" target="_blank">丽园路818弄门口</a></span>上海港惠净水科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=679003&rand=01" target="_blank">永寿路云南路居委门口</a></span>上海港惠净水科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=729881&rand=01" target="_blank">丽园路333弄13号靠近西藏南路</a></span>上海清淼实业有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=729860&rand=01" target="_blank">瞿溪路301弄-1</a></span>上海清淼实业有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=729861&rand=01" target="_blank">瞿溪路301弄-2</a></span>上海清淼实业有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=729866&rand=01" target="_blank">丽园路68弄（西藏南路口）</a></span>上海清淼实业有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=729867&rand=01" target="_blank">斜土东路265弄1号</a></span>上海清淼实业有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=734366&rand=01" target="_blank">瞿溪路468弄</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=734365&rand=01" target="_blank">老重庆中路64弄15号后门</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=734367&rand=01" target="_blank">斜土东路333弄</a></span>上海怡泉净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=734368&rand=01" target="_blank">黄浦区四川中路650号</a></span>上海怡泉净水设备科技有限公司</dt>
+            
+            	<dd><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=734528&rand=01" target="_blank">东台路167弄1-4号</a></span>上海甘霖净水设备科技有限公司</dd>
+            
+            	<dt><span style="width: 400px"><a href="/staticPage/viewDetail.html?id=747024&rand=01" target="_blank">丽园路333弄</a></span>上海港惠净水科技有限公司</dt>
+            
+            </dl>
+            <div style="text-align:center;">
+            
+               	 	<input name="" type="button" class="jydw_button" value="回到顶部" onclick="goTop();return false;" />
+            
+            	
+            </div>
+        </div>
+    </div>
+<!--页尾 begin-->
+<table width="1003" border="0" align="center" cellpadding="0" cellspacing="0">
+      
+
+
+
+</table>
+ 
+<!--页尾 end--> 
+</body>
+  <script type="text/javascript">
+  	function goIndex(){
+		window.location.href = '/staticPage/index.html' ;
+  	}
+  	
+  	function displayMore(obj){
+  		window.location.href = '/staticPage/search.html?code='+310101+'&hidden=YES' ;
+  	}
+  	
+	function goTop(acceleration, time) {
+		acceleration = acceleration || 0.1;
+		time = time || 16;
+	 
+		var x1 = 0;
+		var y1 = 0;
+		var x2 = 0;
+		var y2 = 0;
+		var x3 = 0;
+		var y3 = 0;
+	 
+		if (document.documentElement) {
+			x1 = document.documentElement.scrollLeft || 0;
+			y1 = document.documentElement.scrollTop || 0;
+		}
+		if (document.body) {
+			x2 = document.body.scrollLeft || 0;
+			y2 = document.body.scrollTop || 0;
+		}
+		var x3 = window.scrollX || 0;
+		var y3 = window.scrollY || 0;
+	 
+		var x = Math.max(x1, Math.max(x2, x3));
+		var y = Math.max(y1, Math.max(y2, y3));
+
+		var speed = 1 + acceleration;
+		window.scrollTo(Math.floor(x / speed), Math.floor(y / speed));
+
+		if(x > 0 || y > 0) {
+			var invokeFunction = "goTop(" + acceleration + ", " + time + ")";
+			window.setTimeout(invokeFunction, time);
+		}
+	} 
+  </script>
+</html>

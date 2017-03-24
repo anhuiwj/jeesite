@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上海市现制现售水自动售水机信息公开</title>
+<link href="css/index1.css" rel="stylesheet" type="text/css" />
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<link href="css/reset.css" rel="stylesheet" type="text/css" />
+<link href="autoWaterStyle/css/style.css" rel="stylesheet" type="text/css" />
+<script src="autoWaterStyle/js/jquery.js" type="text/javascript"></script>
+<script src="autoWaterStyle/js/select.js" type="text/javascript"></script>
+<script type="text/javascript" src="autoWaterStyle/js/litebox.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29595807-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); 
+    ga.type = 'text/javascript'; 
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+<div class="main">
+	<!-- 页面头加搜索 begin-->
+	<div class="head">
+    	<p></p>
+    	<div class="search">
+    		<form action="indexSearch.html" method="get">
+        	<p id="today"></p>
+       		<span class="search_left">快速查询</span> <em>区县</em>
+       		<select id="code" name="code" class="password">
+       			<option value="">全部</option>
+              
+              				<option value="310101">黄浦区</option>
+              
+              				<option value="310104">徐汇区</option>
+              
+              				<option value="310105">长宁区</option>
+              
+              				<option value="310106">静安区</option>
+              
+              				<option value="310107">普陀区</option>
+              
+              				<option value="310108">闸北区</option>
+              
+              				<option value="310109">虹口区</option>
+              
+              				<option value="310110">杨浦区</option>
+              
+              				<option value="310112">闵行区</option>
+              
+              				<option value="310113">宝山区</option>
+              
+              				<option value="310114">嘉定区</option>
+              
+              				<option value="310115">浦东新区</option>
+              
+              				<option value="310116">金山区</option>
+              
+              				<option value="310117">松江区</option>
+              
+              				<option value="310118">青浦区</option>
+              
+              				<option value="310120">奉贤区</option>
+              
+              				<option value="310230">崇明县</option>
+              
+            </select>
+        	<em>地址</em><input id="address" name="address" class="search_input" value="" type="text" /><input id="searchBut" name="searchBut" class="search_button" type="submit" value="查询" />
+            </form>
+       	</div>
+    </div>
+<script type="text/javascript">
+	function search(){
+		var code = document.getElementById('sear').value ; 
+		var address = document.getElementById('address').value ; 
+		alert(code + address) ; 
+		window.location.href = "indexSearch.html?code="+code+"&address="+address ; 
+	}
+	
+	function today(){
+	    var d = new Date();
+	    var month = (d.getMonth() + 1)+'' ;
+	    var ri = d.getDate() + '' ;
+	    if(ri.length==1){
+	    	ri = "0"+ri ;
+	    } 
+	    if(month.length==1){
+	    	month = "0"+month ;
+	    }
+	    document.getElementById("today").innerHTML = "信息截止日期："+ d.getFullYear() + "年" + month + "月" + ri +"日";
+	}
+	window.onload = today ; 
+</script>
+	<!-- 页面头加搜索 end-->
+	
+    <div class="mbx">您的当前位置：<a href="javascript:goIndex();">首页</a>  » <a href="javascript:window.history.back();"   >经营单位</a>  » 斜土路85弄(出口)</div>
+    <div class="ssdz">
+    	<div class="ssdz_text">
+        	<b>斜土路85弄(出口)</b><br/>
+            <span>区县：</span>黄浦区<br/>
+            <span>经营单位名称：</span>瀚塘活净水技术(上海)有限公司<br/>
+            <span>自动售水机名称：</span>瀚颖牌0.06-140型商业用水处理系统<br/>
+            <span>维护报修电话：</span>13917895848<br/>
+            <span>现制现售水经营单位卫生许可证号：</span>沪现制售水字(2006)第0002号<br/>
+        </div>
+        <div>
+        <img src="./images/photo.jpg"  style="width: 188px; max-height: 240px; "/>      
+		<img src="./images/photo.jpg"  style="width: 188px; max-height: 240px; "/>
+        </div>			
+			
+      <div class="ssdz_button">
+       
+      	<input name="" type="button" class="lv_button"  onclick="javascript:popup('1')"  value="水质抽检" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input name="" type="button" class="orange_button" onclick="javascript:popup('2')" value="监督巡查" />&nbsp;&nbsp;&nbsp;&nbsp;
+      	<input name="" type="button" class="blue_button" onclick="toWjs()"  value="水质投诉" />
+
+      </div>
+      <div id="jdxcTable"  style="display: none;position:absolute;top:250;left:100;z-index=10;"  class="tck" >
+    <table border="0" cellspacing="0" cellpadding="0">
+      <thead>
+      <tr>
+        <th width="20%" id="time">监督巡查时间</th>
+        <th width="20%" id="rs">监督巡查结果</th>
+        <th width="20%" id="">处置意见</th>
+        <th width="20%" id="">复查时间</th>
+        <th width="20%" id="">复查结果</th>
+      </tr>
+      </thead>
+    </table>
+    <div style="height: 241px; width: 100% ; overflow-y: auto;">
+    <table border="0" cellspacing="0" cellpadding="0" style="margin-top: 0px;" id="jd">
+ 	
+		<tr>
+			<td width="20%">
+				2015-03-31
+			</td>
+			<td width="20%" id="">合格</td>
+			<td width="20%" id=""></td>
+			<td width="20%" id="">
+				
+			</td>
+			<td width="20%" id=""></td>
+		</tr>
+	
+		<tr>
+			<td width="20%">
+				2015-01-30
+			</td>
+			<td width="20%" id="">设备放置不符合要求,设备外观不符合要求</td>
+			<td width="20%" id=""></td>
+			<td width="20%" id="">
+				2015-02-26
+			</td>
+			<td width="20%" id="">合格</td>
+		</tr>
+		
+	</table>
+	</div>
+    <div class="close" onclick="javascript:popup('2')">关闭</div>
+</div>
+
+<div id="szcjTable" style="display: none; position:absolute;top:250;left:100;z-index=10;" class="tck">
+    <table border="0" cellspacing="0" cellpadding="0">
+      <thead>
+      <tr>
+        <th width="20%" id="time">水质抽检时间</th>
+        <th width="20%" id="rs">水质抽检结果</th>
+        <th width="20%" id="">处置意见</th>
+      </tr>
+      </thead>
+    </table>
+    <div style="height: 241px; width: 100% ; overflow-y: auto;">
+    <table border="0" cellspacing="0" cellpadding="0" style="margin-top: 0px;" id="jd">
+	
+	      <tr>
+			<td width="20%">
+				2014-06-11
+			</td>
+			<td width="20%" id="jieguo">合格</td>
+			<td width="20%" id="" ></td>
+	      </tr>
+	
+	      <tr>
+			<td width="20%">
+				2013-06-05
+			</td>
+			<td width="20%" id="jieguo">合格</td>
+			<td width="20%" id="" ></td>
+	      </tr>
+	      
+	</table>
+	</div>
+    <div class="close" onclick="javascript:popup('1')">关闭</div>
+</div>
+      
+      
+    </div>
+    
+<div class="tck" id="dialog-box"  >
+</div>
+
+
+<!--页尾 begin-->
+<table width="1003" border="0" align="center" cellpadding="0" cellspacing="0">
+      
+
+</table>
+<!--页尾 end--> 
+</body>
+  <script type="text/javascript">
+		function popup(id){
+			if(id=='1'){
+				var tb=document.getElementById("szcjTable");
+				if(tb.style.display=='none') tb.style.display='block';
+				else tb.style.display='none';
+			}else if(id=='2'){
+				var tb=document.getElementById("jdxcTable");
+				if(tb.style.display=='none') tb.style.display='block';
+				else tb.style.display='none';
+			}
+		}
+		
+  	function goIndex(){
+		window.location.href = 'index.html' ;
+  	}
+  	function goQx(){
+  		window.location.href = 'search.html?code=310109' ;
+  		
+  		window.history.back()
+  	}
+  	function goUnit(){
+  		window.location.href = 'searchCompany.html?unitId=262421' ;
+  	}
+  	function toWjs(){
+  		window.open('http://hs.sh.cn/newwjs/category/tsjb.html?from=1');
+  		//window.location.href = 'http://hs.sh.cn/wjs/category/tsjb.html?from=1' ;
+  	}
+  </script>
+</html>
+
+
+
+ 
+
+
+ 

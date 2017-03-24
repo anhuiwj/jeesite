@@ -98,6 +98,11 @@
 		<!-- 配置监控统计拦截的filters -->
 	    <property name="filters" value="stat" /> 
 	</bean>
+
+	<!-- JDBC辅助类 -->
+	<bean id="jdbcDao" class="com.thinkgem.jeesite.modules.sys.utils.JdbcUtils">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 	
 	<!-- 数据源配置, 使用应用服务器的数据库连接池 
 	<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/jeesite" />-->

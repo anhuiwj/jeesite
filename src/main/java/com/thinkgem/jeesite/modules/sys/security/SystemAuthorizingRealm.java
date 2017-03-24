@@ -95,22 +95,50 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	 * 获取权限授权信息，如果缓存中存在，则直接从缓存中获取，否则就重新获取， 登录成功后调用
 	 */
 	protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
-		if (principals == null) {
-            return null;
-        }
-		
-        AuthorizationInfo info = null;
-
-        info = (AuthorizationInfo)UserUtils.getCache(UserUtils.CACHE_AUTH_INFO);
-
-        if (info == null) {
-            info = doGetAuthorizationInfo(principals);
-            if (info != null) {
-            	UserUtils.putCache(UserUtils.CACHE_AUTH_INFO, info);
-            }
-        }
-
-        return info;
+		Principal principal = (Principal) getAvailablePrincipal(principals);
+		// 获取当前已登录的用户
+		if (!Global.TRUE.equals(Global.getConfig("user.multiAccountLogin"))){
+			Collection<Session> sessions = getSystemService().getSessionDao().getActiveSessions(true, principal, UserUtils.getSession());
+			if (sessions.size() > 0){
+				// 如果是登录进来的，则踢出已在线用户
+				if (UserUtils.getSubject().isAuthenticated()){
+					for (Session session : sessions){
+						getSystemService().getSessionDao().delete(session);
+					}
+				}
+				// 记住我进来的，并且当前用户已登录，则退出当前用户提示信息。
+				else{
+					UserUtils.getSubject().logout();
+					throw new AuthenticationException("msg:账号已在其它地方登录，请重新登录。");
+				}
+			}
+		}
+		User user = getSystemService().getUserByLoginName(principal.getLoginName());
+		if (user != null) {
+			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+			List<Menu> list = UserUtils.getMenuList();
+			for (Menu menu : list){
+				if (StringUtils.isNotBlank(menu.getPermission())){
+					// 添加基于Permission的权限信息
+					for (String permission : StringUtils.split(menu.getPermission(),",")){
+						info.addStringPermission(permission);
+					}
+				}
+			}
+			// 添加用户权限
+			info.addStringPermission("user");
+			// 添加用户角色信息
+			for (Role role : user.getRoleList()){
+				info.addRole(role.getEnname());
+			}
+			// 更新登录IP和时间
+			getSystemService().updateUserLoginInfo(user);
+			// 记录登录日志
+			LogUtils.saveLog(Servlets.getRequest(), "系统登录");
+			return info;
+		} else {
+			return null;
+		}
 	}
 
 	/**

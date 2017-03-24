@@ -1,0 +1,233 @@
+
+
+.filing_top_info{
+    margin-top: 15px;
+}
+.filing_top_info table{
+    width: 100%;
+}
+.filing_top_info table td{
+    padding: 5px 5px 0;
+}
+.filing_box1{
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f5f5f5;
+}
+.filing_small_tip{
+    height: 28px;
+    line-height: 28px;
+}
+.filing_small_tip span{
+    color:#fff;
+    font-size: 14px;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+    padding: 3px 10px;
+}
+.filing_small_tip_table{
+    width: 100%;
+}
+.filing_small_tip_table td.td_text01,.filing_small_tip_table td.td_text02{
+    line-height: 22px;
+    padding: 6px;
+}
+.filing_small_tip_table td.td_text01{
+    text-align: center;
+ }
+.filing_small_tip_table td textarea{
+    width: 99%;
+}
+
+.filing_table{
+    width: 100%;
+}
+.filing_table th,.filing_table td{
+    border: 1px solid #dedede;
+    line-height: 22px;
+    padding:5px 10px;
+}
+.filing_table th{
+    color: #000000;
+}
+.filing_table td{
+    color: #929292;
+}
+.filing_table tr.even td{
+    background: #f7f7f7;
+}
+
+
+/*既往史*/
+.history_text{
+    padding: 5px 10px;
+    border: 1px solid #dcdcdc;
+    color: #929292;
+    line-height: 24px;
+    min-height: 60px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.history_text_p{
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: bold;
+    color: #333;
+}
+.history_text_ul{
+    overflow: hidden;
+    zoom: 1;
+    padding-bottom: 15px;
+}
+.history_text_ul li{
+    float: left;
+    width: 33%;
+    color: #333;
+}
+.history_text_ul li div{
+    padding-left: 20px;
+    line-height: 24px;
+}
+
+/*统计*/
+.filing_statistical{
+    padding: 10px;
+    background: #f7f7f7;
+    margin: 15px 0;
+}
+.filing_statistical table{
+    width: 100%;
+}
+.filing_statistical table td{
+    color: #000;
+    padding:8px 10px;
+}
+.filing_statistical table td.td_text{
+    text-align: right;
+}
+.filing_statistical .filing_s_chart{
+    width: 100%;
+    height: 16px;
+    background: #dcdcdc;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+}
+.filing_statistical .filing_s_chart span{
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+}
+.filing_statistical_bottom label{
+   line-height: 30px;
+}
+.filing_box1 .prenatal_title .f_btn{
+    position: absolute;
+    right: 0;
+    top:3px;
+}
+
+
+/*修改信息弹出框*/
+.filing_alert_h3{
+    color: #f57b81;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 30px;
+    padding:5px 15px;
+    border-bottom: 2px solid #f6f6f6;
+}
+.filing_alert_h4{
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 30px;
+    padding:5px;
+    color: #333333;
+}
+.filing_alert_table{
+    width: 100%;
+}
+.filing_alert_content{
+    padding: 0 15px 20px;
+    border-bottom: 2px solid #f6f6f6;
+}
+.filing_alert_table td{
+    height: 24px;
+    padding: 8px 6px;
+}
+
+.filing_alert_table td.td_text01{
+    color: #333333;
+    font-size: 14px;
+    text-align: right;
+}
+
+/*预约查询*/
+
+.appoint_search{
+    color: #999999;
+    height: 30px;
+    margin-top: 10px;
+}
+.search_filing_info{
+    height: 37px;
+    line-height: 37px;
+    background: #feb6ba;
+    color: #fff;
+    padding: 0 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.search_filing_info span{
+    font-size: 18px;
+}
+
+.appoint_filing{
+    margin: 20px auto;
+    border: 2px solid #ffdee0;
+}
+.appoint_filing_con{
+    padding: 15px;
+}
+.appoint_filing_con .h1_tit{
+    height: 40px;
+    line-height: 40px;
+    color: #333333;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.appoint_filing_con  table.table_box{
+    width: 100%;
+}
+.appoint_filing_con table.table_box2{
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.appoint_filing_con  table.table_box td,.appoint_filing_con table.table_box2 td{
+    line-height: 22px;
+    padding: 6px;
+}
+.appoint_filing_con table.table_box td.td_text,.appoint_filing_con table.table_box2 td.td_text{
+    color: #999999;
+    text-align: right;
+}
+
+/*孕妇建档*/
+.filing_add_table{
+    width: 100%;
+}
+.filing_add_table th{
+    text-align: right;
+    color: #333;
+}
+.filing_add_table th,.filing_add_table td{
+    padding: 6px 3px;
+}

@@ -1,33 +1,27 @@
 /**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.mapper.JsonMapper;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.sys.entity.Role;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.OfficeService;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
-import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.service.OfficeService;
-import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
-import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 机构Controller
@@ -53,124 +47,159 @@ public class OfficeController extends BaseController {
 	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = {""})
 	public String index(Office office, Model model) {
-//        model.addAttribute("list", officeService.findAll());
 		return "modules/sys/officeIndex";
 	}
 
-	@RequiresPermissions("sys:office:view")
-	@RequestMapping(value = {"list"})
-	public String list(Office office, Model model) {
-        model.addAttribute("list", officeService.findList(office));
-		return "modules/sys/officeList";
-	}
+	
 	
 	@RequiresPermissions("sys:office:view")
-	@RequestMapping(value = "form")
-	public String form(Office office, Model model) {
-		User user = UserUtils.getUser();
-		if (office.getParent()==null || office.getParent().getId()==null){
-			office.setParent(user.getOffice());
+	@RequestMapping(value = "load/{id}")
+	@ResponseBody
+	public Office load(@PathVariable String id) {
+		Office office = new Office();
+		office.setId(id);
+		Office o = officeService.get(office);
+		if("0".equals(o.getParentId())){
+			o.setParentName("无");
+		} else {
+			office.setId(o.getParentId());
+			Office parent = officeService.get(office);
+			o.setParentName(parent.getName());
 		}
-		office.setParent(officeService.get(office.getParent().getId()));
-		if (office.getArea()==null){
-			office.setArea(user.getOffice().getArea());
-		}
-		// 自动获取排序号
-		if (StringUtils.isBlank(office.getId())&&office.getParent()!=null){
-			int size = 0;
-			List<Office> list = officeService.findAll();
-			for (int i=0; i<list.size(); i++){
-				Office e = list.get(i);
-				if (e.getParent()!=null && e.getParent().getId()!=null
-						&& e.getParent().getId().equals(office.getParent().getId())){
-					size++;
-				}
-			}
-			office.setCode(office.getParent().getCode() + StringUtils.leftPad(String.valueOf(size > 0 ? size+1 : 1), 3, "0"));
-		}
-		model.addAttribute("office", office);
-		return "modules/sys/officeForm";
+		
+		
+		
+		return o;
 	}
 	
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping(value = "save")
-	public String save(Office office, Model model, RedirectAttributes redirectAttributes) {
-		if(Global.isDemoMode()){
-			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/office/";
+	@ResponseBody
+	public String save(Office office) {
+		Office anoOf = officeService.getOfficeByCode(office.getCode());
+		int resultFlag = 0;
+		if(anoOf != null && !anoOf.getId().equals(office.getId())) {
+			resultFlag = 1;
 		}
-		if (!beanValidator(model, office)){
-			return form(office, model);
-		}
-		officeService.save(office);
-		
-		if(office.getChildDeptList()!=null){
-			Office childOffice = null;
-			for(String id : office.getChildDeptList()){
-				childOffice = new Office();
-				childOffice.setName(DictUtils.getDictLabel(id, "sys_office_common", "未知"));
-				childOffice.setParent(office);
-				childOffice.setArea(office.getArea());
-				childOffice.setType("2");
-				childOffice.setGrade(String.valueOf(Integer.valueOf(office.getGrade())+1));
-				childOffice.setUseable(Global.YES);
-				officeService.save(childOffice);
-			}
+		if(resultFlag == 0) {
+			officeService.save(office);
 		}
 		
-		addMessage(redirectAttributes, "保存机构'" + office.getName() + "'成功");
-		String id = "0".equals(office.getParentId()) ? "" : office.getParentId();
-		return "redirect:" + adminPath + "/sys/office/list?id="+id+"&parentIds="+office.getParentIds();
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		result.put("result", resultFlag);
+		return JsonMapper.getInstance().toJson(result);
 	}
 	
 	@RequiresPermissions("sys:office:edit")
-	@RequestMapping(value = "delete")
-	public String delete(Office office, RedirectAttributes redirectAttributes) {
-		if(Global.isDemoMode()){
-			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/office/list";
-		}
-//		if (Office.isRoot(id)){
-//			addMessage(redirectAttributes, "删除机构失败, 不允许删除顶级机构或编号空");
-//		}else{
-			officeService.delete(office);
-			addMessage(redirectAttributes, "删除机构成功");
-//		}
-		return "redirect:" + adminPath + "/sys/office/list?id="+office.getParentId()+"&parentIds="+office.getParentIds();
+	@RequestMapping(value = "remove/{id}")
+	@ResponseBody
+	public String remove(@PathVariable String id) {
+		Office o = new Office();
+		o.setId(id);
+		officeService.delete(o);
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		result.put("result", 0);
+		return JsonMapper.getInstance().toJson(result);
 	}
 
 	/**
-	 * 获取机构JSON数据。
-	 * @param extId 排除的ID
-	 * @param type	类型（1：公司；2：部门/小组/其它：3：用户）
-	 * @param grade 显示级别
-	 * @param response
+	 * 树形结构展示机构
+	 * @param id 父机构id
 	 * @return
 	 */
 	@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public List<Map<String, Object>> treeData(@RequestParam(required=false) String extId, @RequestParam(required=false) String type,
-			@RequestParam(required=false) Long grade, @RequestParam(required=false) Boolean isAll, HttpServletResponse response) {
-		List<Map<String, Object>> mapList = Lists.newArrayList();
-		List<Office> list = officeService.findList(isAll);
-		for (int i=0; i<list.size(); i++){
-			Office e = list.get(i);
-			if ((StringUtils.isBlank(extId) || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1))
-					&& (type == null || (type != null && (type.equals("1") ? type.equals(e.getType()) : true)))
-					&& (grade == null || (grade != null && Integer.parseInt(e.getGrade()) <= grade.intValue()))
-					&& Global.YES.equals(e.getUseable())){
-				Map<String, Object> map = Maps.newHashMap();
-				map.put("id", e.getId());
-				map.put("pId", e.getParentId());
-				map.put("pIds", e.getParentIds());
-				map.put("name", e.getName());
-				if (type != null && "3".equals(type)){
-					map.put("isParent", true);
+	public List<Office> treeData(@RequestParam(required=false) String id) {
+		List<Office> list = null;
+		if(StringUtils.isNotBlank(id)) {
+			list = officeService.findChilds(id);
+		} else {
+			User user = UserUtils.getUser();
+			List<Role> roleList = user.getRoleList();
+			// 0 普通用户 1.系统管理员 2.区县管理员 3.机构管理员
+			String manager = "0";
+			if(roleList != null && roleList.size()>0) {
+				for (Role role : roleList) {
+					if(role != null && StringUtils.isNotBlank(role.getEnname())){
+						if(role.getEnname().equals("dept")){
+							manager = "1";
+						}else if(role.getEnname().equals("AREA_MANAGE")){
+							manager = "2";
+						}else if(role.getEnname().equals("ORG_MANAGE")){
+							manager = "3";
+						}
+						break;
+					}
 				}
-				mapList.add(map);
+			}
+
+			if(user.isAdmin()){
+				//超级管理员
+				list = officeService.findTopOffice();
+			}else{
+				if(manager.equals("1")){
+					//系统管理员
+                    list = officeService.findTopOffice();
+				}else if(manager.equals("2")){
+					//区县管理员
+					Office office = officeService.getOfficeByCode(user.getCompany().getArea().getCode());
+					list = new ArrayList<Office>();
+                    list.add(office);
+				}else if(manager.equals("3")){
+					//机构管理员
+					Office office = officeService.getOfficeByCode(user.getCompany().getCode());
+                    list = new ArrayList<Office>();
+                    list.add(office);
+				}else{
+					//普通用户
+					list = new ArrayList<Office>();
+				}
 			}
 		}
-		return mapList;
+		
+		return list;
+	}
+	
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "findsczx")
+	public List<Office> treeData() {
+		List<Office> list =officeService.findAll();
+		List<Office> lists =Lists.newArrayList();
+		for(Office o:list){
+			if("0".equals(o.getCszx())){
+			lists.add(o);	
+			}
+			}
+		return lists;
+	}
+	
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "findzdzx")
+	public List<Office> tree() {
+		List<Office> list =officeService.findAll();
+		List<Office> lists =Lists.newArrayList();
+		for(Office o:list){
+			if("0".equals(o.getZdzx())){
+			lists.add(o);	
+			}
+			}
+		return lists;
+	}
+	
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "findjg")
+	public List<Office> findjg(@RequestParam("name")String name) {
+		List<Office> list =officeService.findJg(name);
+		List<Office> lists =Lists.newArrayList();
+		for(Office o:list){
+			if("0".equals(o.getZdzx())){
+			lists.add(o);	
+			}
+			}
+		return list;
 	}
 }

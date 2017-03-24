@@ -1,16 +1,15 @@
 /**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.entity;
-
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 /**
  * 角色Entity
@@ -33,9 +32,13 @@ public class Role extends DataEntity<Role> {
 	
 	private User user;		// 根据用户ID查询角色列表
 
-//	private List<User> userList = Lists.newArrayList(); // 拥有用户列表
 	private List<Menu> menuList = Lists.newArrayList(); // 拥有菜单列表
-	private List<Office> officeList = Lists.newArrayList(); // 按明细设置数据范围
+	
+	private List<User> userList = Lists.newArrayList(); // 拥有用户列表
+	
+	private String resTreeIds;//受控资源id集，非持久
+	private String orgCode;//机构代码，非持久
+	
 
 	// 数据范围（1：所有数据；2：所在公司及以下数据；3：所在公司数据；4：所在部门及以下数据；5：所在部门数据；8：仅本人数据；9：按明细设置）
 	public static final String DATA_SCOPE_ALL = "1";
@@ -49,7 +52,7 @@ public class Role extends DataEntity<Role> {
 	public Role() {
 		super();
 		this.dataScope = DATA_SCOPE_SELF;
-		this.useable=Global.YES;
+		this.useable= Global.YES;
 	}
 	
 	public Role(String id){
@@ -136,25 +139,7 @@ public class Role extends DataEntity<Role> {
 		this.oldEnname = oldEnname;
 	}
 
-//	public List<User> getUserList() {
-//		return userList;
-//	}
-//
-//	public void setUserList(List<User> userList) {
-//		this.userList = userList;
-//	}
-//	
-//	public List<String> getUserIdList() {
-//		List<String> nameIdList = Lists.newArrayList();
-//		for (User user : userList) {
-//			nameIdList.add(user.getId());
-//		}
-//		return nameIdList;
-//	}
-//
-//	public String getUserIds() {
-//		return StringUtils.join(getUserIdList(), ",");
-//	}
+
 
 	public List<Menu> getMenuList() {
 		return menuList;
@@ -162,6 +147,16 @@ public class Role extends DataEntity<Role> {
 
 	public void setMenuList(List<Menu> menuList) {
 		this.menuList = menuList;
+	}
+	
+	
+
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
 	}
 
 	public List<String> getMenuIdList() {
@@ -193,42 +188,9 @@ public class Role extends DataEntity<Role> {
 		}
 	}
 	
-	public List<Office> getOfficeList() {
-		return officeList;
-	}
-
-	public void setOfficeList(List<Office> officeList) {
-		this.officeList = officeList;
-	}
-
-	public List<String> getOfficeIdList() {
-		List<String> officeIdList = Lists.newArrayList();
-		for (Office office : officeList) {
-			officeIdList.add(office.getId());
-		}
-		return officeIdList;
-	}
-
-	public void setOfficeIdList(List<String> officeIdList) {
-		officeList = Lists.newArrayList();
-		for (String officeId : officeIdList) {
-			Office office = new Office();
-			office.setId(officeId);
-			officeList.add(office);
-		}
-	}
-
-	public String getOfficeIds() {
-		return StringUtils.join(getOfficeIdList(), ",");
-	}
 	
-	public void setOfficeIds(String officeIds) {
-		officeList = Lists.newArrayList();
-		if (officeIds != null){
-			String[] ids = StringUtils.split(officeIds, ",");
-			setOfficeIdList(Lists.newArrayList(ids));
-		}
-	}
+
+	
 	
 	/**
 	 * 获取权限字符串列表
@@ -251,20 +213,36 @@ public class Role extends DataEntity<Role> {
 		this.user = user;
 	}
 
-//	public boolean isAdmin(){
-//		return isAdmin(this.id);
-//	}
-//	
-//	public static boolean isAdmin(String id){
-//		return id != null && "1".equals(id);
-//	}
+	public String getResTreeIds() {
+		return resTreeIds;
+	}
+
+	public void setResTreeIds(String resTreeIds) {
+		this.resTreeIds = resTreeIds;
+	}
+
+	public String getOrgCode() {
+		return orgCode;
+	}
+
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
+	}
 	
-//	@Transient
-//	public String getMenuNames() {
-//		List<String> menuNameList = Lists.newArrayList();
-//		for (Menu menu : menuList) {
-//			menuNameList.add(menu.getName());
-//		}
-//		return StringUtils.join(menuNameList, ",");
-//	}
+	public String getCompanyName() {
+		if(office !=  null) {
+			return office.getName();
+		}
+		return "";
+	}
+	
+	public String getCompanyCode() {
+		if(office !=  null) {
+			return office.getCode();
+		}
+		return "";
+	}
+ 	
+
+
 }

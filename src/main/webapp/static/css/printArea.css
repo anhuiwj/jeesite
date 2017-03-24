@@ -1,0 +1,34 @@
+.table_cs{
+ 	width: 100%;
+ 	height:auto;
+}
+
+._text{
+	text-align:center;
+	font-weight:bold; 
+	border-bottom: 1px solid #ccc;
+}
+
+.table_cs input{
+	border:0;
+	background:transparent;
+	font-weight:bold;
+	text-align:center;
+}
+
+.table_cs th {
+	text-align: center;
+	border: solid #AAAAAA 1px;
+	background-color: #DDDDDD;
+	font-weight: bold;
+	height: 25px;
+}
+
+/* .table_cs textarea{
+	border:0;
+	background:transparent;
+	font-weight:bold;
+} */
+
+
+

@@ -1,0 +1,51 @@
+@charset "utf-8";
+body{background:url(../images/bg.jpg);}
+
+.wrapper{background:url(../images/bg.png) repeat-x;}
+.n_layer{background:url(../images/banner.png) center top no-repeat;}
+.main{width:999px;min-height:1100px;margin:0 auto;padding:359px 0 20px 0;}
+
+.left_tab{width:734px;background:url(../images/left_top_bg.png) top no-repeat;float:left;}
+.left_tab ul{width:684px;height:47px;margin:28px auto 0;background:url(../images/title_bg.png) bottom repeat-x;}
+.left_tab ul li{float:left;padding-right:2px;}
+.left_tab ul li a{width:142px;height:43px;font:20px/43px Microsoft Yahei;color:#006faa;text-align:center;background:url(../images/title_k.png) no-repeat;display:block;}
+.left_tab ul li a:hover{background:url(../images/title_k_cur.png) no-repeat;color:#fff;}
+.left_tab ul li.current a{background:url(../images/title_k_cur.png) no-repeat;color:#fff;}
+.tab_box{width:710px;margin:0 auto;}
+.tab1{width:650px;background:#fff url(../images/text_bg.jpg) repeat-x;padding:0 30px;margin:0 auto;}
+.tab1 p{font:14px/30px simsun;color:#555;padding-top:16px;}
+.tab1 p b{display:block;}
+
+.ckgd{width:100%;height:64px;margin-top:20px;background:url(../images/fgx.png) top no-repeat;text-align:center;display:block;}
+.ckgd a{width:108px;height:26px;font:12px/26px simsun;color:#609dcb;background:url(../images/blue_bt.png) no-repeat;display:inline-block;margin:24px auto 0;}
+.ckgd a i{padding-right:10px;background:url(../images/down_icon.gif) right no-repeat;}
+.ckgd a b{padding-right:10px;font-weight:400;background:url(../images/up_icon.gif) right 1px no-repeat;}
+
+.left_tab .bottom{width:100%;height:7px;background:url(../images/left_bt_bg.png) no-repeat;display:block;}
+
+.right_pic{width:274px;height:505px;margin-left:-9px;background:url(../images/right_top_bg.png) top no-repeat;float:right;}
+.right_pic ul{width:226px;height:100%;margin:28px auto 0;padding:0 12px;background:#fff url(../images/text_bg2.jpg) repeat-x;}
+.right_pic ul li{border:1px solid #cdcdcd;margin-bottom:11px;}
+.right_pic ul li span{height:28px;font:12px/28px simsun;text-align:center;margin:0 1px;background:url(../images/right_text_bg.jpg) repeat-x;display:block;}
+.right_pic ul li a{color:#555;}
+.right_pic .bottom{width:100%;height:5px;background:url(../images/right_bt_bg.png) no-repeat;display:block;}
+
+/* lighthouse */
+.w1000{width:1000px;margin:0 auto;}
+.header{height:251px;background:url(../images/headerbg.jpg) no-repeat 0 0;position:relative;}
+.logo{position:absolute;width:148px;left:10px;top:0;height:144px;background:url(../images/logo.png) no-repeat left top;}
+.headText{display:inline-block;position:absolute;left:198px;top:87px;width:700px;height:50px;background:url(../images/text.png) left top no-repeat;}
+
+.lightTab{width:100%;padding-top:12px;}
+.lightTab table{font-size:12px;border-collapse:collapse;}
+.lightTab table th{font-size:12px;text-align:center;height:37px;font:14px/37px 'Microsoft Yahei';color:#333;background:url(../images/th_bg.jpg) repeat-x left top;}
+.lightTab table th div{background:url(../images/th_line02.jpg) right 1px no-repeat;}
+.lightTab table th.thFisrt div p{background:url(../images/th_line01.jpg) left 1px no-repeat;}
+.lightTab table th.thLast div{background:url(../images/th_line03.jpg) right 1px no-repeat;}
+.lightTab table td{font:12px/35px 'Simsun';color:#333;text-align:center;}
+.lightTab table td a{font:'Simsun';color:#777;text-align:center;}
+.lightTab table td a:hover{font:'Simsun';color:#ff6633;text-align:center;}
+.view_more{text-align:center;padding:20px 0;}
+.view_more a{width:108px;height:26px;font:12px/26px simsun;color:#609dcb;background:url(../images/blue_bt.png) no-repeat;display:inline-block;margin:0 auto;}
+.view_more a i{padding-right:10px;background:url(../images/down_icon.gif) right no-repeat;}
+.view_more a b{padding-right:10px;font-weight:400;background:url(../images/up_icon.gif) right 1px no-repeat;}

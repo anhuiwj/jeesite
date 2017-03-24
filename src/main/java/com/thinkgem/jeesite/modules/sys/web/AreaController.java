@@ -1,31 +1,27 @@
 /**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.mapper.JsonMapper;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.entity.Area;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.sys.service.AreaService;
+import com.thinkgem.jeesite.modules.sys.service.OfficeService;
+import com.thinkgem.jeesite.modules.sys.utils.ComboNode;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.modules.sys.entity.Area;
-import com.thinkgem.jeesite.modules.sys.service.AreaService;
-import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * 区域Controller
@@ -38,6 +34,8 @@ public class AreaController extends BaseController {
 
 	@Autowired
 	private AreaService areaService;
+	@Autowired
+	private OfficeService officeService;
 	
 	@ModelAttribute("area")
 	public Area get(@RequestParam(required=false) String id) {
@@ -51,81 +49,255 @@ public class AreaController extends BaseController {
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Area area, Model model) {
-		model.addAttribute("list", areaService.findAll());
 		return "modules/sys/areaList";
 	}
 
 	@RequiresPermissions("sys:area:view")
-	@RequestMapping(value = "form")
-	public String form(Area area, Model model) {
-		if (area.getParent()==null||area.getParent().getId()==null){
-			area.setParent(UserUtils.getUser().getOffice().getArea());
+	@RequestMapping(value = "load/{id}")
+	@ResponseBody
+	public Area load(@PathVariable String id) {
+		Area area = new Area();
+		area.setId(id);
+		Area a = areaService.get(area);
+		if("1".equals(a.getType())) {
+			a.setTypeName("国家");
 		}
-		area.setParent(areaService.get(area.getParent().getId()));
-//		// 自动获取排序号
-//		if (StringUtils.isBlank(area.getId())){
-//			int size = 0;
-//			List<Area> list = areaService.findAll();
-//			for (int i=0; i<list.size(); i++){
-//				Area e = list.get(i);
-//				if (e.getParent()!=null && e.getParent().getId()!=null
-//						&& e.getParent().getId().equals(area.getParent().getId())){
-//					size++;
-//				}
-//			}
-//			area.setCode(area.getParent().getCode() + StringUtils.leftPad(String.valueOf(size > 0 ? size : 1), 4, "0"));
-//		}
-		model.addAttribute("area", area);
-		return "modules/sys/areaForm";
+		if("2".equals(a.getType())) {
+			a.setTypeName("省份、直辖市");
+		}
+		if("3".equals(a.getType())) {
+			a.setTypeName("地市");
+		}
+		if("4".equals(a.getType())) {
+			a.setTypeName("区县");
+		}
+		if("5".equals(a.getType())) {
+			a.setTypeName("街道（镇）");
+		}
+		if("6".equals(a.getType())) {
+			a.setTypeName("居委（村）");
+		}
+		
+		if("0".equals(a.getParentId())){
+			a.setParentName("无");
+		} else {
+			area.setId(a.getParentId());
+			Area parent = areaService.get(area);
+			a.setParentName(parent.getName());
+		}
+		return a;
 	}
 	
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "save")
-	public String save(Area area, Model model, RedirectAttributes redirectAttributes) {
-		if(Global.isDemoMode()){
-			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/area";
+	@ResponseBody
+	public String save(Area area) {
+		
+		Area anoArea = areaService.getAreaByCode(area.getCode());
+		int resultFlag = 0;
+		if(anoArea != null && !anoArea.getId().equals(area.getId())) {
+			resultFlag = 1;
 		}
-		if (!beanValidator(model, area)){
-			return form(area, model);
+		if(resultFlag == 0) {
+			areaService.save(area);
 		}
-		areaService.save(area);
-		addMessage(redirectAttributes, "保存区域'" + area.getName() + "'成功");
-		return "redirect:" + adminPath + "/sys/area/";
+		
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		result.put("result", resultFlag);
+		return JsonMapper.getInstance().toJson(result);
 	}
 	
 	@RequiresPermissions("sys:area:edit")
-	@RequestMapping(value = "delete")
-	public String delete(Area area, RedirectAttributes redirectAttributes) {
-		if(Global.isDemoMode()){
-			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/area";
-		}
-//		if (Area.isRoot(id)){
-//			addMessage(redirectAttributes, "删除区域失败, 不允许删除顶级区域或编号为空");
-//		}else{
-			areaService.delete(area);
-			addMessage(redirectAttributes, "删除区域成功");
-//		}
-		return "redirect:" + adminPath + "/sys/area/";
+	@RequestMapping(value = "remove/{id}")
+	@ResponseBody
+	public String remove(@PathVariable String id) {
+			Area a = new Area();
+			a.setId(id);
+			areaService.delete(a);
+			Map<String, Integer> result = new HashMap<String, Integer>();
+			result.put("result", 0);
+			return JsonMapper.getInstance().toJson(result);
 	}
 
 	@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public List<Map<String, Object>> treeData(@RequestParam(required=false) String extId, HttpServletResponse response) {
-		List<Map<String, Object>> mapList = Lists.newArrayList();
-		List<Area> list = areaService.findAll();
-		for (int i=0; i<list.size(); i++){
-			Area e = list.get(i);
-			if (StringUtils.isBlank(extId) || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
-				Map<String, Object> map = Maps.newHashMap();
-				map.put("id", e.getId());
-				map.put("pId", e.getParentId());
-				map.put("name", e.getName());
-				mapList.add(map);
+	public List<Area> treeData(@RequestParam(required=false) String code) {
+		
+		List<Area> list = null;
+		if(StringUtils.isNotBlank(code)) {
+			list = areaService.findByParentCode(code);
+		} else {
+			list = areaService.findTopArea();
+		}
+		if(list != null && list.size()>0) {
+			for(Area a: list) {
+				if("1".equals(a.getType())) {
+					a.setTypeName("国家");
+				}
+				if("2".equals(a.getType())) {
+					a.setTypeName("省份、直辖市");
+				}
+				if("3".equals(a.getType())) {
+					a.setTypeName("地市");
+				}
+				if("4".equals(a.getType())) {
+					a.setTypeName("区县");
+				}
+				if("5".equals(a.getType())) {
+					a.setTypeName("街道（镇）");
+				}
+				if("6".equals(a.getType())) {
+					a.setTypeName("居委（村）");
+					a.setLeaf(true);
+				}
+				if("3".equals(a.getType()) || "4".equals(a.getType()) || "5".equals(a.getType())) {
+					List<Area> childs = areaService.findByParentCode(a.getCode());
+					if(childs == null || childs.size()<=0) {
+						a.setLeaf(true);
+					}
+				}
+				
 			}
 		}
-		return mapList;
+		
+		return list;
+	}
+	
+	/**
+	 * 按父区域查询子区域
+	 * @param parentCode
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "findChildArea")
+	public List<ComboNode> findChildArea(@RequestParam(required=true) String parentCode) {
+		List<ComboNode> result  = Lists.newArrayList();
+		if(parentCode.equals("310000000000")){
+			ComboNode cn = new ComboNode();
+			cn.setValue("310101000000");
+			cn.setText("黄浦区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310104000000");
+			cn.setText("徐汇区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310105000000");
+			cn.setText("长宁区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310106000000");
+			cn.setText("静安区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310107000000");
+			cn.setText("普陀区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310108000000");
+			cn.setText("闸北区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310109000000");
+			cn.setText("虹口区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310110000000");
+			cn.setText("杨浦区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310112000000");
+			cn.setText("闵行区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310113000000");
+			cn.setText("宝山区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310114000000");
+			cn.setText("嘉定区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310115000000");
+			cn.setText("浦东新区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310116000000");
+			cn.setText("金山区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310117000000");
+			cn.setText("松江区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310118000000");
+			cn.setText("青浦区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310120000000");
+			cn.setText("奉贤区");
+			result.add(cn);
+			cn = new ComboNode();
+			cn.setValue("310230000000");
+			cn.setText("崇明县");
+			result.add(cn);
+		} else {
+			List<Area> lists = areaService.findByParentCode(parentCode);
+			
+			if(lists != null){ //兼容初始 000000时，报错
+				for(Area node:lists) {
+					ComboNode cn = new ComboNode();
+					cn.setValue(node.getCode());
+					cn.setText(node.getName());
+					result.add(cn);
+				}
+			}
+		}
+		return result;
+	}
+	/**
+	 * 按父区域查询子区域
+	 * @param parentCode
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "findChildAreas")
+	public List<ComboNode> findChildAreas(@RequestParam(required=true) String parentCode) {
+		List<ComboNode> result  = Lists.newArrayList();
+		List<Area> lists = areaService.findByParentCode(parentCode);
+		if(lists != null){ //兼容初始 000000时，报错
+			for(Area node:lists) {
+				ComboNode cn = new ComboNode();
+				cn.setValue(node.getCode());
+				cn.setText(node.getName());
+				result.add(cn);
+			}
+		}
+		return result;
+	}
+
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "getsqByqxCode")//根据区县拿到区县下所有的社区
+	public List<ComboNode> getsqByqxCode(@RequestParam(required=true) String parentCode) {
+		return officeService.findByQxcode(parentCode);
+	}
+	
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "getSq/{code}")//根据街道code拿到当前社区
+	public List<Office> getSq(@PathVariable String code) {
+		return officeService.getSq(code);
+	}
+	
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "getxySq/{code}")//根据街道code拿到当前社区
+	public List<ComboNode> getySq(@PathVariable String code) {
+
+		return officeService.getxySq(code);
 	}
 }

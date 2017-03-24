@@ -243,5 +243,39 @@
     <function-signature>java.lang.String toJsonString(java.lang.Object)</function-signature>
     <example>${fns:toJson(object)}</example>  
   </function>
-  
+
+  <function>
+    <description>为系统设置获取机构树</description>
+    <name>getOfficeTreeForAdmin</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.CodeUtils</function-class>
+    <function-signature>java.lang.String getOfficeTreeForAdmin(java.lang.String)</function-signature>
+    <example>${fns:getOfficeTreeForAdmin(flag)}</example>
+  </function>
+
+  <!-- 根据机构名称获取机构区县 ${fns:getOfficeByCode(code).area} -->
+  <function>
+    <description>根据区县Code获取机构树</description>
+    <name>getOfficeTreeForArea</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.CodeUtils</function-class>
+    <function-signature>java.lang.String getOfficeTreeForArea(java.lang.String)</function-signature>
+    <example>${fns:getOfficeTreeForArea(areaCode)}</example>
+  </function>
+
+  <function>
+    <description>为系统设置获取所有角色</description>
+    <name>getRoleForAdmin</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.CodeUtils</function-class>
+    <function-signature>java.lang.String getRoleForAdmin()</function-signature>
+    <example>${fns:getRoleForAdmin()}</example>
+  </function>
+
+  <function>
+    <description>为当前用户获取可授权的角色</description>
+    <name>getCurrUserRoleList</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.CodeUtils</function-class>
+    <function-signature>java.lang.String getCurrUserRoleList()</function-signature>
+    <example>${fns:getCurrUserRoleList()}</example>
+  </function>
+
+
 </taglib>

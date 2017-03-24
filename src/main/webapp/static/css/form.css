@@ -1,0 +1,127 @@
+.wrap{
+    background: url("../images/procedureBg.png") repeat-x;
+    padding: 1px 0;
+}
+.form-div-box{
+    width: 960px;
+    padding: 15px;
+    border-radius: 7px;
+    border: 0px solid #f39a7f;
+    background: #fff;
+	margin-bottom:50px auto;
+    margin: 21px auto;
+	margin-bottom:50px auto;
+    overflow: hidden;
+}
+.form-table {
+    width: 100%;
+    color: #333;
+}
+.form-table .red{
+    color: #ff0000;
+    padding-right: 5px;
+}
+.form-table td{
+    padding:10px 5px;
+    line-height: 30px;
+    vertical-align: text-top;
+}
+.form-table td.td-text{
+    text-align: right;
+}
+.form-table .input-text,.form-table .select-text{
+    width: 230px;
+    padding-left: 8px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border linear .2s, box-shadow linear .2s;
+    -moz-transition: border linear .2s, box-shadow linear .2s;
+    -o-transition: border linear .2s, box-shadow linear .2s;
+    transition: border linear .2s, box-shadow linear .2s;
+}
+.form-table .select-text{
+    height: 32px;
+    width: 240px;
+}
+.form-table .input-text:focus,.form-table .select-text:focus{
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+}
+.form-table .other-p{
+    margin-top: 10px;;
+}
+.label-radio{
+    display: inline-block;
+    margin-right: 30px;
+}
+.label-radio input{
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-top: -3px;;
+}
+.row-td .label-radio{
+    margin-bottom: 0px;
+}
+.default-btn{
+    height: 30px;
+    line-height: 30px;
+    padding: 6px 20px;
+    background: #9e0001;
+    color: #fff;
+    font-size: 16px;
+    text-align: right;
+    font-family: "Microsoft Yahei","SimHei";
+    border-radius: 5px;
+    letter-spacing: 1px;
+}
+.default-btn:hover{
+    background: #BD0607;
+    text-decoration: none;
+}
+.default-btn.disable,.default-btn.disable:hover{
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    filter: alpha(opacity=60);
+    -khtml-opacity: .6;
+    -moz-opacity: .6;
+    opacity: .6;
+    cursor: not-allowed;
+    box-shadow: none;
+    background-color: #ccc;
+    color: #000;
+}
+.btn-box{
+    margin: 20px 0;
+    padding-left: 145px;
+}
+.btn-box a{
+    margin-left: 20px;;
+}
+.input-search-box{
+    position: relative;
+    width: 240px;
+}
+.input-search-box .search-btn{
+    position: absolute;
+    right: 0px;
+    top:8px;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+    overflow: hidden;
+    background: url("../images/ColSearch.png") no-repeat;
+    line-height: 400px;
+}
+.check-p-tool a{
+    color: #9e0001;
+    margin-right: 15px;
+}

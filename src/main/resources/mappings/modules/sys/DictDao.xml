@@ -20,7 +20,6 @@
 		<if test="description != null and description != ''">
 			AND description LIKE 
 					<if test="dbName == 'oracle'">'%'||#{description}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{description}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{description}, '%')</if>
 		</if>
 		ORDER BY type, sort, update_date DESC
@@ -32,6 +31,25 @@
 		FROM sys_dict 
 		WHERE del_flag = #{DEL_FLAG_NORMAL} 
 		ORDER BY type, sort, update_date DESC
+	</select>
+	
+	<select id="findCodeList" resultType="Dict">
+		select 
+		  a.value as value, 
+		  a.name as label, 
+		  b.value as type
+		  from sys_code a
+		  join (select *
+		          from sys_code t
+		         where exists (select 1
+		                  from sys_code s
+		                 where t.parent_id = s.id
+		                   and s.parent_id = '0'
+		                   and s.del_flag = '0')
+		           and t.del_flag = '0') b
+		    on a.parent_id = b.id
+		 where a.del_flag = '0'
+		 order by b.value
 	</select>
 	
 	<select id="findTypeList" resultType="string">

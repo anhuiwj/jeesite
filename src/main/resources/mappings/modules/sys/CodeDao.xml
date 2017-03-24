@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.CodeDao">
+    
+	<sql id="codeColumns">
+		a.id,
+		a.parent_id AS "parent.id",
+		a.parent_ids,
+		a.value,
+		a.comCode,
+		a.name,
+		a.sort,
+		a.description,
+		a.remarks,
+		a.create_by AS "createBy.id",
+		a.create_date,
+		a.update_by AS "updateBy.id",
+		a.update_date,
+		a.del_flag
+	</sql>
+	
+	
+    
+	<select id="get" resultType="Code">
+		SELECT
+			<include refid="codeColumns"/>
+		FROM sys_code a
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Code">
+		SELECT
+			<include refid="codeColumns"/>
+		FROM sys_code a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		ORDER BY a.code
+	</select>
+	
+	<select id="findAllList" resultType="Code">
+		SELECT
+			<include refid="codeColumns"/>
+		FROM sys_code a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findByParent" resultType="Code">
+		SELECT
+			<include refid="codeColumns"/>
+		FROM sys_code a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.parent_id = #{id}
+		ORDER BY a.sort
+	</select>
+	
+	
+	<select id="findByValueWithParent" resultType="Code">
+		SELECT
+			<include refid="codeColumns"/>
+		FROM sys_code a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.parent_id = #{parent.id} and a.value = #{value}
+		ORDER BY a.sort
+	</select>
+
+	<select id="findBySort" resultType="Code">
+		select * from sys_code where parent_id='ae62faa9f5504e979cda93c35d57d006'and sort = #{sort}
+	</select>
+	
+	<select id="findUniqueValueByParent" resultType="Code">
+		SELECT
+			<include refid="codeColumns"/>
+		FROM sys_code a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.parent_ids like '%,'||#{parent.id}||',%' and a.value = #{value}
+		ORDER BY a.sort
+	</select>
+
+	
+	<select id="findTopList" resultType="Code">
+		SELECT
+			<include refid="codeColumns"/>
+		FROM sys_code a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.parent_id = '0'
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findForCheckCode" resultType="Code">
+		SELECT a.id
+		FROM sys_code a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.value = #{value}
+		<if test="parent != null and parent.id != null and parent.id != ''">
+			AND a.parent_id = #{parent.id}
+		</if>
+		
+		<if test="parent == null">
+			AND a.parent_id is null
+		</if>
+		
+		<if test="id != null and id !=''">
+			AND a.id != #{id}
+		</if>
+		ORDER BY a.sort
+	</select>
+	
+		
+	<select id="findForCheckComCode" resultType="Code">
+		SELECT a.id
+		FROM sys_code a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.comCode = #{comCode}
+		<if test="parent != null and parent.id != null and parent.id != ''">
+			AND a.parent_id = #{parent.id}
+		</if>
+		
+		<if test="parent == null">
+			AND a.parent_id is null
+		</if>
+		
+		<if test="id != null and id !=''">
+			AND a.id != #{id}
+		</if>
+		ORDER BY a.sort
+	</select>
+	
+	
+	
+	<select id="findByParentIdsLike" resultType="Code">
+		SELECT
+			 a.id,
+			 p.id AS "parent.id",
+			 a.value,
+			 p.value as "parent.value",
+			 a.name
+		FROM sys_code a left join sys_code p on a.parent_id = p.id
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_ids LIKE #{parentIds}
+		ORDER BY a.sort
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_code(
+			id, 
+			parent_id, 
+			parent_ids, 
+			value, 
+			comCode,
+			name, 
+			sort,
+			description,
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{parent.id}, 
+			#{parentIds}, 
+			#{value}, 
+			#{comCode}, 
+			#{name}, 
+			#{sort}, 
+			#{description},
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	
+	<update id="update">
+		UPDATE sys_code SET 
+			value = #{value}, 
+			comCode = #{comCode},
+			name = #{name}, 
+			sort = #{sort}, 
+			description = #{description},
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE sys_code SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_code SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
+	</update>
+	
+</mapper>

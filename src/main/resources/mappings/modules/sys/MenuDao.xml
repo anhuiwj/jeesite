@@ -11,8 +11,9 @@
 		a.target,
 		a.icon,
 		a.sort,
-		a.is_show,
+		a.type,
 		a.permission,
+		a.sysflag,
 		a.remarks,
 		a.create_by AS "createBy.id",
 		a.create_date,
@@ -43,6 +44,18 @@
 		ORDER BY a.sort
 	</select>
 	
+	<select id="findNonSysList" resultType="Menu">
+		SELECT
+			<include refid="menuColumns"/>
+		FROM sys_menu a
+		<include refid="menuJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		AND a.sysflag !='0'
+		ORDER BY a.sort
+	</select>
+	
+	
+	
 	<select id="findByParentIdsLike" resultType="Menu">
 		SELECT
 			a.id,
@@ -53,7 +66,31 @@
 		ORDER BY a.sort
 	</select>
 	
-	<select id="findByUserId" resultType="Menu">
+	<select id="findByParentId" resultType="Menu">
+		SELECT
+			a.id,
+			a.parent_id AS "parent.id",
+			a.parent_ids,
+			a.name,
+			a.href,
+			a.target,
+			a.icon,
+			a.sort,
+			a.type,
+			a.permission,
+			a.sysflag,
+			a.remarks,
+			a.create_by AS "createBy.id",
+			a.create_date,
+			a.update_by AS "updateBy.id",
+			a.update_date,
+			a.del_flag
+		FROM sys_menu a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_id = #{parent.id}
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findRoleMenuByUserId" resultType="Menu">
 		SELECT DISTINCT
 			<include refid="menuColumns"/>
 		FROM sys_menu a
@@ -66,6 +103,40 @@
 		ORDER BY a.sort
 	</select>
 	
+	<select id="findUserMenuList" resultType="Menu">
+		SELECT
+			<include refid="menuColumns"/>
+		FROM sys_menu a
+		<include refid="menuJoins"/>
+		LEFT JOIN sys_user_menu um ON um.menu_id = a.id
+		LEFT JOIN sys_user u ON u.id = um.user_id
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		AND u.id = #{userId}
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findRoleMenuList" resultType="Menu">
+		SELECT
+			<include refid="menuColumns"/>
+		FROM sys_menu a
+		<include refid="menuJoins"/>
+		LEFT JOIN sys_role_menu rm ON rm.menu_id = a.id
+		LEFT JOIN sys_role r ON r.id = rm.role_id
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		AND r.id = #{roleId}
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findTop" resultType="Menu">
+		SELECT
+			<include refid="menuColumns"/>
+		FROM sys_menu a
+		<include refid="menuJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		and a.parent_id = '1'
+		ORDER BY a.sort
+	</select>
+	
 	<insert id="insert">
 		INSERT INTO sys_menu(
 			id, 
@@ -74,10 +145,10 @@
 			name, 
 			href, 
 			target, 
-			icon, 
 			sort, 
-			is_show, 
-			permission, 
+			type, 
+			permission,
+			sysflag,
 			create_by, 
 			create_date, 
 			update_by, 
@@ -91,10 +162,10 @@
 			#{name}, 
 			#{href}, 
 			#{target}, 
-			#{icon}, 
 			#{sort}, 
-			#{isShow}, 
+			#{type}, 
 			#{permission}, 
+			#{sysflag}, 
 			#{createBy.id}, 
 			#{createDate}, 
 			#{updateBy.id}, 
@@ -106,15 +177,13 @@
 	
 	<update id="update">
 		UPDATE sys_menu SET 
-			parent_id = #{parent.id}, 
-			parent_ids = #{parentIds}, 
 			name = #{name}, 
 			href = #{href}, 
 			target = #{target}, 
-			icon = #{icon}, 
 			sort = #{sort}, 
-			is_show = #{isShow}, 
-			permission = #{permission}, 
+			type = #{type}, 
+			permission = #{permission},
+			sysflag = #{sysflag}, 
 			update_by = #{updateBy.id}, 
 			update_date = #{updateDate}, 
 			remarks = #{remarks}
@@ -128,19 +197,22 @@
 		WHERE id = #{id}
 	</update>
 	
-	<update id="updateSort">
-		UPDATE sys_menu SET 
-			sort = #{sort}
-		WHERE id = #{id}
-	</update>
 	
 	<update id="delete">
 		UPDATE sys_menu SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id} OR parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
-					<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
 	</update>
+	
+	<!-- 删除用户和资源关联表数据 -->
+	<delete id="deleteUserMenu">
+		DELETE FROM sys_user_menu WHERE menu_id = #{id}
+	</delete>
+	
+	<delete id="deleteRoleMenu">
+		DELETE FROM sys_role_menu WHERE role_id = #{id}
+	</delete>
 	
 </mapper>

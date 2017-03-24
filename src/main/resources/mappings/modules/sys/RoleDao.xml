@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thinkgem.jeesite.modules.sys.dao.RoleDao">
-    
-    <resultMap id="roleResult" type="Role">
+
+	<resultMap id="roleResult" type="Role">
 		<id property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="enname" column="enname" />
@@ -10,94 +10,73 @@
 		<result property="dataScope" column="dataScope" />
 		<result property="remarks" column="remarks" />
 		<result property="useable" column="useable" />
-		<result property="sysData" column="sysData" /><!-- 
-		<collection property="userList" ofType="User">
-			<id property="id" column="userList.id" />
-			<id property="loginName" column="userList.loginName" />
-			<id property="name" column="userList.name" />
-			<id property="email" column="userList.email" />
-			<id property="phone" column="userList.phone" />
-			<id property="mobile" column="userList.mobile" />
-			<id property="office.name" column="userList.office.name" />
-			<id property="company.name" column="userList.company.name" />
-		</collection> -->
+		<result property="sysData" column="sysData" />
+		<result property="office.code" column="office.code" />
+		<result property="office.name" column="office.name" />
 		<collection property="menuList" ofType="Menu">
 			<id property="id" column="menuList.id" />
 		</collection>
-		<collection property="officeList" ofType="Office">
-			<id property="id" column="officeList.id" />
-		</collection>
+		
 	</resultMap>
-	
-    <sql id="roleColumns">
-    	a.id,
-    	a.office_id AS "office.id",
-    	a.name,
-    	a.enname,
-    	a.role_type AS roleType,
+
+	<sql id="roleColumns">
+		a.id,
+		a.office_id AS "office.id",
+		a.name,
+		a.enname,
+		a.role_type AS roleType,
 		a.data_scope AS dataScope,
 		a.remarks,
-		a.create_by AS "createBy.id",
+		a.create_by AS
+		"createBy.id",
 		a.create_date,
 		a.update_by AS "updateBy.id",
 		a.update_date,
 		a.del_flag,
-    	o.name AS "office.name",
-    	o.code,
-    	a.useable AS useable,
-    	a.is_sys AS sysData
-    </sql>
-    
+		a.useable AS useable,
+		a.is_sys AS sysData
+	</sql>
+
 	<select id="get" resultMap="roleResult">
 		SELECT
-			<include refid="roleColumns"/>,<!-- 
-			ur.user_id AS "userList.id",
-			u.login_name AS "userList.loginName",
-			u.name AS "userList.name",
-			u.email AS "userList.email",
-			u.phone AS "userList.phone",
-			u.mobile AS "userList.mobile",
-			uc.name AS "userList.company.name",
-			uo.name AS "userList.office.name", -->
-			rm.menu_id AS "menuList.id",
-			ro.office_id AS "officeList.id"
+		<include refid="roleColumns" />,
+		rm.menu_id AS "menuList.id",
+		o.code as "office.code",
+		o.name as "office.name"
 		FROM sys_role a
-		JOIN sys_office o ON o.id = a.office_id<!-- 
-		LEFT JOIN sys_user_role ur ON ur.role_id = a.id
-		LEFT JOIN sys_user u ON u.id = ur.user_id
-		LEFT JOIN sys_office uc ON uc.id = u.company_id
-		LEFT JOIN sys_office uo ON uo.id = u.office_id -->
+		LEFT JOIN sys_office o ON o.id = a.office_id
 		LEFT JOIN sys_role_menu rm ON rm.role_id = a.id
-		LEFT JOIN sys_role_office ro ON ro.role_id = a.id
 		WHERE a.id = #{id}
 	</select>
-	
+
 	<select id="getByName" resultType="Role">
 		SELECT
-			<include refid="roleColumns"/>
+		<include refid="roleColumns" />
 		FROM sys_role a
 		JOIN sys_office o ON o.id = a.office_id
-		WHERE a.name = #{name} AND a.del_flag = #{DEL_FLAG_NORMAL}
+		WHERE a.name =
+		#{name} AND a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
-	
+
 	<select id="getByEnname" resultType="Role">
 		SELECT
-			<include refid="roleColumns"/>
+		<include refid="roleColumns" />
 		FROM sys_role a
 		JOIN sys_office o ON o.id = a.office_id
-		WHERE a.enname = #{enname} AND a.del_flag = #{DEL_FLAG_NORMAL}
+		WHERE a.enname =
+		#{enname} AND a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
-	
+
 	<select id="findList" resultMap="roleResult">
 		SELECT <!-- DISTINCT -->
-			<include refid="roleColumns"/>,
-			ro.office_id AS "officeList.id"
+		<include refid="roleColumns" />
 		FROM sys_role a
 		LEFT JOIN sys_office o ON o.id = a.office_id
 		LEFT JOIN sys_user_role ur ON ur.role_id = a.id
 		LEFT JOIN sys_user u ON u.id = ur.user_id
-		LEFT JOIN sys_role_office ro ON ro.role_id = a.id
-		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.useable=#{useable}
+		
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND
+		a.useable=#{useable}
 		<if test="user != null and user.id != null and user.id != ''">
 			AND u.id = #{user.id}
 		</if>
@@ -108,97 +87,122 @@
 		${sqlMap.dsf}
 		ORDER BY o.code, a.name
 	</select>
-	
+
 	<select id="findAllList" resultType="Role">
 		SELECT
-			<include refid="roleColumns"/>
+		<include refid="roleColumns" />,
+		o.code AS "office.code",
+		o.name AS "office.name"
 		FROM sys_role a
 		LEFT JOIN sys_office o ON o.id = a.office_id
-		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
-		ORDER BY o.code, a.name
+		WHERE
+		a.del_flag = #{DEL_FLAG_NORMAL}
+		ORDER BY a.name
 	</select>
 	
+	<select id="findOrgList" resultType="Role">
+		SELECT
+		<include refid="roleColumns" />,
+		o.code AS "office.code",
+		o.name AS "office.name"
+		FROM sys_role a
+		LEFT JOIN sys_office o ON o.id = a.office_id
+		WHERE
+		a.del_flag = #{DEL_FLAG_NORMAL}
+		AND (a.office_id is null OR a.office_id = #{id})
+		ORDER BY a.name
+	</select>
+
 	<insert id="insert">
 		INSERT INTO sys_role(
-			id, 
-			office_id, 
-			name, 
-			enname, 
-			role_type, 
-			data_scope, 
-			create_by, 
-			create_date, 
-			update_by, 
-			update_date, 
-			remarks, 
-			del_flag,
-			is_sys,
-			useable
+		id,
+		office_id,
+		name,
+		enname,
+		role_type,
+		data_scope,
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		remarks,
+		del_flag,
+		is_sys,
+		useable
 		) VALUES (
-			#{id}, 
-			#{office.id}, 
-			#{name}, 
-			#{enname}, 
-			#{roleType}, 
-			#{dataScope}, 
-			#{createBy.id}, 
-			#{createDate}, 
-			#{updateBy.id}, 
-			#{updateDate}, 
-			#{remarks}, 
-			#{delFlag},
-			#{sysData},
-			#{useable}
+		#{id},
+		#{office.id},
+		#{name},
+		#{enname},
+		#{roleType},
+		#{dataScope},
+		#{createBy.id},
+		#{createDate},
+		#{updateBy.id},
+		#{updateDate},
+		#{remarks},
+		#{delFlag},
+		#{sysData},
+		#{useable}
 		)
 	</insert>
 	
+	
+
 	<update id="update">
-		UPDATE sys_role SET 
-			office_id = #{office.id}, 
-			name = #{name}, 
-			enname = #{enname}, 
-			role_type = #{roleType}, 
-			data_scope = #{dataScope}, 
-			update_by = #{updateBy.id}, 
-			update_date = #{updateDate}, 
-			remarks = #{remarks},
-			is_sys = #{sysData},
-			useable = #{useable}
+		UPDATE sys_role SET
+		office_id = #{office.id},
+		name = #{name},
+		enname = #{enname},
+		role_type = #{roleType},
+		data_scope = #{dataScope},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate},
+		remarks = #{remarks},
+		is_sys = #{sysData},
+		useable = #{useable}
 		WHERE id = #{id}
 	</update>
-	
+
 	<delete id="deleteRoleMenu">
 		DELETE FROM sys_role_menu WHERE role_id = #{id}
 	</delete>
 	
+	<delete id="deleteRoleUser">
+		DELETE FROM sys_user_role WHERE role_id = #{id} AND user_id= #{user.id}
+	</delete>
+	
+	<delete id="deleteRoleAllUser">
+		DELETE FROM sys_user_role WHERE role_id = #{id}
+	</delete>
+
 	<insert id="insertRoleMenu">
 		INSERT INTO sys_role_menu(role_id, menu_id)
 		<foreach collection="menuList" item="menu" separator=" union all ">
-			SELECT #{id}, #{menu.id}
-			<if test="dbName != 'mssql'">
-			FROM dual
-			</if>
+			SELECT
+			#{id}, #{menu.id} FROM dual
 		</foreach>
 	</insert>
 	
-	<delete id="deleteRoleOffice">
-		DELETE FROM sys_role_office WHERE role_id = #{id}
-	</delete>
-	
-	<insert id="insertRoleOffice">
-		INSERT INTO sys_role_office(role_id, office_id)
-		<foreach collection="officeList" item="office" separator=" union all ">
-			SELECT #{id}, #{office.id}
-			<if test="dbName != 'mssql'">
-			FROM dual
-			</if>
+	<!-- 插入用户和角色关联表数据 -->
+	<insert id="insertRoleUser">
+		INSERT INTO sys_user_role(user_id, role_id)
+		<foreach collection="userList" item="user" separator=" union all ">
+			SELECT
+			#{user.id}, #{id} FROM dual
 		</foreach>
 	</insert>
+
 	
+
+	
+
 	<update id="delete">
-		UPDATE sys_role SET 
-			del_flag = #{DEL_FLAG_DELETE}
+		UPDATE sys_role SET
+		del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
+
+
 	
 </mapper>

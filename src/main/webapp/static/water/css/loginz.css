@@ -1,0 +1,14 @@
+@charset "utf-8";
+body{background:url(../images/bg.jpg);}
+
+.imgWrap{position:absolute; top:0; left:0; width:100%; height:100%; z-index:0;}
+
+.wrapper{position:absolute; top:50%; left:50%; width:520px; height:400px; margin-left:-260px; margin-top:-200px; z-index:5; text-align:center;}
+.logo{display:block; width:515px; height:200px; margin-bottom:100px; background:url(../images/login/logo.png) no-repeat 0 0;}
+.btn01{display:inline-block; width:100px; height:31px; margin:0 10px; border:0; background:url(../images/login/btn01.png) no-repeat 0 0;}
+.btn02{display:inline-block; width:100px; height:31px; margin:0 10px; border:0; background:url(../images/login/btn02.png) no-repeat 0 0;}
+.btn03{display:inline-block; width:100px; height:31px; margin:0 10px; border:0; background:url(../images/login/btn03.png) no-repeat 0 0;}
+.btn04{display:inline-block; width:100px; height:31px; margin:0 10px; border:0; background:url(../images/login/btn04.png) no-repeat 0 0;}
+.btn05{display:inline-block; width:100px; height:31px; margin:0 10px; border:0; background:url(../images/login/btn05.png) no-repeat 0 0;}
+
+.copyright{position:absolute; bottom:0; left:0; z-index:3; width:100%; margin-bottom:15px; font:12px/20px Arial; color:#67b8e0; text-align:center;}

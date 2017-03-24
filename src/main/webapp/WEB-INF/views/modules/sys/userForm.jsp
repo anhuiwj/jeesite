@@ -1,170 +1,323 @@
+<%@ page import="java.util.List" %>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
+<%@ page import="com.thinkgem.jeesite.modules.sys.entity.User" %>
+<%@ page import="com.thinkgem.jeesite.modules.sys.utils.UserUtils" %>
+<%@ page import="com.thinkgem.jeesite.modules.sys.entity.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
 	<title>用户管理</title>
-	<meta name="decorator" content="default"/>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#no").focus();
-			$("#inputForm").validate({
-				rules: {
-					loginName: {remote: "${ctx}/sys/user/checkLoginName?oldLoginName=" + encodeURIComponent('${user.loginName}')}
-				},
-				messages: {
-					loginName: {remote: "用户登录名已存在"},
-					confirmNewPassword: {equalTo: "输入与上面相同的密码"}
-				},
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
+	<meta name="decorator" content="miniui"/>
+	<link rel="stylesheet" href="${ctxStatic}/css/my-mini.css" />
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			width: 100%;
+			height: 100%;
+			overflow:hidden;
+		}
+		
+		.pwd{width:40px;height:20px;line-height:14px;padding-top:2px;} 
+		.pwd_f{color:#BBBBBB;} 
+		.pwd_c{background-color:#F3F3F3;border-top:1px solid #D0D0D0;border-bottom:1px solid #D0D0D0;border-left:1px solid #D0D0D0;} 
+		.pwd_Weak_c{background-color:#FF4545;border-top:1px solid #BB2B2B;border-bottom:1px solid #BB2B2B;border-left:1px solid #BB2B2B;} 
+		.pwd_Medium_c{background-color:#FFD35E;border-top:1px solid #E9AE10;border-bottom:1px solid #E9AE10;border-left:1px solid #E9AE10;} 
+		.pwd_Strong_c{background-color:#3ABB1C;border-top:1px solid #267A12;border-bottom:1px solid #267A12;border-left:1px solid #267A12;} 
+		.pwd_c_r{border-right:1px solid #D0D0D0;} 
+		.pwd_Weak_c_r{border-right:1px solid #BB2B2B;} 
+		.pwd_Medium_c_r{border-right:1px solid #E9AE10;} 
+		.pwd_Strong_c_r{border-right:1px solid #267A12;} 
+		
+	</style>
+	<%
+		User user = UserUtils.getUser();
+		List<Role> roleList = user.getRoleList();
+
+		// 0 普通用户 1.系统管理员 2.区县管理员 3.机构管理员
+		String manager = "0";
+		if(roleList != null && roleList.size()>0){
+			for (Role role : roleList){
+				if(role != null && StringUtils.isNotBlank(role.getEnname())){
+					if(role.getEnname().equals("dept")){
+						manager = "1";
+					}else if(role.getEnname().equals("AREA_MANAGE")){
+						manager = "2";
+					}else if(role.getEnname().equals("ORG_MANAGE")){
+						manager = "3";
 					}
+					break;
 				}
-			});
-		});
-	</script>
+			}
+		}
+		request.setAttribute("manager",manager);
+		request.setAttribute("areaCode",user.getCompany().getArea().getCode());
+		request.setAttribute("orgCode",user.getCompany().getCode());
+	%>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sys/user/list">用户列表</a></li>
-		<li class="active"><a href="${ctx}/sys/user/form?id=${user.id}">用户<shiro:hasPermission name="sys:user:edit">${not empty user.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:user:edit">查看</shiro:lacksPermission></a></li>
-	</ul><br/>
-	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
-		<sys:message content="${message}"/>
-		<div class="control-group">
-			<label class="control-label">头像:</label>
-			<div class="controls">
-				<form:hidden id="nameImage" path="photo" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="nameImage" type="images" uploadPath="/photo" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+	<div class="mini-panel" title="用户信息" style="width:100%;" showCollapseButton="false">
+    	<div id="uForm">
+    	<input id="id" class="mini-hidden" name="id">
+    	
+    	<fieldset style="border:solid 1px #aaa;padding:3px;">
+    		<legend >基本信息</legend>
+    		<table>
+    			<tr>
+       				<td style="width:30%;">登录名：</td>
+               		<td>    
+                   		<input id="loginName" name="loginName" class="mini-textbox" required="true"/>
+               		</td>
+               		<td style="width:30%;">工号：</td>
+               		<td>    
+                   		<input id="no" name="no" class="mini-textbox" required="true"/>
+               		</td>
+       			</tr>
+        		<tr>
+        			<td>密码：</td>
+                	<td>    
+                    	<input id="password" name="password" class="mini-password" required="true" onKeyUp="checkIntensity"/>
+                	</td>
+               		<td></td>
+               		<td>    
+                   		<table border="0" cellpadding="0" cellspacing="0"> 
+						  <tr align="center"> 
+						    <td id="pwd_Weak" class="pwd pwd_c">&nbsp;</td> 
+						    <td id="pwd_Medium" class="pwd pwd_c pwd_f">无</td> 
+						    <td id="pwd_Strong" class="pwd pwd_c pwd_c_r">&nbsp;</td> 
+						  </tr> 
+						</table> 
+
+               		</td>
+        		</tr>
+        		<tr>
+               		<td>重复密码：</td>
+               		<td>    
+                   		<input id="password2" name="password2" class="mini-password" required="true"/>
+               		</td>
+               		<td>
+               		</td>
+               		<td>
+               		</td>
+        		</tr>
+        			
+       			<tr>
+        			<td>姓名：</td>
+                	<td>    
+                   		<input id="name" name="name" class="mini-textbox" required="true"/>
+               		</td>
+               		<td>机构：</td>
+               		<td>    
+						<!--modify xf 2016,12.8 -->
+						<!--demander 徐敏 -->
+						<!--机构管理员默认未当前机构，且不可修改-->
+						<!--区县管理员默认未当前区县的所有机构，可选，默认值为当前区县-->
+						<c:if test="${fns:getUser().admin}"><!-- 如果是超级管理员-->
+						<div id="orgCode" name="orgCode" class="mini-treeselect" required="true" resultAsTree="false" style="width:260px;" onbeforenodeselect="beforenodeselect" data="${fns:getOfficeTreeForAdmin('0')}" ></div>
+						</c:if>
+						<c:if test="${! fns:getUser().admin}"><!-- 如果不是超级管理员-->
+							<c:if test="${manager == '1'}">	<!--系统管理员-->
+								<div id="orgCode" name="orgCode" class="mini-treeselect" resultAsTree="false" style="width:260px;" onbeforenodeselect="beforenodeselect" data="${fns:getOfficeTreeForArea("310000000000")}" ></div>
+							</c:if>
+							<c:if test="${manager == '2'}">	<!--区县管理员-->
+								<div id="orgCode" name="orgCode" class="mini-treeselect" value="${areaCode}" resultAsTree="false" style="width:260px;" onbeforenodeselect="beforenodeselect" data="${fns:getOfficeTreeForArea(areaCode)}" ></div>
+							</c:if>
+							<c:if test="${manager == '3'}">	<!--机构管理员-->
+								<div id="orgCode" name="orgCode" class="mini-treeselect" value="${orgCode}" resultAsTree="false" style="width:260px;" onbeforenodeselect="beforenodeselect" data="${fns:getOfficeTreeForArea(orgCode)}" ></div>
+							</c:if>
+						</c:if>
+
+               		</td>
+        		</tr>
+        		<tr>
+       				<td>手机：</td>
+               		<td>    
+                   		<input id="mobile" name="mobile" class="mini-textbox"/>
+               		</td>
+               		<td>邮箱：</td>
+               		<td>    
+                   		<input id="email" name="email" class="mini-textbox"/>
+               		</td>
+       			</tr>
+    		</table>
+    	</fieldset>
+    	</div>
+    	<div class="mini-panel" title="角色" style="width:100%;height:60%;overflow:auto">
+       		
+       		<div id="roles" name="roles" class="mini-checkboxlist" repeatItems="4" style="width:100%;height:100%;overflow:auto"
+				repeatLayout="table" r textField="text" valueField="value"  
+					data="${fns:getCurrUserRoleList()}">
 			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">归属公司:</label>
-			<div class="controls">
-                <sys:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}"
-					title="公司" url="/sys/office/treeData?type=1" cssClass="required"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">归属部门:</label>
-			<div class="controls">
-                <sys:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="required" notAllowSelectParent="true"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">工号:</label>
-			<div class="controls">
-				<form:input path="no" htmlEscape="false" maxlength="50" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">姓名:</label>
-			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="50" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">登录名:</label>
-			<div class="controls">
-				<input id="oldLoginName" name="oldLoginName" type="hidden" value="${user.loginName}">
-				<form:input path="loginName" htmlEscape="false" maxlength="50" class="required userName"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">密码:</label>
-			<div class="controls">
-				<input id="newPassword" name="newPassword" type="password" value="" maxlength="50" minlength="3" class="${empty user.id?'required':''}"/>
-				<c:if test="${empty user.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
-				<c:if test="${not empty user.id}"><span class="help-inline">若不修改密码，请留空。</span></c:if>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">确认密码:</label>
-			<div class="controls">
-				<input id="confirmNewPassword" name="confirmNewPassword" type="password" value="" maxlength="50" minlength="3" equalTo="#newPassword"/>
-				<c:if test="${empty user.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">邮箱:</label>
-			<div class="controls">
-				<form:input path="email" htmlEscape="false" maxlength="100" class="email"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">电话:</label>
-			<div class="controls">
-				<form:input path="phone" htmlEscape="false" maxlength="100"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">手机:</label>
-			<div class="controls">
-				<form:input path="mobile" htmlEscape="false" maxlength="100"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">是否允许登录:</label>
-			<div class="controls">
-				<form:select path="loginFlag">
-					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-				<span class="help-inline"><font color="red">*</font> “是”代表此账号允许登录，“否”则表示此账号不允许登录</span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">用户类型:</label>
-			<div class="controls">
-				<form:select path="userType" class="input-xlarge">
-					<form:option value="" label="请选择"/>
-					<form:options items="${fns:getDictList('sys_user_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">用户角色:</label>
-			<div class="controls">
-				<form:checkboxes path="roleIdList" items="${allRoles}" itemLabel="name" itemValue="id" htmlEscape="false" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">备注:</label>
-			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="200" class="input-xlarge"/>
-			</div>
-		</div>
-		<c:if test="${not empty user.id}">
-			<div class="control-group">
-				<label class="control-label">创建时间:</label>
-				<div class="controls">
-					<label class="lbl"><fmt:formatDate value="${user.createDate}" type="both" dateStyle="full"/></label>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label">最后登陆:</label>
-				<div class="controls">
-					<label class="lbl">IP: ${user.loginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.loginDate}" type="both" dateStyle="full"/></label>
-				</div>
-			</div>
-		</c:if>
-		<div class="form-actions">
-			<shiro:hasPermission name="sys:user:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
-			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
-		</div>
-	</form:form>
+       		
+       </div>
+       
+       <div style="text-align:center;padding:10px;">               
+            <a class="mini-button" onclick="saveUser" iconCls="icon-save" >保存</a>
+              
+        </div> 
+        
+    </div>
+    
+  <%--  <div showCollapseButton="false">
+       <div class="mini-panel" title="资源权限" style="width:100%;height:100%;overflow:auto">
+
+       		<ul id="resTree" class="mini-tree" url="${ctx}/sys/user/menuTree" checkRecursive="true"
+       			style="width:500px;padding:5px;" showCheckBox="true" 
+                    autoCheckParent="true" parentField="parentId" showTreeIcon="true" 
+                    textField="name" idField="id" resultAsTree="false" onload="expandResTree()">        
+            </ul>
+       </div>
+        
+            
+        
+    </div>--%>
+       
+
+	<script type="text/javascript">
+		mini.parse();
+		/*var resTree = mini.get('resTree');*/
+		var roles = mini.get('roles');
+		
+		/*
+		 *校验密码强度
+		 *1. 如果输入的密码位数少于5位，那么就判定为弱。
+		 *2. 如果输入的密码只由数字、小写字母、大写字母或其它特殊符号当中的一种组成，则判定为弱。
+		 *3. 如果密码由数字、小写字母、大写字母或其它特殊符号当中的两种组成，则判定为中。
+		 *4. 如果密码由数字、小写字母、大写字母或其它特殊符号当中的三种以上组成，则判定为强。
+		*/
+		function checkIntensity(e) {
+			var pwd = e.sender.getValue();
+			var mColor,wColor,sColor,colorHtml; 
+			var m=0; 
+			var modes=0; 
+			for(i=0; i<pwd.length; i++){ 
+				var charType=0; 
+				var t=pwd.charCodeAt(i); 
+				if(t>=48 && t <=57){
+					charType=1;
+				} else if(t>=65 && t <=90){
+					charType=2;
+				} else if(t>=97 && t <=122){
+					charType=4;
+				} else {
+					charType=4;
+				} 
+				modes |= charType; 
+			} 
+			
+			for(i=0;i<4;i++){
+				if(modes & 1){
+					m++;
+				} 
+				modes>>>=1; 
+			} 
+			if(pwd.length<=4){
+				m=1;
+			} 
+			if(pwd.length<=0){
+				m=0;
+			} 
+			
+			switch(m){ 
+				case 1 : 
+					wColor="pwd pwd_Weak_c"; 
+					mColor="pwd pwd_c"; 
+					sColor="pwd pwd_c pwd_c_r"; 
+					colorHtml="弱"; 
+					break; 
+				case 2 : 
+					wColor="pwd pwd_Medium_c"; 
+					mColor="pwd pwd_Medium_c"; 
+					sColor="pwd pwd_c pwd_c_r"; 
+					colorHtml="中"; 
+					break; 
+				case 3 : 
+					wColor="pwd pwd_Strong_c"; 
+					mColor="pwd pwd_Strong_c"; 
+					sColor="pwd pwd_Strong_c pwd_Strong_c_r"; 
+					colorHtml="强"; 
+					break; 
+				default : 
+					wColor="pwd pwd_c"; 
+					mColor="pwd pwd_c pwd_f"; 
+					sColor="pwd pwd_c pwd_c_r"; 
+					colorHtml="无"; 
+					break; 
+			} 
+
+			document.getElementById('pwd_Weak').className=wColor; 
+			document.getElementById('pwd_Medium').className=mColor; 
+			document.getElementById('pwd_Strong').className=sColor; 
+			document.getElementById('pwd_Medium').innerHTML=colorHtml; 
+
+		}
+		
+		/*function expandResTree() {
+			resTree = mini.get('resTree');
+			resTree.expandAll();
+		}*/
+		
+		function saveUser() {
+			var form = new mini.Form("#uForm");
+			form.validate();
+			if (form.isValid()) { 
+				var pwd = mini.get('password').getValue();
+				var pwd2 = mini.get('password2').getValue();
+				if(pwd != pwd2) {
+					mini.get('password').setValue('');
+					mini.get('password2').setValue('');
+					mini.get('password').focus();
+					mini.alert("两次输入密码不同，请重新输入");
+					return;
+				}
+				var orgCode = mini.get("orgCode").getValue();
+				if(orgCode.length!=11){
+					mini.alert("请选择正确的机构");
+					return;
+				}
+
+				/*var resTreeIds = resTree.getValue(true);*/
+				var roleIds = roles.getValue();
+				var data = form.getData(false,false); 
+				/*data["resTreeIds"] = resTreeIds;*/
+				data["roleIds"] = roleIds;
+				
+				$.ajax({
+	                url: "${ctx}/sys/user/save/",
+	                type: "post",
+	                data: data,
+	                success: function (text) {
+	                	var r = mini.decode(text);
+	                	if(r.result == 0) {
+	                		window.parent.reload('1');
+		                	
+	                	} else {
+	                		if(r.result == 1) {
+	                			mini.alert("保存 失败，登录名重复");
+	                		}
+	                		if(r.result == 2) {
+	                			mini.alert("保存 失败，工号重复");
+	                		}
+	                	}
+	                	
+	                }
+	            });
+	           
+	           
+			} else {
+				mini.alert("请填写必填项");
+			}
+			
+		}
+
+		//机构禁止选择父节点
+		function beforenodeselect(e) {
+			//禁止选中父节点
+			if (e.isLeaf == false) e.cancel = true;
+		}
+
+    </script>
 </body>
 </html>

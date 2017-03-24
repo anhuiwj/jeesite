@@ -1,75 +1,119 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<!DOCTYPE html>
 <html>
 <head>
-	<title>${fns:getConfig('productName')} 登录</title>
+    <title>${fns:getConfig('productName')} 登录</title> 
 	<meta name="decorator" content="blank"/>
-	<style type="text/css">
-      html,body,table{background-color:#f5f5f5;width:100%;text-align:center;}.form-signin-heading{font-family:Helvetica, Georgia, Arial, sans-serif, 黑体;font-size:36px;margin-bottom:20px;color:#0663a2;}
-      .form-signin{position:relative;text-align:left;width:300px;padding:25px 29px 29px;margin:0 auto 20px;background-color:#fff;border:1px solid #e5e5e5;
-        	-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.05);-moz-box-shadow:0 1px 2px rgba(0,0,0,.05);box-shadow:0 1px 2px rgba(0,0,0,.05);}
-      .form-signin .checkbox{margin-bottom:10px;color:#0663a2;} .form-signin .input-label{font-size:16px;line-height:23px;color:#999;}
-      .form-signin .input-block-level{font-size:16px;height:auto;margin-bottom:15px;padding:7px;*width:283px;*padding-bottom:0;_padding:7px 7px 9px 7px;}
-      .form-signin .btn.btn-large{font-size:16px;} .form-signin #themeSwitch{position:absolute;right:15px;bottom:10px;}
-      .form-signin div.validateCode {padding-bottom:15px;} .mid{vertical-align:middle;}
-      .header{height:80px;padding-top:20px;} .alert{position:relative;width:300px;margin:0 auto;*padding-bottom:0px;}
-      label.error{background:none;width:270px;font-weight:normal;color:inherit;margin:0;}
-    </style>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#loginForm").validate({
-				rules: {
-					validateCode: {remote: "${pageContext.request.contextPath}/servlet/validateCodeServlet"}
-				},
-				messages: {
-					username: {required: "请填写用户名."},password: {required: "请填写密码."},
-					validateCode: {remote: "验证码不正确.", required: "请填写验证码."}
-				},
-				errorLabelContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					error.appendTo($("#loginError").parent());
-				} 
-			});
-		});
-		// 如果在框架或在对话框中，则弹出提示并跳转到首页
-		if(self.frameElement && self.frameElement.tagName == "IFRAME" || $('#left').length > 0 || $('.jbox').length > 0){
-			alert('未登录或登录超时。请重新登录，谢谢！');
-			top.location = "${ctx}";
+    <script src="${ctxStatic}/js/jquery-1.7.2.min.js" type="text/javascript" ></script>
+    <script src="${ctxStatic}/js/jquery.placehold.min.js" type="text/javascript" ></script>
+   
+    <script type="text/javascript" src="${ctxStatic}/miniui/miniui.js" ></script>
+	<script type="text/javascript" src="${ctxStatic}/miniui/locale/zh_CN.js"></script>
+    <link rel="stylesheet" href="${ctxStatic}/css/communal.css" type="text/css" />
+    <link rel="stylesheet" href="${ctxStatic}/css/login.css"  type="text/css">
+	<link rel="stylesheet" type="text/css" href="${ctxStatic}/miniui/themes/default/miniui.css"/>
+	<link rel="stylesheet" type="text/css" href="${ctxStatic}/miniui/themes/icons.css"/>
+	<link rel="stylesheet" type="text/css" href="${ctxStatic}/miniui/themes/bootstrap/skin.css"/>
+    <!--[if ie 6]>
+    <script src="js/iepng.js" type="text/javascript"></script>
+    <![endif]-->
+    <script type="text/javascript">
+    
+ // 如果在框架或在对话框中，则弹出提示并跳转到首页
+	if(self.frameElement && self.frameElement.tagName == "IFRAME" || $('#left').length > 0 || $('.jbox').length > 0){
+		alert('未登录或登录超时。请重新登录，谢谢！');
+		top.location = "${ctx}";
+	}
+    
+    function checkLogin(){
+		name = $("#LoginName").val();
+		pwd = $("#LoginPassword").val();
+		if(!name || name==''){
+			 mini.showTips({
+                 content: "<b>信息</b> <br/>请输入您的用户名",
+                 state: 'info',
+                 x: 'center',
+                 y: 'center',
+                 timeout: 3000
+             });
+			 return;
 		}
-	</script>
+		if(!pwd || pwd==''){
+			 mini.showTips({
+                content: "<b>信息</b> <br/>请输入您的密码",
+                state: 'info',
+                x: 'center',
+                y: 'center',
+                timeout: 3000
+            });
+			 return;
+		}
+		document.forms[0].submit();
+	}
+    
+    function pressLogin(e){
+    	e = e || event;
+    	if (e.keyCode == 13) {  //判断是否单击的enter按键(回车键)
+    		checkLogin();
+        }
+    }
+    
+    </script>
 </head>
 <body>
-	<!--[if lte IE 6]><br/><div class='alert alert-block' style="text-align:left;padding-bottom:10px;"><a class="close" data-dismiss="alert">x</a><h4>温馨提示：</h4><p>你使用的浏览器版本过低。为了获得更好的浏览体验，我们强烈建议您 <a href="http://browsehappy.com" target="_blank">升级</a> 到最新版本的IE浏览器，或者使用较新版本的 Chrome、Firefox、Safari 等。</p></div><![endif]-->
-	<div class="header">
-		<div id="messageBox" class="alert alert-error ${empty message ? 'hide' : ''}"><button data-dismiss="alert" class="close">×</button>
-			<label id="loginError" class="error">${message}</label>
-		</div>
-	</div>
-	<h1 class="form-signin-heading">${fns:getConfig('productName')}</h1>
-	<form id="loginForm" class="form-signin" action="${ctx}/login" method="post">
-		<label class="input-label" for="username">登录名</label>
-		<input type="text" id="username" name="username" class="input-block-level required" value="${username}">
-		<label class="input-label" for="password">密码</label>
-		<input type="password" id="password" name="password" class="input-block-level required">
-		<c:if test="${isValidateCodeLogin}"><div class="validateCode">
-			<label class="input-label mid" for="validateCode">验证码</label>
-			<sys:validateCode name="validateCode" inputCssStyle="margin-bottom:0;"/>
-		</div></c:if><%--
-		<label for="mobile" title="手机登录"><input type="checkbox" id="mobileLogin" name="mobileLogin" ${mobileLogin ? 'checked' : ''}/></label> --%>
-		<input class="btn btn-large btn-primary" type="submit" value="登 录"/>&nbsp;&nbsp;
-		<label for="rememberMe" title="下次不需要再登录"><input type="checkbox" id="rememberMe" name="rememberMe" ${rememberMe ? 'checked' : ''}/> 记住我（公共场所慎用）</label>
-		<div id="themeSwitch" class="dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fns:getDictLabel(cookie.theme.value,'theme','默认主题')}<b class="caret"></b></a>
-			<ul class="dropdown-menu">
-			  <c:forEach items="${fns:getDictList('theme')}" var="dict"><li><a href="#" onclick="location='${pageContext.request.contextPath}/theme/${dict.value}?url='+location.href">${dict.label}</a></li></c:forEach>
-			</ul>
-			<!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
-		</div>
-	</form>
-	<div class="footer">
-		Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="${pageContext.request.contextPath}${fns:getFrontPath()}">${fns:getConfig('productName')}</a> - Powered By <a href="http://jeesite.com" target="_blank">JeeSite</a> ${fns:getConfig('version')} 
-	</div>
-	<script src="${ctxStatic}/flash/zoom.min.js" type="text/javascript"></script>
+    <div id="Login_body" class="login_main">
+        <!--背景 start-->
+        <div class="bg">
+            <img src="${ctxStatic}/images/login_bg_02.png">
+        </div>
+        <!--背景 end>
+        <!--左侧图片 start-->
+        <div class="login_left_img">
+            <img src="${ctxStatic}/images/login_img.png">
+        </div>
+        <!--左侧图片 end-->
+        <!--内容 start-->
+        <form id="loginForm" class="form-signin" action="${ctx}/login" method="post">
+        <div class="login_content"><br>
+            <!--title start -->
+            <h1 class="login_title_h1"><span style="font-weight:bold;"><i class="logo"></i>上海市妇幼保健信息系统</span></h1>
+            <!--title end-->
+            
+            
+            <div class="login_content_box clearfix">
+                <!--登录框 start-->
+                
+                <div class="login_box right">
+                    <h3 class="login_h3_tit">用户登录</h3>
+                      	<div class="header">
+							<div id="messageBox" class="alert alert-error ${empty message ? 'hide' : ''}"><button data-dismiss="alert" class="close">×</button>
+								<label id="loginError" class="error">${message}</label>
+							</div>
+						</div>
+                    <div class="login_box_content">
+                        <ul class="login_box_ul">
+                            <li><i class="icon1"></i><input id="LoginName"  name="username" placeholder="请输入您的用户名" type="text" /></li>
+                            <li><i class="icon2"></i><input type="password" id="LoginPassword" name="password" placeholder="请填写您的密码" type="text" onkeydown="pressLogin();"/></li>
+                        </ul>
+                      
+                        <div class="login_box_tool clearfix">
+                            <a class="btns pink_btn left" onclick="checkLogin()" style="cursor:pointer;">登录</a>
+                            <a class="btns gray_btn right" href="">重填</a>
+                        </div>
+                    </div>
+                </div>
+                <!--登录框 end-->
+            </div>
+        </div>
+        </form>
+        <!--内容 end-->
+          <div class="login_footer">
+        	2015  上海市卫计委版权所有 
+    		</div>
+    </div>
+  
+    
 </body>
 </html>

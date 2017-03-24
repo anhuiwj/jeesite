@@ -19,10 +19,25 @@
 		p.name AS "parent.name"
 	</sql>
 	
+	<sql id="areaColumns2">
+		a.id,
+		a.parent_id AS "parent.id",
+		a.parent_ids,
+		a.code,
+		a.name,
+		a.sort,
+		a.type,
+		a.remarks,
+		a.create_by AS "createBy.id",
+		a.create_date,
+		a.update_by AS "updateBy.id",
+		a.update_date,
+		a.del_flag
+	</sql>
+	
 	<sql id="areaJoins">
 		LEFT JOIN sys_office p ON p.id = a.parent_id
     </sql>
-    
 	<select id="get" resultType="Area">
 		SELECT
 			<include refid="areaColumns"/>
@@ -40,7 +55,23 @@
 		<!-- 数据范围过滤 -->
 		${sqlMap.dsf}
 		OR a.id = #{currentUser.office.area.id}
-		ORDER BY a.code
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findTopList" resultType="Area">
+		SELECT
+			<include refid="areaColumns2"/>
+		FROM sys_area a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.parent_id =#{code}
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findByParentCode" resultType="Area">
+		SELECT
+			<include refid="areaColumns"/>
+		FROM sys_area a join  sys_area p ON a.parent_id = p.id
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and p.code=#{code}
+		ORDER BY a.sort
 	</select>
 	
 	<select id="findAllList" resultType="Area">
@@ -49,7 +80,7 @@
 		FROM sys_area a
 		<include refid="areaJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
-		ORDER BY a.code
+		ORDER BY a.sort
 	</select>
 	
 	<select id="findByParentIdsLike" resultType="Area">
@@ -59,7 +90,34 @@
 			a.parent_ids
 		FROM sys_area a
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_ids LIKE #{parentIds}
-		ORDER BY a.code
+		ORDER BY a.sort
+	</select>
+	
+	 
+	<select id="getAreaByCode" resultType="Area">
+		SELECT
+			<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.del_flag = '0'
+		and a.code = #{code}
+	</select>
+	
+	<select id="findAllParent" resultType="Area">
+		SELECT
+			<include refid="areaColumns"/>
+		FROM sys_area a
+		<include refid="areaJoins"/>
+		WHERE a.del_flag = '0' and a.id in 
+		<foreach collection="array" index="index" item="parentIdArr" open="(" separator="," close=")"> #{parentIdArr}</foreach>  
+		order by a.parent_ids
+	</select>
+	
+	<select id="queryAreaByUserId" resultType="Area">
+		select a.* from sys_user u 
+		left join sys_office o on u.company_id = o.id
+		left join sys_area a on o.area_id = a.id
+		where u.id = #{userId}
 	</select>
 	
 	<insert id="insert">
@@ -95,13 +153,10 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE sys_area SET 
-			parent_id = #{parent.id}, 
-			parent_ids = #{parentIds}, 
+		UPDATE sys_area SET
 			code = #{code}, 
 			name = #{name}, 
 			sort = #{sort}, 
-			type = #{type}, 
 			update_by = #{updateBy.id}, 
 			update_date = #{updateDate}, 
 			remarks = #{remarks}
@@ -120,7 +175,6 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id} OR parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
-					<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
 	</update>
 	

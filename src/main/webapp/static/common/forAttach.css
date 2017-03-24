@@ -1,0 +1,42 @@
+a.addfile {
+	background-image:url(../images/addOrigin.gif);
+	background-repeat:no-repeat;
+	background-position:0px 5px;
+	display:block;
+	float:left;
+	height:20px;
+	margin-top:-1px;
+	position:relative;
+	text-decoration:none;
+	top:0pt;
+	width:80px;
+}
+
+a.addAttachFile {
+	background-image:url(../images/addAttach.gif);
+	background-repeat:no-repeat;
+	background-position:0px 5px;
+	display:block;
+	float:left;
+	height:20px;
+	margin-top:-1px;
+	position:relative;
+	text-decoration:none;
+	top:0pt;
+	width:80px;
+}
+	
+input.addfile {
+	cursor:pointer;
+	height:18px;
+	left:-13px;
+	filter:alpha(opacity=0); 
+	-moz-opacity:0;
+	opacity: 0;
+	top:5px;
+	width:65px;
+	
+} 
+
+
+ 

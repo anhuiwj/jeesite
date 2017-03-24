@@ -1,0 +1,876 @@
+/*
+*产前检查页面样式
+*2014-06-11
+*/
+.row{
+    width: 100%;
+}
+.w1,.w2,.w2-5,.w3,.w4,.w5,.w6,.w7,.w8,.w9{
+    position: relative;
+    float: left;
+    display: inline;
+}
+.w1{ width: 10%;}
+.w2{ width: 20%;}
+.w2-5{ width: 25%;}
+.w3{ width: 30%;}
+.w4{ width: 40%;}
+.w5{ width:50%;}
+.w6{ width: 60%;}
+.w7{ width: 70%;}
+.w8{ width: 80%;}
+.w9{ width: 90%;}
+
+.f_w_20{
+    width: 20px;
+}
+.f_w_30{
+    width: 30px;
+}
+.f_w_50{
+    width: 50px;
+}
+.f_w_80{
+    width: 80px;
+}
+.f_w_100{
+    width: 100px;
+}
+.f_w_120{
+    width: 120px;
+}
+.f_w_140{
+    width: 145px;
+}
+.f_w_145{
+    width: 145px;
+}
+.f_w_150{
+    width: 150px;
+}
+
+.tab{
+    position:absolute;
+    left:-99999px;
+    top:-99999px;
+}
+
+.ipt_style{
+    border: 1px solid #e4e4e4;
+    background: #f5f5f5;
+    border-radius: 5px;
+    height: 20px;
+    line-height: 20px;
+    padding:3px 5px;
+    color: #333;
+}
+.textarea_style{
+    border: 1px solid #e4e4e4;
+    background: #f5f5f5;
+    border-radius: 5px;
+    line-height: 20px;
+    padding:3px 5px;
+    color: #333;
+}
+
+
+
+.prenatal_tab_nav{
+    border-bottom: 1px solid #f5f5f5;
+    height: 33px;
+    margin-top: 15px;
+}
+.prenatal_tab_box{
+    width: 100%;
+}
+.prenatal_tab_box div.active{
+    position:static;
+    left:0;
+    top:0;
+}
+.prenatal_tab_nav li {
+    position: relative;
+    height: 27px;
+    float: left;
+    width: 100px;
+    padding: 3px;
+}
+.prenatal_tab_nav li a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    line-height: 27px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+}
+.prenatal_tab_nav li a:hover{
+
+}
+.prenatal_tab_nav li.active{
+    padding: 0;
+    height: 33px;
+    margin-right:5px;
+}
+.prenatal_tab_nav li.active a{
+    height: 32px;
+    line-height: 32px;
+    background: no-repeat;
+    color: #f57b81;
+    border: 1px solid #f5f5f5;
+    border-bottom:1px solid #fff;
+}
+
+.prenatal_title{
+    position: relative;
+    color: #333333;
+    font-weight: bold;
+    line-height: 28px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+/*个人信息*/
+.prenatal_info_textWrap{
+    margin-right: 20px;
+}
+.prenatal_info_chart_tab_box{
+    padding:5px 15px 5px 5px;
+    line-height: 22px;
+    font-size: 14px;
+    font-weight: bold;
+}
+table.tables{
+    width: 100%;
+    margin:10px 0 5px -5px;
+}
+table.tables th,table.tables td{
+    height: 22px;
+    line-height: 22px;
+    font-size: 14px;
+    font-weight: bold;
+    padding:0 10px;
+}
+table.tables th{
+    background: #f7f7f7;
+    color: #666;
+    text-align: right;
+    vertical-align: middle;
+}
+table.tables th.green{
+    width: 103px;
+    color: #3b6bf3;
+    cursor: pointer;
+}
+table.tables th.green i{
+    float: left;
+    margin-top: 3px;
+    cursor: pointer;
+}
+ table.tables td{
+    color: #333;
+    padding:0 5px 5px 5px;
+     border-bottom: 1px solid #ccc;
+}
+.look_more{
+    display: inline-block;
+    padding-right: 12px;
+    color: #333333;
+    font-weight: bold;
+}
+
+.prenatal_info_chart{
+
+}
+.prenatal_info_chart_nav_tab{
+    height: 28px;
+}
+.prenatal_info_chart_nav_tab li{
+    float: left;
+    position: relative;
+    width: 74px;
+    height: 24px;
+    padding: 4px 0 0 3px;
+}
+.prenatal_info_chart_nav_tab li a{
+    display: block;
+    background: #f5f5f5;
+    height: 24px;
+    line-height: 24px;
+    color: #333333;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+}
+.prenatal_info_chart_nav_tab li a:hover{
+    color: #f6868b;
+}
+.prenatal_info_chart_nav_tab li.active{
+    height: 28px;
+    padding: 0;
+    color: #f6868b;
+}
+.prenatal_info_chart_nav_tab li.active a{
+    height: 26px;
+    line-height: 26px;
+    color: #f6868b;
+    border:2px solid #ffe5e6 ;
+    background: none;
+    border-bottom: 2px solid #fff;
+}
+.prenatal_info_chart_tab_box{
+    padding: 10px;
+}
+.prenatal_info_chart_tab_box div.active{
+    display: block;
+}
+
+
+/*初检结果和历次产检*/
+.prenatal_scroll_div{
+    width: 100%;
+    position: relative;
+    overflow:hidden;
+}
+.prenatal_scroll_div .prenatal_scroll_more{
+   display: block;
+   position: absolute;
+   top:0;
+   right: 0;
+   width: 19px;
+   height: 33px;
+   background: url("../images/table_more_info_btn.png") no-repeat;
+   cursor: pointer;
+}
+.prenatal_scroll_div table{
+    width: 100%;
+    border: 1px solid #dddddd;
+}
+.prenatal_scroll_div table th{
+    height: 31px;
+    background: #f5f5f5;
+    font-size: 14px;
+    color: #666666;
+    border-bottom: 1px solid #dddddd;
+    text-align: center;
+    font-weight: bold;
+}
+.prenatal_scroll_div table td{
+    text-align: center;
+    color: #666666;
+    border-bottom: 1px solid #dddddd;
+    line-height: 30px;
+}
+.prenatal_scroll_div table tr.even td{
+    background: #f3f3f3;
+}
+
+
+/*诊疗记录*/
+.prenatal_title .record_info{
+    position:absolute;
+    right:0;
+    top:0;
+    display: inline-block;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 10px;
+    color: #fff;
+    background: #feb6ba;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.waring_p1{
+    color:#ec5d81;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 33px;
+    background: #f6f6f6;
+    border-left: 2px solid #ec5d81;
+    padding-left: 10px;
+}
+
+/*诊疗记录弹出框*/
+.record_alert{
+    position: relative;
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    background: #fff;
+    width: 840px;
+  /*  position: absolute;
+    left: -10000px;
+    top:0;*/
+
+}
+.record_alert select{
+    display: block;
+    width: 100%;
+}
+.close_top{
+    position: absolute;
+    right: 10px;
+    top:10px;
+    display: inline-block;
+    background: url("../images/alert_close_icon.png");
+    width: 14px;
+    height: 14px;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+
+.record_alert table.table_from{
+    width: 96%;
+}
+.record_alert table.table_from input ,.record_alert table.table_from textarea,.record_alert table.table_from select{
+    display: block;
+    width: 100%;
+}
+.record_alert table.table_from td{
+  padding: 8px 5px;
+  line-height: 22px;
+
+}
+.record_alert table.table_from td.td_text{
+    vertical-align: text-top;
+    text-align: right;
+    color: #333333;
+}
+
+
+.record_alert_tool{
+    height: 25px;
+    text-align: center;
+    margin:15px auto;
+}
+
+
+/*弹出框内容样式*/
+.test_results_alert{
+    padding: 15px;
+}
+.results_a_table{
+     width: 100%;
+}
+.results_a_table td,.results_a_table th{
+    height: 24px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+.results_a_table th{
+    text-align: center;
+    background: #f9f9f9;
+    font-weight: bold;
+}
+.results_a_table td.td_text{
+    background: #f9f9f9;
+    text-align: right;
+    color: #666;
+}
+.results_a_list{}
+.results_a_list li{
+    float: left;
+    width: 120px;
+    margin-right: 10px;
+    height: 30px;
+    line-height: 30px;
+}
+
+
+/*高危筛选*/
+.worry_record{
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #dddddd;
+    margin-bottom: 20px;
+}
+
+.worry_result{
+    width: 100%;
+    overflow: hidden;
+}
+.worry_result_ul{
+    padding-left: 30px;
+    position: relative;
+}
+.worry_result_ul li{
+    position: relative;
+    width: 100%;
+    display: block;
+    border-left: 3px solid #f5f5f5;
+    padding-bottom: 15px;
+
+}
+
+.worry_result_ul_l{
+    position: absolute;
+    overflow: hidden;
+    width: 150px;
+    height: 68px;
+    background: #f5f5f5;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    left: -30px;
+    top:0;
+}
+.worry_result_ul_l .p1{
+    margin-top: 10px;
+    padding:0 10px;
+    line-height: 24px;
+    height: 24px;
+}
+.worry_result_ul_l .p1 span.span1{
+    float: left;
+    width: 45px;
+    height: 22px;
+    text-align: right;
+    padding-right: 5px;
+    color: #fff;
+    background: #feb6ba;
+}
+.worry_result_ul_l .p1 span.span2{
+    float: right;
+    font-size: 16px;
+    color: #333333;
+}
+.worry_result_ul_l .p1 span.span2 i{
+    font-size: 12px;
+}
+
+.worry_result_ul_l .p2{
+    white-space: nowrap;
+    padding:0 10px;
+    font-size: 14px;
+    color: #333333;
+    line-height: 24px;
+}
+
+/*高危筛选内容弹出框*/
+.risk_assessment_alert{
+    padding: 15px;
+}
+.risk_a_a_h3{
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #D76C71;;
+}
+.risk_a_a_p{
+    line-height: 35px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.risk_a_a_text{
+    padding: 5px 10px;
+    border: 1px solid #cccccc;
+    line-height: 24px;
+}
+.risk_a_a_ul{
+    padding-bottom: 10px;
+}
+.risk_a_a_ul li{
+    float: left;
+    width: 33.3%;
+}
+.risk_a_a_ul li div{
+    padding-left: 15px;
+}
+.risk_a_a_ul li div p{
+    line-height: 25px;
+    color: #666;
+}
+
+/**/
+.medicine_top{
+    border-bottom: 1px dashed #ccc;
+    color: #333333;
+    padding: 15px 20px;
+}
+.search_btn,.search_btn:hover{
+    display: inline-block;
+    color: #fff;
+    width: 50px;
+    height: 21px;
+    line-height: 21px;
+    background: #f57b81;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: normal;
+    text-decoration: none;
+}
+.medicine_infomation .w5{
+    *width: 49.9%;
+}
+
+/*联想查询*/
+.search_lenovo{
+    width: 325px;
+    height: 160px;
+}
+.search_lenovo table{
+    width: 100%;
+}
+.search_lenovo table th{
+    background: #efb9bb;
+    color: #333;
+    line-height: 25px;
+    border-right:1px solid #fff;
+    border-bottom: 1px solid #fff;
+    text-align: center;
+}
+
+.search_lenovo table td{
+    color: #333;
+    line-height: 25px;
+    border-bottom: 1px solid #fff;
+    text-align: center;
+    background: #fafafa;
+}
+.search_lenovo table tr.even td{
+    background: #fff6f6;
+}
+
+.search_lenovo_page{
+    text-align: right;
+    height: 24px;
+    line-height: 24px;
+    padding: 15px;
+}
+.search_lenovo_page a{
+    color: #333;
+}
+
+.medicine_info_box{
+    /*margin: 15px 20px;*/
+}
+.medicine_info_box .h4_tit{
+    color: #333333;
+    font-size: 14px;
+    line-height: 35px;
+    font-weight: bold;
+}
+.medicine_info_box .medicine_i_b_c{
+    position: relative;
+    background: #f5f5f5;
+    height: 80px;
+    overflow:hidden;;
+    line-height: 24px;
+    margin-right: 20px;
+}
+.medicine_info_box .medicine_i_b_c .con{
+    padding: 10px;
+}
+
+.add_new_medicine{
+   display: inline-block;
+    color: #fff;
+    width: 98px;
+    height: 21px;
+    line-height: 21px;
+    background: #f57b81;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: normal;
+}
+.detail_btn i,.delete_btn i{
+     margin-right: 5px;
+ }
+.detail_btn,.delete_btn{
+    color: #666;
+}
+
+.worry_result_ul_r{
+   margin-left: 150px;
+   padding-right: 3px;
+}
+
+.alert_box{
+    position: relative;
+    border: 1px solid #f7f7f7;
+    box-shadow: 0 0 3px #ccc;
+    margin: 0 auto;
+    border-radius: 5px;
+    background: #fff;
+    overflow: hidden;
+}
+.medicine_detail_alert{
+    width: 480px;
+}
+.medicine_d_a_c{
+    padding: 15px;
+}
+.medicine_d_a_c .h1_tit{
+    text-align: center;
+    font-size: 16px;
+    line-height: 40px;
+    height: 40px;
+    font-weight: bold;
+}
+.medicine_d_a_c p{
+    line-height: 24px;
+    color: #333333;
+}
+.medicine_d_a_c p span{
+    font-weight: bold;
+}
+.medicine_d_a_c .close_btn{
+    display: inline-block;
+    border: 0;
+    width: 68px;
+    height: 21px;
+    font-size: 14px;
+    color: #333;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 21px;
+    background: #dedede;
+}
+.addnew_record_alert{
+    width: 265px;
+    padding: 10px;
+}
+.addnew_record_alert ul{
+
+}
+.addnew_record_alert ul li{
+    height: 30px;
+    margin-bottom: 10px;
+}
+.addnew_record_alert ul li label{
+    float: left;
+    width: 100px;
+    text-align: right;
+    padding-right:10px;
+    line-height: 30px;
+}
+.addnew_record_alert ul li .date_box{
+    float: left;
+    position: relative;
+    height: 30px;
+    width: 134px;
+}
+.addnew_record_alert ul li .date_box input{
+    width: 124px;
+}
+.addnew_record_alert ul li .date_box em{
+    display: block;
+    right: 10px;
+    top:5px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    background: url("../images/icon_date_01.png") no-repeat;
+}
+
+/*开具申请单*/
+.open_application{
+    position: relative;
+    width: 100%;
+}
+.folder_left_list{
+    position: absolute;
+    width: 230px;
+    left: 0;
+    top:0;
+    border-right:1px solid #f6f6f6;
+}
+.folder_left_list_ul{
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.folder_left_list_ul li.sub_01{
+    border-bottom: 1px dashed #f1f1f1;
+    padding: 5px 0;
+}
+.folder_left_list_ul li.sub_01 a.sub_a,.folder_left_list_ul li.sub_01 a.sub_a:link{
+    display: block;
+    padding-left: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #444444;
+    position: relative;
+    font-weight: bold;
+    overflow:hidden;
+    -o-text-overflow:ellipsis;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    word-break:keep-all;
+    word-wrap:normal
+}
+.folder_left_list_ul li.sub_01 a.sub_a i{
+    position: absolute;
+    display: block;
+    width: 14px;
+    height: 14px;
+    left: 10px;
+    top:8px;
+    background: url("../images/folder_icon01.png") no-repeat;
+}
+
+.folder_left_list_ul li.sub_02{
+    display: block;
+    padding-left:15px;
+    height: 30px;
+    line-height: 30px;
+}
+.folder_left_list_ul li.sub_02 a.sub_a2,.folder_left_list_ul li.sub_02 a.sub_a2:link{
+    display: block;
+    padding-left: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #666;
+    position: relative;
+    overflow:hidden;
+    -o-text-overflow:ellipsis;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    word-break:keep-all;
+    word-wrap:normal
+}
+.folder_left_list_ul li.sub_02 a.sub_a2 i{
+    position: absolute;
+    display: block;
+    width: 14px;
+    height: 14px;
+    left: 10px;
+    top:8px;
+    background: url("../images/folder_icon02.png") no-repeat;
+}
+
+/*还没有点*/
+.folder_left_list_ul li.sub_01 a:visited,.folder_left_list_ul li.sub_02 a:visited{
+    color: #f57b81;
+}
+
+.folder_left_list_ul li.sub_01 a.sub_a:hover,.folder_left_list_ul li.sub_02 a.sub_a2:hover{
+    background: #ffe3e4;
+    color: #f57b81;
+    text-decoration: none;
+}
+.folder_left_list_ul li.sub_01 a.active{
+    background: #ffe3e4;
+    color: #f57b81;
+    text-decoration: none;
+}
+
+
+
+
+.folder_right{
+  margin-left: 245px;
+}
+.folder_h1_tit{
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.folder_from_table{
+    width: 100%;
+}
+.folder_from_table td{
+    line-height: 22px;
+    padding: 6px 5px;
+    color: #333333;
+}
+.folder_from_table td.td_text01{
+    width: 70px;
+    text-align: right;
+    color: #333333;
+}
+
+.folder_from_table .folder_from_table_s_01{
+    width: 100%;
+}
+.folder_from_table .folder_from_table_s_02{
+    width: 100%;
+}
+.surgery_way_table{
+    width: 100%;
+}
+.surgery_way_table td{
+    padding:6px;
+    line-height: 22px;
+}
+
+/*查看报告单*/
+.hospital_diagnose{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.hospital_diagnose .hospital_title{
+    font-size: 18px;
+    line-height: 40px;
+    text-align: center;
+    color: #333;
+}
+.hospital_diagnose .hospital_agree{
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+.hospital_diagnose .hospital_content{
+    padding: 15px;
+}
+.hospital_diagnose .hospital_content p{
+    font-size: 14px;
+    line-height: 24px;
+    color: #666;
+}
+.hospital_diagnose .hospital_content p .text_underline{
+    padding-left: 5px;
+    padding-right: 5px;
+    text-decoration: underline;
+}
+
+/*转入转出*/
+.turn_table{
+    width: 100%;
+}
+.turn_table th,.turn_table td{
+    padding:9px 10px;
+    font-size: 14px;
+    color: #666;
+    border: 1px solid #eee;
+}
+.turn_table th{
+    text-align: right;
+    width: 100px;
+    background:#F9F9F9;
+}
+
+/*死亡报告*/
+.death_report{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.death_report .turn_table th{
+    width: 85px;
+}
+.death_report .ipt_style{
+    margin-right: 10px;
+}
+.death_report input.w80{
+    width: 80px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.death_report .textarea_style01{
+    border: 1px solid #E4E4E4;
+    background: none repeat scroll 0% 0% #F5F5F5;
+    border-radius: 5px;
+    line-height: 20px;
+    padding: 3px 5px;
+    color: #333;
+}

@@ -1,0 +1,16 @@
+
+.commonTable     { background:#c2c5ca; width:100%; border:1px solid #fff}
+.commonTable th,
+.commonTable td  { background:#ececff; #7BB5D7; *border:none;}
+*+html .commonTable td {border:none;}
+.commonTable th  { background-color:#d3def1; border:1px #fff;text-align:right;}
+
+.submit_01{ border:0; background:url(../images/button/submit_02.jpg) no-repeat; height:24px; width:63px; line-height:24px; font-size:14px; font-weight:bold; color:#FFFFFF; cursor:pointer;}
+.submit_02{ border:1px solid #6d90ab; background:#fffbbf; height:20px; padding-top:1px;}
+.submit_03{ border:0; background:url(../images/button/submit_02.jpg) no-repeat; height:24px; width:63px; line-height:24px; font-weight:bold; color:#FFFFFF; cursor:pointer;}
+.submit_04{ border:0; background:url(../images/button/submit_01.jpg) no-repeat; height:24px; width:151px; line-height:24px; font-weight:bold; color:#FFFFFF; cursor:pointer;}
+
+
+
+
+

@@ -1,86 +1,221 @@
+<%@ page import="java.util.List" %>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
+<%@ page import="com.thinkgem.jeesite.modules.sys.entity.User" %>
+<%@ page import="com.thinkgem.jeesite.modules.sys.utils.UserUtils" %>
+<%@ page import="com.thinkgem.jeesite.modules.sys.entity.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
 	<title>用户管理</title>
-	<meta name="decorator" content="default"/>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#btnExport").click(function(){
-				top.$.jBox.confirm("确认要导出用户数据吗？","系统提示",function(v,h,f){
-					if(v=="ok"){
-						$("#searchForm").attr("action","${ctx}/sys/user/export");
-						$("#searchForm").submit();
+	<meta name="decorator" content="miniui"/>
+	<link rel="stylesheet" href="${ctxStatic}/css/my-mini.css" />
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+</style>
+	<%
+		User user = UserUtils.getUser();
+		List<Role> roleList = user.getRoleList();
+
+		// 0 普通用户 1.系统管理员 2.区县管理员 3.机构管理员
+		String manager = "0";
+		if(roleList != null && roleList.size()>0){
+			for (Role role : roleList){
+				if(role != null && StringUtils.isNotBlank(role.getEnname())){
+					if(role.getEnname().equals("dept")){
+						manager = "1";
+					}else if(role.getEnname().equals("AREA_MANAGE")){
+						manager = "2";
+					}else if(role.getEnname().equals("ORG_MANAGE")){
+						manager = "3";
 					}
-				},{buttonsFocus:1});
-				top.$('.jbox-body .jbox-icon').css('top','55px');
-			});
-			$("#btnImport").click(function(){
-				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
-					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
-			});
-		});
-		function page(n,s){
-			if(n) $("#pageNo").val(n);
-			if(s) $("#pageSize").val(s);
-			$("#searchForm").attr("action","${ctx}/sys/user/list");
-			$("#searchForm").submit();
-	    	return false;
-	    }
-	</script>
+					break;
+				}
+			}
+		}
+		request.setAttribute("manager",manager);
+		request.setAttribute("areaCode",user.getCompany().getArea().getCode());
+	%>
 </head>
 <body>
-	<div id="importBox" class="hide">
-		<form id="importForm" action="${ctx}/sys/user/import" method="post" enctype="multipart/form-data"
-			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
-			<input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
-			<input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>
-			<a href="${ctx}/sys/user/import/template">下载模板</a>
-		</form>
+<div id="mainTabs"  class="mini-tabs" activeIndex="0" style="width:100%;height:100%;">
+    <div name="userList" title="用户管理" style="width:100%;" >
+	
+	<div style="width:100%;">
+        <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
+            <table style="width:100%;">
+                <tr>
+                    <td style="width:100%;">
+                        <a class="mini-button" iconCls="icon-add" onclick="addUser()" >添加用户</a>           
+                    </td>
+                    <td style="white-space:nowrap;">
+                       	姓名：<input id="name" name="name" class="mini-textbox"  style="width:100px;"/>   
+                       	登录名：<input id="loginName" name="loginName" class="mini-textbox"  style="width:100px;"/>
+
+                       	<c:if test="${fns:getUser().admin}"><!-- 如果是超级管理员-->
+                       		归属机构：<div id="orgCode" name="orgCode" class="mini-treeselect" resultAsTree="false" style="width:260px;" data="${fns:getOfficeTreeForAdmin('1')}" ></div>
+                       	</c:if>
+						<c:if test="${! fns:getUser().admin}"><!-- 如果不是超级管理员-->
+							<c:if test="${manager == '1'}">	<!--系统管理员-->
+								归属机构：<div id="orgCode" name="orgCode" class="mini-treeselect" resultAsTree="false" style="width:260px;" data="${fns:getOfficeTreeForArea("310000000000")}" ></div>
+							</c:if>
+							<c:if test="${manager == '2'}">	<!--区县管理员-->
+								归属机构：<div id="orgCode" name="orgCode" class="mini-treeselect" resultAsTree="false" style="width:260px;" data="${fns:getOfficeTreeForArea(areaCode)}" ></div>
+							</c:if>
+							<c:if test="${manager == '3'}">	<!--机构管理员，当前自己机构，不需要做任何事情-->
+
+							</c:if>
+						</c:if>
+
+                        <a class="my-btn green"  plain="false" onclick="queryUser()">查询</a>
+                        <a class="my-btn"  plain="false" onclick="onUndo()">重置</a>
+                    </td>
+                </tr>
+            </table>           
+        </div>
+    </div>
+	<div id="uGrid" class="mini-datagrid" fit="true"  url="${ctx}/sys/user/pageQuery" idField="id" allowResize="true" pageSize="10" >
+    	<div property="columns">
+        	<div type="indexcolumn"></div>
+        	<div name="id" field="id"  visible="false">id</div>
+        	<div name="name" field="name" width="60" >姓名</div>
+        	<div field="loginName" field="loginName" width="80">登录名</div>
+        	<div field="companyName" field="companyName" width="160">归属机构</div>
+        	<div field="no" field="no" width="60" align="right">工号</div>
+        	<div field="phone" field="phone" width="80" align="right">电话</div>
+        	<div name="opr" width="100" renderer="onOprRenderer">操作</div>       
+    	</div>
 	</div>
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/sys/user/list">用户列表</a></li>
-		<shiro:hasPermission name="sys:user:edit"><li><a href="${ctx}/sys/user/form">用户添加</a></li></shiro:hasPermission>
-	</ul>
-	<form:form id="searchForm" modelAttribute="user" action="${ctx}/sys/user/list" method="post" class="breadcrumb form-search ">
-		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<sys:tableSort id="orderBy" name="orderBy" value="${page.orderBy}" callback="page();"/>
-		<ul class="ul-form">
-			<li><label>归属公司：</label><sys:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}" 
-				title="公司" url="/sys/office/treeData?type=1" cssClass="input-small" allowClear="true"/></li>
-			<li><label>登录名：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/></li>
-			<li class="clearfix"></li>
-			<li><label>归属部门：</label><sys:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" 
-				title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/></li>
-			<li><label>姓&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="return page();"/>
-				<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
-				<input id="btnImport" class="btn btn-primary" type="button" value="导入"/></li>
-			<li class="clearfix"></li>
-		</ul>
-	</form:form>
-	<sys:message content="${message}"/>
-	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>归属公司</th><th>归属部门</th><th class="sort-column login_name">登录名</th><th class="sort-column name">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
-		<tbody>
-		<c:forEach items="${page.list}" var="user">
-			<tr>
-				<td>${user.company.name}</td>
-				<td>${user.office.name}</td>
-				<td><a href="${ctx}/sys/user/form?id=${user.id}">${user.loginName}</a></td>
-				<td>${user.name}</td>
-				<td>${user.phone}</td>
-				<td>${user.mobile}</td><%--
-				<td>${user.roleNames}</td> --%>
-				<shiro:hasPermission name="sys:user:edit"><td>
-    				<a href="${ctx}/sys/user/form?id=${user.id}">修改</a>
-					<a href="${ctx}/sys/user/delete?id=${user.id}" onclick="return confirmx('确认要删除该用户吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
-	<div class="pagination">${page}</div>
+	</div>
+</div>
+	
+	
+	
+	<script type="text/javascript">
+		mini.parse();
+		var tabs=mini.get('mainTabs');
+		var grid = mini.get('uGrid');
+		grid.load();
+		
+		function queryUser() {
+            //姓名
+			var name = mini.get('name').getValue();
+
+            //登录名
+            var loginName = mini.get('loginName').getValue();
+
+            //机构
+            var orgCode = '';
+			<c:if test="${fns:getUser().admin}"><!-- 判断是否超级管理员-->
+			orgCode = mini.get('orgCode').getValue();
+           	</c:if>
+            <c:if test="${! fns:getUser().admin}"><!-- 如果不是超级管理员 而是 区县管理员和系统管理员-->
+                <c:if test="${manager == '1' or manager == '2'}">
+                    orgCode = mini.get('orgCode').getValue();
+                </c:if>
+            </c:if>
+
+
+			var param = {
+				name:name,
+				loginName:loginName,
+				orgCode:orgCode
+			}
+			grid.load(param);
+		}
+		
+		function onUndo() {
+			mini.get('name').setValue('');
+			mini.get('loginName').setValue('');
+            var orgCode = mini.get('orgCode');
+            if(orgCode){
+                orgCode.setValue('');
+            }
+
+		}
+		
+		function addUser() {
+			var url="${ctx}/sys/user/form";
+	    	var formTab = tabs.getTab("formTab");
+	    	if(!formTab) {
+	    		formTab = { name:"formTab",title: "添加用户", url:url, showCloseButton: true};
+	    		tabs.addTab(formTab);
+	    	    tabs.activeTab(formTab);
+	    	} else {
+	    		tabs.removeTab(formTab);
+	    		formTab = { name:"formTab",title: "添加用户", url:url, showCloseButton: true };
+	    		tabs.addTab(formTab);
+	    		tabs.activeTab(formTab);
+	    	}
+		}
+		
+		function onOprRenderer(e) {
+    		var record = e.record;
+    		
+    		var returnStr = "";
+    		returnStr += '<a href="javascript:modify(\''+record.id+'\')">修改</a>&nbsp;';
+    		returnStr += '<a href="javascript:remove(\''+record.id+'\')">删除</a>&nbsp;';
+    		
+    		return returnStr;
+    	}
+		
+		function modify(uid) {
+			var url="${ctx}/sys/user/edit?id="+uid;
+	    	var formTab = tabs.getTab("editTab");
+	    	if(!formTab) {
+	    		formTab = { name:"editTab",title: "修改用户", url:url, showCloseButton: true};
+	    		tabs.addTab(formTab);
+	    	    tabs.activeTab(formTab);
+	    	} else {
+	    		tabs.removeTab(formTab);
+	    		formTab = { name:"editTab",title: "修改用户", url:url, showCloseButton: true };
+	    		tabs.addTab(formTab);
+	    		tabs.activeTab(formTab);
+	    	}
+		}
+		
+		function remove(uid) {
+			mini.confirm("确定删除记录？", "确定？",
+	    	    function (action) {
+	    	        if(action == "ok") {
+	    	        	$.ajax({
+	    	            	url: "${ctx}/sys/user/remove/"+uid,
+	    	                type: "post",
+	    	                success: function (text) {
+	    	                	mini.alert("删除成功");
+	    	                   	grid.reload();
+	    		                	
+	    	                }
+	    	            });
+	    	       	}        
+	    		}
+	    	);
+		}
+		
+		function reload(flag) {
+			
+			if(flag == '1') {
+				var formTab = tabs.getTab("formTab");
+				tabs.removeTab(formTab);
+			}
+			if(flag == '2') {
+				var editTab = tabs.getTab("editTab");
+				tabs.removeTab(editTab);
+			}
+			var listTab = tabs.getTab("userList");
+			tabs.activeTab(listTab);
+			grid.reload();
+			mini.alert("保存成功");
+		}
+
+
+    </script>
 </body>
 </html>

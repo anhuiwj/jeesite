@@ -1,0 +1,360 @@
+.color_f57{color: #f57b81;}
+.color_ff9{color: #ff9328;}
+.color_6bc{color: #6bcea5;}
+.color_ff0{color: #ff0000;}
+.color_f39{color: #f39800;}
+.color_5ac{ color: #5ac89b}
+.doctor_wrap{
+    padding-top: 15px;
+}
+.doctor_leftmain{
+    position: relative;
+}
+.doctor_right{
+    margin-left: 200px;
+    padding:0 10px;
+}
+
+
+.look_more {
+    display: inline-block;
+    background: url("../images/more_down_icon.png") right center no-repeat;
+    padding-right: 12px;
+    color: #333333;
+    font-weight: bold;
+}
+
+/*已就诊未就诊*/
+.doctor_title{
+    color: #333333;
+    line-height: 36px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/*今日就诊情况*/
+.today_come{
+    border: 2px solid #f5f5f5;
+    margin-right: 10px;
+    padding: 10px;
+}
+.today_come .doctor_title span{
+    font-size: 14px;
+    color: #a3a3a3;
+}
+.today_come_chart{
+
+}
+
+.today_come_chart li{
+    float: left;
+    width: 33%;
+    text-align: center;
+    padding:25px 0;
+}
+.today_come_chart li img.img-response{
+    display: block;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.today_come_chart li p.p1{
+    color: #adadad;
+    font-size: 11px;
+}
+.today_come_chart li p.p1 em{
+    font: 700 24px/24px Arial;
+    padding-right: 5px;
+}
+.today_come_chart li p.p2{
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    line-height: 30px;
+}
+/*日历提醒*/
+.calendar_box{
+    position: relative;
+}
+.calendar_box .add_canlendar_btn{
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    right:10px;
+    top:10px;
+}
+.calendar_box .add_canlendar_btn img{
+    width: 20px;
+    height: 20px;
+}
+.addCanlendarbox{
+    width: 400px;
+    display: none;
+}
+.addCanlendarbox_con{
+    padding: 15px;
+}
+.a_c_b01{
+    line-height: 30px;
+    color: #666;
+}
+.a_c_b01 p{
+    line-height: 30px;
+}
+.a_c_b01 textarea{
+    width: 98%;
+}
+.calendar_title{
+    height: 38px;
+    line-height: 38px;
+    _height: 20px;
+    _padding: 9px 0;
+    _line-height: 20px;
+    color: #fff;
+    background: #feb6ba;
+   text-align: center;
+   margin-right: 1px;
+   vertical-align: middle;
+}
+.calendar_title span{
+    display: inline-block;
+    width: 85px;
+    font-weight: bold;
+    line-height: 38px;
+}
+.calendar_title a.calendar_left_btn,.calendar_title a.calendar_right_btn{
+    display: inline-block;
+    width: 6px;
+    height: 10px;
+    font-size: 0;
+    line-height: 0px;
+    overflow: hidden;
+    margin: 0 15px;
+}
+.calendar_title a.calendar_left_btn{
+    background: url("../images/canlender_left_btn.png");
+}
+
+.calendar_title a.calendar_right_btn{
+    background: url("../images/canlender_right_btn.png");
+}
+
+.calendar_table{
+    width: 100%;
+    background: #f8f8f8;
+    border: 1px solid #e7d9af;
+}
+.calendar_table tr th{
+    text-align: center;
+    height: 33px;
+}
+.calendar_table tr td{
+   /* position: relative;*/
+    height: 33px;
+    text-align: center;
+    border: 1px solid #e7d9af;
+}
+.calendar_table tr td div.day_box{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 30px;
+    z-index: 1;
+}
+.calendar_table tr td div.day_box span{
+    position: absolute;
+    z-index: 1;
+}
+.calendar_table tr td div.day_box em{
+    position: absolute;
+    display: inline-block;
+    width: 9px;
+    height: 10px;
+    right: 0;
+    top:0;
+    background: url("../images/canlender_tright_bg_01.png") no-repeat;
+}
+.calendar_table tr td div.day_box em.c_green{
+    background: url("../images/canlender_tright_bg_02.png") no-repeat;
+}
+
+.calendar_table tr td div.red_bg{
+    background: #fd7b68;
+    color: #fff;
+}
+.calendar_table tr td div.orange_bg{
+    background: #fecd38;
+    color: #fff;
+}
+.calendar_table .day_box_sub{
+    display: none;
+    z-index: 36;
+    position: absolute;
+    width: 180px;
+    height: 105px;
+    padding: 10px 4px 5px 4px;
+    top:25px;
+    left: -50%;
+    margin-left: -50px;
+    line-height: 22px;
+    background: url("../images/canlander_info_bg.png");
+}
+.calendar_table .day_box_sub p.p1{
+    height: 66px;
+    padding: 8px 10px;
+    text-align: left;
+    color: #333;
+    overflow: hidden;
+    z-index: 36;
+}
+.calendar_table .day_box_sub .calendar_more{
+    z-index: 36;
+    padding-right: 10px;
+    text-align: right;
+}
+.date_box{
+    position: relative;
+}
+.date_box input{
+    width: 100%;
+}
+.date_box em{
+    position: absolute;
+    right:4px;
+    top:8px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url("../images/icon_date_01.png") no-repeat;
+}
+/*建档情况总览*/
+.filing_overview{
+    margin-right: 10px;
+    background: #f5f5f5;
+    padding: 10px;
+}
+.filing_overview_con{
+    margin-top: 10px;
+    border: 1px solid #e6e6e6;
+    padding: 15px;
+    background: #fff;
+    border-radius: 5px;
+}
+.filing_overview_chart{
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.filing_overview_con .br{
+   /* border-right: 1px solid #e6e6e6;*/
+}
+.filing_overview_con .bt{
+    border-top: 1px solid #e6e6e6;
+}
+.filing_overview_chart .time{
+    font-size: 18px;
+    color: #666666;
+    height: 30px;
+    line-height: 30px;
+}
+.filing_chart_con{
+    position: relative;
+    padding-left: 90px;
+    height: 82px;
+}
+.filing_chart{
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 82px;
+    height: 82px;
+}
+.filing_chart span{
+    display: inline-block;
+    left: 12px;
+    top:20px;
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    position:absolute;
+    font-size: 14px;
+    color: #999999;
+}
+.filing_chart span strong{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Arial;
+}
+.filing_chart_01{
+    background: url("../images/pic/filing_01.jpg") no-repeat;
+}
+.filing_chart_02{
+    background: url("../images/pic/filing_02.jpg") no-repeat;
+}
+.filing_chart_03{
+    background: url("../images/pic/filing_03.jpg") no-repeat;
+}
+.filing_chart_text{
+    padding: 10px 0;
+    font-size: 14px;
+    color:#999;
+    font-weight: bold;
+    line-height: 22px;
+}
+.filing_chart_text em{
+    color: #333333;
+    font-weight: bold;
+}
+.filing_chart_text i{
+    font-style: normal;
+}
+.filing_overview_more{
+    clear: both;
+    height: 30px;
+}
+.filing_overview_more a{
+    float: right;
+    font-size: 14px;
+    font-family: "Microsoft Yahei";
+    background: url("../images/more_a_bg.gif") left center no-repeat;
+    padding-left: 20px;
+    color: #666666;
+}
+/*今日孕产妇高危提醒*/
+.today_dangerous_info{
+    background: #f5f5f5;
+    padding: 10px 15px;
+    height: 353px;
+}
+.today_dangerous_con{
+
+}
+.today_dangerous_con ul{
+
+}
+.today_dangerous_con ul li{
+    margin:20px 0;
+    background: #fff url("../images/today_dangerous_list_bg.jpg") left repeat-y;
+    height: 58px;
+    line-height: 58px;
+    border: 1px solid #d4d4d4;
+    border-left: 0;
+    padding-left: 40px;
+    color: #666666;
+    font-size: 14px;
+    font-weight: bold;
+}
+.today_dangerous_con ul li span{
+    font-size: 12px;
+    color: #999;
+}
+.today_dangerous_con ul li span a:hover{
+    text-decoration: none;
+}
+.today_dangerous_con ul li span em {
+    font-size: 24px;
+    color: #ff9933;
+    text-decoration: underline;
+}

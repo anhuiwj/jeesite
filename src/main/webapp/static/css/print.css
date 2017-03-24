@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/*reset css*/
+* {
+    margin: 0;
+    padding: 0
+}
+
+em, i {
+    font-style: normal
+}
+
+li {
+    list-style: none
+}
+
+img {
+    border: 0;
+    vertical-align: middle
+}
+
+button {
+    cursor: pointer
+}
+
+a {
+    color: #666;
+    text-decoration: none
+}
+
+a:hover {
+    color: #c81623
+}
+
+button, input {
+    font-family: Microsoft YaHei, tahoma, arial, Hiragino Sans GB, \\5b8b\4f53, sans-serif
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    background-color: #fff;
+    font: 12px/1.5 Microsoft YaHei, tahoma, arial, Hiragino Sans GB, \\5b8b\4f53, sans-serif;
+    color: #666
+}
+
+.hide, .none {
+    display: none
+}
+
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0
+}
+
+.clearfix {
+    *zoom: 1
+}
+
+/*page css*/
+.container {
+    margin: 0 auto;
+    width: 210mm;
+    height: 297mm;
+    cmtext-align: center;
+    font-size: 12pt;
+    line-height: 2em;
+    font: 宋体, 'Microsoft YaHei', 'Myriad Pro', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+.container table {
+    width: 200mm;
+    margin-top: 30px;
+}
+
+h2, h1 {
+    letter-spacing: 0.6em;
+    line-height: 3em;
+}
+
+h2 span {
+    letter-spacing: 0.2em;
+}
+
+input[type="text"] {
+    border: none;
+    border-bottom: 1px solid gray;
+    text-align: center;
+}
+
+.borders th {
+    border-top: 2px solid #333;
+}
+
+.borders tr td {
+    border: 1px solid #333;
+    text-align: center;
+    height: 35px;
+}
+

@@ -1,75 +1,56 @@
 /**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.entity;
 
-import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.TreeEntity;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * 菜单Entity
  * @author ThinkGem
  * @version 2013-05-15
  */
-public class Menu extends DataEntity<Menu> {
+public class Menu extends TreeEntity<Menu> implements Comparable {
 
 	private static final long serialVersionUID = 1L;
-	private Menu parent;	// 父级菜单
-	private String parentIds; // 所有父级编号
-	private String name; 	// 名称
 	private String href; 	// 链接
 	private String target; 	// 目标（ mainFrame、_blank、_self、_parent、_top）
 	private String icon; 	// 图标
-	private Integer sort; 	// 排序
-	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
+	private String type; 	// 是否在菜单中显示（1：菜单；2：按钮）
 	private String permission; // 权限标识
 	
-	private String userId;
+	private String sysflag;//系统资源标识（0：系统级；1：业务级）
 	
+	private String userId;//非持久
+	
+	private String roleId;//非持久
+	
+	private String parentName;//父机构名称,非持久
+	
+	
+	public Menu getParent() {
+		return parent;
+	}
+
+
+	public void setParent(Menu parent) {
+		this.parent = parent;
+	}
+
 	public Menu(){
 		super();
-		this.sort = 30;
-		this.isShow = "1";
 	}
 	
 	public Menu(String id){
 		super(id);
 	}
 	
-	@JsonBackReference
-	@NotNull
-	public Menu getParent() {
-		return parent;
-	}
-
-	public void setParent(Menu parent) {
-		this.parent = parent;
-	}
-
-	@Length(min=1, max=2000)
-	public String getParentIds() {
-		return parentIds;
-	}
-
-	public void setParentIds(String parentIds) {
-		this.parentIds = parentIds;
-	}
 	
-	@Length(min=1, max=100)
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	
+	
 
 	@Length(min=0, max=2000)
 	public String getHref() {
@@ -98,27 +79,18 @@ public class Menu extends DataEntity<Menu> {
 		this.icon = icon;
 	}
 	
-	@NotNull
-	public Integer getSort() {
-		return sort;
-	}
-	
-	public void setSort(Integer sort) {
-		this.sort = sort;
-	}
-	
-	@Length(min=1, max=1)
-	public String getIsShow() {
-		return isShow;
-	}
-
-	public void setIsShow(String isShow) {
-		this.isShow = isShow;
-	}
-
 	@Length(min=0, max=200)
 	public String getPermission() {
 		return permission;
+	}
+
+	@Length(min=1, max=1)
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public void setPermission(String permission) {
@@ -129,27 +101,7 @@ public class Menu extends DataEntity<Menu> {
 		return parent != null && parent.getId() != null ? parent.getId() : "0";
 	}
 
-	@JsonIgnore
-	public static void sortList(List<Menu> list, List<Menu> sourcelist, String parentId, boolean cascade){
-		for (int i=0; i<sourcelist.size(); i++){
-			Menu e = sourcelist.get(i);
-			if (e.getParent()!=null && e.getParent().getId()!=null
-					&& e.getParent().getId().equals(parentId)){
-				list.add(e);
-				if (cascade){
-					// 判断是否还有子节点, 有则继续获取子节点
-					for (int j=0; j<sourcelist.size(); j++){
-						Menu child = sourcelist.get(j);
-						if (child.getParent()!=null && child.getParent().getId()!=null
-								&& child.getParent().getId().equals(e.getId())){
-							sortList(list, sourcelist, e.getId(), true);
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
+	
 
 	@JsonIgnore
 	public static String getRootId(){
@@ -163,9 +115,74 @@ public class Menu extends DataEntity<Menu> {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	
+	
+	
+
+	public String getRoleId() {
+		return roleId;
+	}
+
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+
+
+	public String getSysflag() {
+		return sysflag;
+	}
+
+
+	public void setSysflag(String sysflag) {
+		this.sysflag = sysflag;
+	}
+	
+	
+
+
+	public String getParentName() {
+		return parentName;
+	}
+
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
 
 	@Override
 	public String toString() {
 		return name;
 	}
+	
+	public String getTypeName() {
+		if("1".equals(type)) {
+			return "菜单";
+		}
+		if("2".equals(type)) {
+			return "按钮";
+		}
+		return "";
+	}
+	
+	public String getSysflagName() {
+		if("0".equals(sysflag)) {
+			return "系统级";
+		}
+		if("1".equals(sysflag)) {
+			return "业务级";
+		}
+		return "";
+	}
+
+
+	@Override
+	public int compareTo(Object other) {
+		Menu m =(Menu)other;
+		return this.sort-m.sort;
+	}
+	
+	
+	
 }

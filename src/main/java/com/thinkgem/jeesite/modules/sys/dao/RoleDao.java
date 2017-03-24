@@ -1,11 +1,14 @@
 /**
- * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
+
+import java.util.List;
 
 /**
  * 角色DAO接口
@@ -28,13 +31,29 @@ public interface RoleDao extends CrudDao<Role> {
 
 	public int insertRoleMenu(Role role);
 	
+	
+	
 	/**
-	 * 维护角色与公司部门关系
+	 * 查询公共角色和机构特有角色
+	 * @param o
+	 * @return
+	 */
+	public List<Role> findOrgList(Office o);
+	
+	public int insertRoleUser(Role role);
+	
+	/**
+	 * 删除角色用户关联
 	 * @param role
 	 * @return
 	 */
-	public int deleteRoleOffice(Role role);
-
-	public int insertRoleOffice(Role role);
+	public int deleteRoleUser(Role role);
+	
+	/**
+	 * 删除角色用户关联
+	 * @param role
+	 * @return
+	 */
+	public int deleteRoleAllUser(Role role);
 
 }

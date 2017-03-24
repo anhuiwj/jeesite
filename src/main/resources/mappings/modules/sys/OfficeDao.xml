@@ -12,6 +12,10 @@
 		a.sort,
 		a.type,
 		a.grade,
+		a.lv,
+		a.cszx,
+		a.zdzx,
+		a.zcjg,
 		a.address, 
 		a.zip_code, 
 		a.master, 
@@ -24,21 +28,15 @@
 		a.update_by AS "updateBy.id",
 		a.update_date,
 		a.del_flag,
-		a.useable AS useable,
-		a.primary_person AS "primaryPerson.id",
-		a.deputy_person AS "deputyPerson.id",
 		p.name AS "parent.name",
+		ar.code AS "area.code",
 		ar.name AS "area.name",
-		ar.parent_ids AS "area.parentIds",
-		pp.name AS "primaryPerson.name",
-		dp.name AS "deputyPerson.name"
+		ar.parent_ids AS "area.parentIds"
 	</sql>
 	
 	<sql id="officeJoins">
 		LEFT JOIN sys_office p ON p.id = a.parent_id
 		LEFT JOIN sys_area ar ON ar.id = a.area_id
-		LEFT JOIN SYS_USER pp ON pp.id = a.primary_person
-		LEFT JOIN SYS_USER dp ON dp.id = a.deputy_person
     </sql>
 	
 	<select id="get" resultType="Office">
@@ -48,7 +46,54 @@
 		<include refid="officeJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="getOfficeByType" resultType="Office">
+		SELECT
+			<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.del_flag = '0'
+		and a.type = #{0}
+	</select>
+
+	<select id="getByCode" resultType="Office">
+		SELECT
+			<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.code = #{code}
+		 and a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="type != null and type != ''">
+			and a.type=#{type} 
+		</if>
+		<if test="grade != null and grade != ''">
+			and a.grade=#{grade} 
+		</if>
+		<if test="lv != null and lv != ''">
+			and a.lv=#{lv} 
+		</if>
+	</select>
+
+	<select id="getOfficeByCode" resultType="Office">
+		SELECT
+		<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.code = #{code}
+	</select>
 	
+	<select id="findByQxcode" resultType="Office">
+		SELECT
+			<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE  a.del_flag ='0'
+		<if test="parentCode != null and parentCode != ''">
+			and a.parent_id = (select f.id from sys_office f where f.code = #{parentCode})
+		</if>
+		
+	</select>
+
 	<select id="findList" resultType="Office">
 		SELECT
 			<include refid="officeColumns"/>
@@ -56,9 +101,33 @@
 		<include refid="officeJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		<!-- 数据范围过滤 -->
-		${sqlMap.dsf}
-		OR a.id = #{currentUser.office.id}
-		ORDER BY a.code
+		<!--  ${sqlMap.dsf}-->
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findTop" resultType="Office">
+		SELECT
+			<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="code!= null and code != ''">
+			and a.code= #{code}
+		</if>
+		<if test="code == null or code == '' ">
+			and a.parent_id is null or a.parent_id= #{DEL_FLAG_NORMAL}
+		</if>
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findChilds" resultType="Office">
+		SELECT
+			<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		and a.parent_id= #{id}
+		ORDER BY a.sort
 	</select>
 			
 	<select id="findAllList" resultType="Office">
@@ -67,7 +136,42 @@
 		FROM sys_office a
 		<include refid="officeJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
-		ORDER BY a.code
+		ORDER BY a.sort
+	</select>
+	<select id="findByZcjg" resultType="Office">
+		SELECT *
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.del_flag = '0'
+		and a.zcjg = '0'
+		ORDER BY a.sort
+	</select>
+	<select id="findAllChilds" resultType="Office">
+		SELECT
+			<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_ids LIKE 
+		<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+		<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
+		<if test="type != null and type != ''">
+			AND a.type != #{type}
+		</if>
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findWithAllChilds" resultType="Office">
+		SELECT
+			<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND (a.parent_ids LIKE 
+		<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+		<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
+		
+		OR a.id=#{id}
+		)
+		ORDER BY a.sort
 	</select>
 	
 	<select id="findByParentIdsLike" resultType="Office">
@@ -76,7 +180,32 @@
 		FROM sys_office a
 		<include refid="officeJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_ids LIKE #{parentIds}
-		ORDER BY a.code
+		ORDER BY a.sort
+	</select>
+	
+	<select id="getMessageOrg" resultType="Office">
+		SELECT
+			a.id,
+			a.code,
+			a.name text
+		FROM sys_office a
+		left join sys_area sa on a.area_id = sa.id
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		
+		<if test="type != null and type == 'sfy'.toString()">
+			and sa.code != '310000000000'
+			and a.type = '3'
+		</if>
+		<if test="type != null and type == 'qfy'.toString()">
+			and sa.code != #{code}
+			and a.type = '3'
+		</if>
+		<if test="type != null and type == 'qtjg'.toString()">
+			and sa.code = #{code}
+    		and a.type != '1'
+		</if>
+		
+		ORDER BY a.sort
 	</select>
 	
 	<insert id="insert">
@@ -89,7 +218,11 @@
 			name, 
 			sort, 
 			type, 
-			grade, 
+			grade,
+			lv,
+			cszx,
+			zdzx, 
+			zcjg,
 			address, 
 			zip_code, 
 			master, 
@@ -101,10 +234,7 @@
 			update_by, 
 			update_date, 
 			remarks, 
-			del_flag,
-			useable,
-			primary_person,
-			deputy_person
+			del_flag
 		) VALUES (
 			#{id}, 
 			#{parent.id}, 
@@ -115,6 +245,10 @@
 			#{sort}, 
 			#{type}, 
 			#{grade}, 
+			#{lv},
+			#{cszx},
+			#{zdzx},
+			#{zcjg},   
 			#{address}, 
 			#{zipCode}, 
 			#{master}, 
@@ -126,22 +260,22 @@
 			#{updateBy.id}, 
 			#{updateDate}, 
 			#{remarks}, 
-			#{delFlag},
-			#{useable},
-			#{primaryPerson.id},
-			#{deputyPerson.id}
+			#{delFlag}
 		)
 	</insert>
 	
 	<update id="update">
 		UPDATE sys_office SET 
-			parent_id = #{parent.id}, 
-			parent_ids = #{parentIds}, 
 			area_id = #{area.id}, 
 			code = #{code}, 
 			name = #{name}, 
 			type = #{type}, 
 			grade = #{grade}, 
+			sort = #{sort}, 
+			lv = #{lv},
+			cszx = #{cszx}, 
+			zdzx = #{zdzx},  
+			zcjg = #{zcjg},
 			address = #{address}, 
 			zip_code = #{zipCode}, 
 			master = #{master}, 
@@ -150,10 +284,7 @@
 			email = #{email}, 
 			update_by = #{updateBy.id}, 
 			update_date = #{updateDate}, 
-			remarks = #{remarks},
-			useable=#{useable},
-			primary_person=#{primaryPerson.id},
-			deputy_person=#{deputyPerson.id}
+			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
 	
@@ -169,8 +300,30 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id} OR parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
-					<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
 	</update>
+	
+	<select id="findJg" resultType="Office">
+		SELECT
+			<include refid="officeColumns"/>
+		FROM sys_office a
+		<include refid="officeJoins"/>
+		WHERE a.del_flag ='0'
+		<if test="name != null and name != ''">
+		AND a.name like '%'||#{name}||'%'
+		</if>
+		ORDER BY a.sort
+	</select>
+	
+	
+	
+	<select id="getSq" resultType="Office">
+		select x.name,x.code from sys_office x left join y_street y on x.code=y.sq 
+		where 1=1
+		and y.del_flag = '0'
+		<if test="code != null and code != ''">
+		and y.jd=#{code}
+		</if> 
+	</select>
 	
 </mapper>
