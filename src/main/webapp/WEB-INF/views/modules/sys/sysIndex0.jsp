@@ -212,15 +212,11 @@
 						<div class="newVersion"></div>
 					</li>
 <%-- 					<li><a href="${ctx}/yunbao/chanfu/showHelp" title="帮助?">帮助</a></li>
- --%>				
-					<li><a href="${ctx}/yunbao/chanfu/showHelp1" target="_Blank" title="帮助?">帮助</a></li>
+ --%>
 					<li>
-						<%-- <c:if test="${fns:getConfig('casFlag') eq 'true'}">
-						 <a href="${fns:getConfig('cas.server.url')}/logout" title="退出登录">退出</a>
-						 </c:if>
-						 <c:if test="${fns:getConfig('casFlag') eq 'false'}">
-						 <a href="${ctx}/logout" title="退出登录">退出</a>
-						 </c:if> --%>
+						<%--<a href="${ctx}/yunbao/chanfu/showHelp1" target="_Blank" title="帮助?">帮助</a>--%>
+					</li>
+					<li>
 						 <a href="${ctx}/logout" title="退出登录">退出</a>
 					</li>	
 					<li>&nbsp;</li>
@@ -260,13 +256,13 @@
 				<tr>
 					<td class="tds"><div class="sys-nav"><img src="${ctxStatic}/images/1.png" /></div></td>
 					<td class="tds"><div class="sys-nav"><img src="${ctxStatic}/images/2.png" /></div></td>
-					<td class="tds" onclick="opens('b7c435c3fdfc47b7982e2662e9221c91')"><div class="sys-nav"><img src="${ctxStatic}/images/3.png" /></div></td>
+					<td class="tds" onclick="opensWidow() "><div class="sys-nav"><img src="${ctxStatic}/images/3.png" /></div></td>
 					<td class="tds"><div class="sys-nav"><img src="${ctxStatic}/images/4.png" /></div></td>
 					<td class="tds"><div class="sys-nav"><img src="${ctxStatic}/images/5.png" /></div></td>
 				</tr>
 				<tr>
 					<td class="tds"><div class="sys-nav"><img src="${ctxStatic}/images/6.png" /></div></td>
-					<td class="tds" onclick="opensWidow()"><div class="sys-nav"><img src="${ctxStatic}/images/7.png" /></div></td>
+					<td class="tds" onclick="opens('0457725c9a1b405d8a3e6c888f024688')"><div class="sys-nav"><img src="${ctxStatic}/images/7.png" /></div></td>
 					<td class="tds"><div class="sys-nav"><img src="${ctxStatic}/images/8.png" /></div></td>
 					<td class="tds"><div class="sys-nav"><img src="${ctxStatic}/images/9.png" /></div></td>
 					<td class="tds"><div class="sys-nav"><img src="${ctxStatic}/images/10.png" /></div></td>
@@ -293,8 +289,8 @@
       <input type="password" id="LoginPassword" value="${sessionScope.fymm}" name="password" type="hidden"/>
      </form>
 	
-	<!-- 信息发送窗口 -->
-	<div id="message-window" class="mini-window" title="网内信息" url="${ctx}/yunbao/emails/main" showMaxButton="true" showShadow="true" showModal="true" allowResize="true" allowDrag="true"></div>
+	<%--<!-- 信息发送窗口 -->--%>
+	<%--<div id="message-window" class="mini-window" title="网内信息" url="${ctx}/yunbao/emails/main" showMaxButton="true" showShadow="true" showModal="true" allowResize="true" allowDrag="true"></div>--%>
 	
 	<!-- 浮动按钮 -->
 	<div id="wFloatBtn" style="display:none; border:2px solid #FFFFFF; background:#FA5461; width: 50px; height: 50px; position:fixed; right: 10px; top: 55px; z-index:9999; border-radius: 50px; color: #FFFFFF; text-align: center; line-height: 50px;cursor: pointer;">
@@ -334,7 +330,7 @@
 		function opens(ids){
 			if(ids==3 || ids == 'b7c435c3fdfc47b7982e2662e9221c91'){
 				$("#menu a.menu[id='b7c435c3fdfc47b7982e2662e9221c91'] span").click();
-				$("#mainFrame").attr("src","${ctx}/yunbao/chanfu/main");
+//				$("#mainFrame").attr("src","");
 				//改变框架显示的系统名称
 				$("#productName").text("上海市孕产妇保健信息管理系统");
 				//获取是否具有新版本
@@ -350,10 +346,10 @@
 			
 		}
 		
-		//历史版本
-		function showVersion(){
-			window.open("${ctx}/sys/system/version/history?type="+xtType, "newwindow", "height=600, width=1000, menubar=no, scrollbars=yes, toolbar=no, status=no, resizable=no");
-		}
+		<%--//历史版本--%>
+		<%--function showVersion(){--%>
+			<%--window.open("${ctx}/sys/system/version/history?type="+xtType, "newwindow", "height=600, width=1000, menubar=no, scrollbars=yes, toolbar=no, status=no, resizable=no");--%>
+		<%--}--%>
 		
 		function showHelp(){
 			window.location.href="";
@@ -367,10 +363,10 @@
 			messageWindow.show();
 		}
 		
-		//查询孕妇详细信息
-		function watchDetail(_id){
-			window.open("${ctx}/yunbao/chanfu/yunChanFuMain?id="+_id, "newwindow", "height=600; width=1000; menubar=no; scrollbars=yes; titlebar=yes; resizable=yes");
-		}
+		<%--//查询孕妇详细信息--%>
+		<%--function watchDetail(_id){--%>
+			<%--window.open("${ctx}/yunbao/chanfu/yunChanFuMain?id="+_id, "newwindow", "height=600; width=1000; menubar=no; scrollbars=yes; titlebar=yes; resizable=yes");--%>
+		<%--}--%>
 		
 		//显示浮动按钮
 		function showFloatBtn(){
@@ -386,60 +382,60 @@
  			window.open("<%= Global.getConfig("eburl")%>uid=${user.loginName}&psw=${user.password}");
  		}
 		
-		//显示或隐藏今日提醒和版本提示
-		function toggleTipAndVersion(val){
-			switch(val){
-				case "show":
-                    //进入提醒
-					$("#tip").show();
-                    //版本信息
-					$("#version").show();
-                    //用户是否具有下拉
-                    $("#userMsg").attr("data-toggle","dropdown");
-					break;
-				case "hide":
-					$("#tip").hide();
-					$("#version").hide();
-                    $("#userMsg").removeAttr("data-toggle","dropdown");
-					break;
-				default:
-					$("#tip").hide();
-					$("#version").hide();
-                    $("#userMsg").removeAttr("data-toggle","dropdown");
-			}
-		}
-		
-		//获取是否具有新版本
-		function getHaveNewVersion(sysType){
-			$.ajax({
-				url: "${ctx}/sys/system/version/isNewVersion",
-				type: "get",
-				data: {mType: sysType},
-				dataType: "text",
-				success: function(result){
-					if(result == "true"){
-						$("#remand").show();
-						//$(".newVersion").css("display","block");
-					}else{
-						$("#remand").hide();
-						//$(".newVersion").css("display","none");
-					}
-				},
-				error: function(){
-					
-				}
-			});
-			
-			//显示消息提醒和版本提示
-			toggleTipAndVersion("show");
-		}
-		
-		$(function(){
-			//隐藏信息提醒和版本提醒
-			toggleTipAndVersion("hide");
+		<%--//显示或隐藏今日提醒和版本提示--%>
+		<%--function toggleTipAndVersion(val){--%>
+			<%--switch(val){--%>
+				<%--case "show":--%>
+                    <%--//进入提醒--%>
+					<%--$("#tip").show();--%>
+                    <%--//版本信息--%>
+					<%--$("#version").show();--%>
+                    <%--//用户是否具有下拉--%>
+                    <%--$("#userMsg").attr("data-toggle","dropdown");--%>
+					<%--break;--%>
+				<%--case "hide":--%>
+					<%--$("#tip").hide();--%>
+					<%--$("#version").hide();--%>
+                    <%--$("#userMsg").removeAttr("data-toggle","dropdown");--%>
+					<%--break;--%>
+				<%--default:--%>
+					<%--$("#tip").hide();--%>
+					<%--$("#version").hide();--%>
+                    <%--$("#userMsg").removeAttr("data-toggle","dropdown");--%>
+			<%--}--%>
+		<%--}--%>
+		<%----%>
+		<%--//获取是否具有新版本--%>
+		<%--function getHaveNewVersion(sysType){--%>
+			<%--$.ajax({--%>
+				<%--url: "${ctx}/sys/system/version/isNewVersion",--%>
+				<%--type: "get",--%>
+				<%--data: {mType: sysType},--%>
+				<%--dataType: "text",--%>
+				<%--success: function(result){--%>
+					<%--if(result == "true"){--%>
+						<%--$("#remand").show();--%>
+						<%--//$(".newVersion").css("display","block");--%>
+					<%--}else{--%>
+						<%--$("#remand").hide();--%>
+						<%--//$(".newVersion").css("display","none");--%>
+					<%--}--%>
+				<%--},--%>
+				<%--error: function(){--%>
+					<%----%>
+				<%--}--%>
+			<%--});--%>
+			<%----%>
+			<%--//显示消息提醒和版本提示--%>
+			<%--toggleTipAndVersion("show");--%>
+		<%--}--%>
+		<%----%>
+		<%--$(function(){--%>
+			<%--//隐藏信息提醒和版本提醒--%>
+			<%--toggleTipAndVersion("hide");--%>
 
-		});
-		
+		<%--});--%>
+		<%----%>
 		function opensWidow(){
 			$("#loginForm").submit();
 		}

@@ -3,16 +3,15 @@
  */
 package com.thinkgem.jeesite.common.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
-import org.springframework.core.io.DefaultResourceLoader;
-
 import com.ckfinder.connector.ServletContextFactory;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.utils.PropertiesLoader;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import org.springframework.core.io.DefaultResourceLoader;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * 全局配置类
@@ -34,7 +33,7 @@ public class Global {
 	/**
 	 * 属性文件加载对象
 	 */
-	private static PropertiesLoader loader = new PropertiesLoader("jeesite.properties");
+	private static PropertiesLoader loader = new PropertiesLoader(getPath());
 
 	/**
 	 * 显示/隐藏
@@ -64,6 +63,14 @@ public class Global {
 	 */
 	public static Global getInstance() {
 		return global;
+	}
+
+	public static String getPath(){
+		String env = System.getProperty("spring.profiles.active");
+		if (env == null) {
+			env = System.getenv("spring.profiles.active");
+		}
+		return "classpath:config/"+env+"-jeesite.properties";
 	}
 	
 	/**

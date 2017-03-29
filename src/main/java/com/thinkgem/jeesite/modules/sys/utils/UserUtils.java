@@ -8,18 +8,19 @@ import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.dao.*;
 import com.thinkgem.jeesite.modules.sys.entity.*;
-import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm;
+import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.mybatis.spring.DataSource;
+import org.mybatis.spring.DataSourceContextHolder;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 
 /**
  * 用户工具类
@@ -51,6 +52,7 @@ public class UserUtils {
 	 * @param id
 	 * @return 取不到返回null
 	 */
+	@DataSource(name=DataSource.fy)
 	public static User get(String id){
 		User user = (User) CacheUtils.get(USER_CACHE, USER_CACHE_ID_ + id);
 		if (user ==  null){
@@ -97,6 +99,7 @@ public class UserUtils {
 	 * @return 取不到返回null
 	 */
 	public static User getByLoginName(String loginName){
+		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		User user = (User) CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
 		if (user == null){
 			user = userDao.getByLoginName(new User(null, loginName));
@@ -199,7 +202,7 @@ public class UserUtils {
 	 * @return
 	 */
 	public static List<Role> getRoleList(){
-		@SuppressWarnings("unchecked")
+		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		List<Role> roleList = (List<Role>)getCache(CACHE_ROLE_LIST);
 		if (roleList == null){
 			User user = getUser();
@@ -222,6 +225,7 @@ public class UserUtils {
 	public static List<Menu> getMenuList(){
 		@SuppressWarnings("unchecked")
 		List<Menu> menuList = (List<Menu>)getCache(CACHE_MENU_LIST);
+		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		if (menuList == null){
 			User user = getUser();
 			if (user.isAdmin()){
@@ -261,7 +265,7 @@ public class UserUtils {
 	 * @return
 	 */
 	public static List<Area> getAreaList(){
-		@SuppressWarnings("unchecked")
+		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		List<Area> areaList = (List<Area>)getCache(CACHE_AREA_LIST);
 		if (areaList == null){
 			areaList = areaDao.findAllList(new Area());
@@ -277,6 +281,7 @@ public class UserUtils {
 	public static List<Office> getOfficeList(){
 		@SuppressWarnings("unchecked")
 		List<Office> officeList = (List<Office>)getCache(CACHE_OFFICE_LIST);
+		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		if (officeList == null){
 			User user = getUser();
 			if (user.isAdmin()){
@@ -298,6 +303,7 @@ public class UserUtils {
 	public static List<Office> getOfficeAllList(){
 		@SuppressWarnings("unchecked")
 		List<Office> officeList = (List<Office>)getCache(CACHE_OFFICE_ALL_LIST);
+		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		if (officeList == null){
 			officeList = officeDao.findAllList(new Office());
 		}
