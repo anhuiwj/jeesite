@@ -15,6 +15,7 @@ import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.dao.DictDao;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
+import org.mybatis.spring.DataSource;
 
 /**
  * 字典工具类
@@ -59,7 +60,8 @@ public class DictUtils {
 		}
 		return defaultLabel;
 	}
-	
+
+	@DataSource(name=DataSource.fy)
 	public static List<Dict> getDictList(String type){
 		@SuppressWarnings("unchecked")
 		Map<String, List<Dict>> dictMap = (Map<String, List<Dict>>)CacheUtils.get(CACHE_DICT_MAP);

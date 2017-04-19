@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.sys.service;
 
 import java.util.List;
 
+import org.mybatis.spring.DataSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,16 +28,19 @@ public class DictService extends CrudService<DictDao, Dict> {
 	 * 查询字段类型列表
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<String> findTypeList(){
 		return dao.findTypeList(new Dict());
 	}
 
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void save(Dict dict) {
 		super.save(dict);
 		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
 
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void delete(Dict dict) {
 		super.delete(dict);

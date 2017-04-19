@@ -99,8 +99,8 @@ public class UserUtils {
 	 * @param loginName
 	 * @return 取不到返回null
 	 */
+	@DataSource(name = DataSource.fy)
 	public static User getByLoginName(String loginName){
-		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		User user = (User) CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
 		if (user == null){
 			user = userDao.getByLoginName(new User(null, loginName));
@@ -202,8 +202,8 @@ public class UserUtils {
 	 * 获取当前用户角色列表
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public static List<Role> getRoleList(){
-		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		List<Role> roleList = (List<Role>)getCache(CACHE_ROLE_LIST);
 		if (roleList == null){
 			User user = getUser();
@@ -223,10 +223,10 @@ public class UserUtils {
 	 * 获取当前用户授权菜单
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public static List<Menu> getMenuList(){
 		@SuppressWarnings("unchecked")
 		List<Menu> menuList = (List<Menu>)getCache(CACHE_MENU_LIST);
-		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		if (menuList == null){
 			User user = getUser();
 			if (user.isAdmin()){
@@ -265,8 +265,8 @@ public class UserUtils {
 	 * 获取当前用户授权的区域
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public static List<Area> getAreaList(){
-		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		List<Area> areaList = (List<Area>)getCache(CACHE_AREA_LIST);
 		if (areaList == null){
 			areaList = areaDao.findAllList(new Area());
@@ -279,10 +279,10 @@ public class UserUtils {
 	 * 获取当前用户有权限访问的部门
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public static List<Office> getOfficeList(){
 		@SuppressWarnings("unchecked")
 		List<Office> officeList = (List<Office>)getCache(CACHE_OFFICE_LIST);
-		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		if (officeList == null){
 			User user = getUser();
 			if (user.isAdmin()){
@@ -301,10 +301,10 @@ public class UserUtils {
 	 * 获取当前用户有权限访问的部门
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public static List<Office> getOfficeAllList(){
 		@SuppressWarnings("unchecked")
 		List<Office> officeList = (List<Office>)getCache(CACHE_OFFICE_ALL_LIST);
-		DataSourceContextHolder.setDataSource(DataSource.fy);//切换数据库
 		if (officeList == null){
 			officeList = officeDao.findAllList(new Office());
 		}

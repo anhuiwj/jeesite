@@ -10,6 +10,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.mybatis.spring.DataSource;
+import org.mybatis.spring.DataSourceContextHolder;
 import org.springframework.web.method.HandlerMethod;
 
 import com.google.common.collect.Lists;
@@ -80,6 +82,7 @@ public class LogUtils {
 		}
 		
 		@Override
+		@DataSource(name=DataSource.fy)
 		public void run() {
 			// 获取日志标题
 			if (StringUtils.isBlank(log.getTitle())){
@@ -106,6 +109,7 @@ public class LogUtils {
 	/**
 	 * 获取菜单名称路径（如：系统设置-机构用户-用户管理-编辑）
 	 */
+	@DataSource(name=DataSource.fy)
 	public static String getMenuNamePath(String requestUri, String permission){
 		String href = StringUtils.substringAfter(requestUri, Global.getAdminPath());
 		@SuppressWarnings("unchecked")

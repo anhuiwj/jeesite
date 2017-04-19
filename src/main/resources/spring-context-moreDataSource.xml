@@ -119,6 +119,7 @@
 		<property name="patterns">
 			<list>
 				<value>com.thinkgem.jeesite.modules.sys.service.*</value>
+				<value>com.thinkgem.jeesite.modules.sys.utils.*</value>
 			</list>
 		</property>
 	</bean>

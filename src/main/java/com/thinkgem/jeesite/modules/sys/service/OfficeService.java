@@ -13,6 +13,7 @@ import com.thinkgem.jeesite.modules.sys.utils.ComboNode;
 import com.thinkgem.jeesite.modules.sys.utils.SimpleTreeNode;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.mybatis.spring.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,10 +37,12 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 	@Autowired
 	private OfficeDao officeDao;
 
+	@DataSource(name = DataSource.fy)
 	public List<Office> findAll() {
 		return UserUtils.getOfficeList();
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<Office> findList(Boolean isAll) {
 		if (isAll != null && isAll) {
 			return UserUtils.getOfficeAllList();
@@ -48,15 +51,18 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 		}
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<Office> findNotDel() {
 		return dao.findAllList(new Office());
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<Office> findList(Office office) {
 		office.setParentIds(office.getParentIds() + "%");
 		return dao.findByParentIdsLike(office);
 	}
 
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void save(Office office) {
 		if (office.getAddress() != null) {
@@ -70,12 +76,14 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 		UserUtils.removeCache(UserUtils.CACHE_OFFICE_LIST);
 	}
 
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void delete(Office office) {
 		super.delete(office);
 		UserUtils.removeCache(UserUtils.CACHE_OFFICE_LIST);
 	}
 
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public Office getOfficeByCode(String code) {
 		Office o = new Office();
@@ -88,6 +96,7 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 	 * 
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<Office> findTopOffice() {
 		List<Role> roleList = UserUtils.getRoleList();
 		String areaCode = "";
@@ -115,6 +124,7 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 	 *            父id
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<Office> findChilds(String pid) {
 		return dao.findChilds(new Office(pid));
 	}
@@ -127,6 +137,7 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 	 *            是否包含部门（0：包含；1：不包含）
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<Office> findAllChilds(Office o, String flag) {
 		if ("0".equals(flag)) {
 			o.setType(null);
@@ -142,10 +153,12 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 	 * @param o
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<Office> findWithAllChilds(Office o) {
 		return dao.findWithAllChilds(o);
 	}
 
+	@DataSource(name = DataSource.fy)
 	public String getRolist(Office o) {
 		if ("3".equals(o.getType())) {
 			if ("310000000000".equals(o.getArea().getCode())) {
@@ -159,6 +172,7 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<ComboNode> findByQxcode(String parentCode) {
 		List<ComboNode> childStList = Lists.newArrayList();
 		List<Office> list = dao.findByQxcode(parentCode);
@@ -171,6 +185,7 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 		return childStList;
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<ComboNode> findYiyuanByQxcode(String parentCode) {
 		List<ComboNode> childStList = Lists.newArrayList();
 		List<Office> list = dao.findByQxcode(parentCode);
@@ -183,6 +198,7 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 		return childStList;
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<Office> findJg(String name) {
 		return dao.findJg(name);
 	}
@@ -194,6 +210,7 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 	 * @param
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<SimpleTreeNode> getMessageOrg() {
 		List<SimpleTreeNode> simpleTreeNodeList = new ArrayList<SimpleTreeNode>();
 
@@ -230,10 +247,12 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<Office> getSq(String code) {
 		return dao.getSq(code);
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<ComboNode> getxySq(String code) {
 		List<Office> list = dao.getSq(code);
 		List<ComboNode> lists = Lists.newArrayList();
@@ -246,10 +265,12 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 		return lists;
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<Office> getOfficeByType(String jgType) {
 		return dao.getOfficeByType(jgType);
 	}
 
+	@DataSource(name = DataSource.fy)
 	public  List<Office> findByZcjg()
 	{
 		return dao.findByZcjg();

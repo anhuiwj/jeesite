@@ -22,6 +22,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.LogUtils;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.session.Session;
+import org.mybatis.spring.DataSource;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,6 +81,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * @param loginName
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public User getUserByLoginName(String loginName) {
 		return UserUtils.getByLoginName(loginName);
 	}
@@ -90,6 +92,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * @param no
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public User getUserByNo(String orgId,String no) {
 		Office o = new Office(orgId);
 		User u = new User();
@@ -98,7 +101,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		return userDao.getByNo(u);
 		
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public Page<User> findUser(Page<User> page, User user) {
 		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
 		user.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "a"));
@@ -114,6 +118,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * @param user
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<User> findUser(User user){
 		List<User> list = userDao.findList(user);
 		return list;
@@ -124,10 +129,12 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * @param user
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<User> findNotInRoleUser(User user) {
 		return userDao.findNotInRole(user);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public MiniPage pageQueryUser(MiniPage mp, User user) {
 		Page<User> page = new Page<User>();
 		page.setPageNo(mp.getPageNo()+1);
@@ -167,8 +174,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		return mp;
 	}
 
-	
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void saveUser(User user) {
 		if (StringUtils.isBlank(user.getId())){
@@ -201,7 +208,8 @@ public class SystemService extends BaseService implements InitializingBean {
 			//sysFyUserService.saveOrUpdateFyUser(user);
 		}
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void updateUserInfo(User user) {
 		user.preUpdate();
@@ -209,7 +217,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		// 清除用户缓存
 		UserUtils.clearCache(user);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void deleteUser(User user) {
 		userDao.delete(user);
@@ -221,7 +230,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		
 		//sysFyUserService.deleteFyUser(user);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void updatePasswordById(String id, String loginName, String newPassword) {
 		User user = new User(id);
@@ -231,7 +241,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		user.setLoginName(loginName);
 		UserUtils.clearCache(user);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void updateUserLoginInfo(User user) {
 		// 保存上次登录信息
@@ -273,31 +284,36 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	//-- Role Service --//
-	
+	@DataSource(name = DataSource.fy)
 	public Role getRole(String id) {
 		return roleDao.get(id);
 	}
 
+	@DataSource(name = DataSource.fy)
 	public Role getRoleByName(String name) {
 		Role r = new Role();
 		r.setName(name);
 		return roleDao.getByName(r);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public Role getRoleByEnname(String enname) {
 		Role r = new Role();
 		r.setEnname(enname);
 		return roleDao.getByEnname(r);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Role> findRole(Role role){
 		return roleDao.findList(role);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Role> findAllRole(){
 		return UserUtils.getRoleList();
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Role> findRoleForAdmin(){
 		List<Role> result = null;
 		//User user = UserUtils.getUser();
@@ -310,9 +326,9 @@ public class SystemService extends BaseService implements InitializingBean {
 		
 		return result;
 	}
-	
-	
-	
+
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void saveRole(Role role) {
 		if (StringUtils.isBlank(role.getId())){
@@ -338,6 +354,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		CacheUtils.removeAll(UserUtils.USER_CACHE);
 	}
 
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void deleteRole(Role role) {
 		roleDao.delete(role);
@@ -349,7 +366,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		CacheUtils.removeAll(UserUtils.USER_CACHE);
 		
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void deleteRoleUser(Role role) {
 		roleDao.deleteRoleUser(role);
@@ -358,7 +376,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		//清除用户缓存
 		CacheUtils.removeAll(UserUtils.USER_CACHE);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void assignUserToRole(Role role) {
 		roleDao.insertRoleUser(role);
@@ -369,24 +388,28 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 
 	//-- Menu Service --//
-	
+	@DataSource(name = DataSource.fy)
 	public Menu getMenu(String id) {
 		return menuDao.get(id);
 	}
 
+	@DataSource(name = DataSource.fy)
 	public List<Menu> findAllMenu(){
 		return UserUtils.getMenuList();
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Menu> findAllMenuForAdmin(){
 		return menuDao.findAllList(new Menu());
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Menu> findTopMenu() {
 		Menu m = new Menu();
 		return menuDao.findTop(m);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Menu> findMenuByParentId(String mid) {
 		Menu p = new Menu(mid);
 		Menu qr = new Menu();
@@ -399,6 +422,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * @param userId
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<Menu> findUserMenu(String userId) {
 		Menu m = new Menu();
 		m.setUserId(userId);
@@ -410,6 +434,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * @param
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<Menu> findRoleMenu(String roleId) {
 		Menu m = new Menu();
 		m.setRoleId(roleId);
@@ -420,11 +445,13 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * 查询非系统菜单
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<Menu> findNonSysMenu() {
 		Menu menu = new Menu();
 		return menuDao.findNonSysList(menu);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void saveMenu(Menu menu) {
 		// 如果没有设置父节点，则代表为跟节点，有则获取父节点实体
@@ -461,8 +488,8 @@ public class SystemService extends BaseService implements InitializingBean {
 		CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
 	}
 
-	
 
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void deleteMenu(Menu menu) {
 		menuDao.delete(menu);
@@ -500,12 +527,12 @@ public class SystemService extends BaseService implements InitializingBean {
 		}
 
 	}
-	
 
-	
-	
-	
-	
+
+
+
+
+	@DataSource(name = DataSource.fy)
 	public MiniPage pageQueryRole(MiniPage mp) {
 		List<Role> list = null;
 		Page<Role> page = new Page<Role>();
@@ -534,6 +561,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * @param jgCode
 	 * @return
      */
+	@DataSource(name = DataSource.fy)
 	public List<User> getOfficeByCode(String jgCode) {
 		return userDao.getOfficeByCode(jgCode);
 	}
@@ -544,9 +572,11 @@ public class SystemService extends BaseService implements InitializingBean {
      * @param userId 人员ID
      * @return 这个人的实体
      */
+	@DataSource(name = DataSource.fy)
     public User findUserByJgCodeAndUserId(String jgCode, String userId) {
         return userDao.findUserByJgCodeAndUserId(jgCode, userId);
     }
+	@DataSource(name = DataSource.fy)
 	public List<Office> findByZcjg()
 	{
 		return officeService.findByZcjg();

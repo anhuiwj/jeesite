@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.sys.service;
 
+import org.mybatis.spring.DataSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Log;
 @Transactional(readOnly = true)
 public class LogService extends CrudService<LogDao, Log> {
 
+	@DataSource(name = DataSource.fy)
 	public Page<Log> findPage(Page<Log> page, Log log) {
 		
 		// 设置默认时间范围，默认当前月

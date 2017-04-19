@@ -11,6 +11,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Area;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.mybatis.spring.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,15 +47,18 @@ public class AreaService extends TreeService<AreaDao, Area> {
 	 */
 	private static Map<String,List<Area>> areaChildMap = Maps.newHashMap();
 
+	@DataSource(name = DataSource.fy)
 	public List<Area> findAll(){
 		return UserUtils.getAreaList();
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Area> findByParentCode(String parentCode){
 
 		return areaChildMap.get(parentCode);
 	}
 
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void save(Area area) {
 		Area p = area.getParent();
@@ -81,7 +85,8 @@ public class AreaService extends TreeService<AreaDao, Area> {
 		UserUtils.removeCache(UserUtils.CACHE_AREA_LIST);
 		init();
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	@Transactional(readOnly = false)
 	public void delete(Area area) {
 		super.delete(area);
@@ -94,6 +99,7 @@ public class AreaService extends TreeService<AreaDao, Area> {
 	 * @param code
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public Area getAreaByCode(String code) {
 
 		return areaMap.get(code);
@@ -104,11 +110,13 @@ public class AreaService extends TreeService<AreaDao, Area> {
 	 * @param parentIdArr
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	public List<Area> findAllParent(String[] parentIdArr) {
 		return dao.findAllParent(parentIdArr);
 		
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Area> findTopArea()  {
 		List<Role> roleList = UserUtils.getRoleList();
 		String areaCode = "";
@@ -202,6 +210,7 @@ public class AreaService extends TreeService<AreaDao, Area> {
 		}
 	}
 
+	@DataSource(name = DataSource.fy)
 	public Area queryAreaByUserId(String userId) {
 		Area params = new Area();
 		params.setUserId(userId);

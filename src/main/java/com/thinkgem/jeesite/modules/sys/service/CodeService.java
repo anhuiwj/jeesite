@@ -7,6 +7,7 @@ import com.thinkgem.jeesite.modules.sys.dao.CodeDao;
 import com.thinkgem.jeesite.modules.sys.entity.Code;
 import com.thinkgem.jeesite.modules.sys.utils.CodeUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.mybatis.spring.DataSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,8 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 public class CodeService extends TreeService<CodeDao, Code> {
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Code> findByParent(String id) {
 		Code code = new Code();
 		
@@ -29,11 +31,13 @@ public class CodeService extends TreeService<CodeDao, Code> {
 			return dao.findTopList(code);
 		}
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public Code loadDicNode(String id) {
 		return dao.get(id);
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public boolean checkDicNodeCode(String id,String value,String parentId) {
 		Code po = new Code(id);
 		po.setValue(value);
@@ -46,7 +50,8 @@ public class CodeService extends TreeService<CodeDao, Code> {
 		}
 		return false;
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	public boolean checkDicNodeComCode(String id,Long comCode,String parentId) {
 		Code po = new Code(id);
 		po.setComCode(comCode);
@@ -60,7 +65,8 @@ public class CodeService extends TreeService<CodeDao, Code> {
 		}
 		return false;
 	}
-	
+
+
 	@Transactional(readOnly = false)
 	public int saveNode(Code entity) {
 		boolean flag = this.checkDicNodeCode(entity.getId(), entity.getValue(), entity.getParentId());
@@ -77,16 +83,17 @@ public class CodeService extends TreeService<CodeDao, Code> {
 		removeCache();
 		return 0;
 	}
-	
-	
+
+
 	@Transactional(readOnly = false)
 	public void removeDicNode(String id) {
 		Code entity = new Code(id);
 		super.delete(entity);
 		removeCache();
 	}
-	
-	
+
+
+
 	public Code getNode(String path,boolean unique) {
 		path = path.trim();
 		String[] pathArray = this.convertPath(path);
@@ -100,6 +107,7 @@ public class CodeService extends TreeService<CodeDao, Code> {
 	 * @param unique 是否唯一节点路径
 	 * @return
 	 */
+	@DataSource(name = DataSource.fy)
 	private Code findNodeByPath(String[] path,boolean unique){
 		Code node = null;
 		String parentId = "0";
@@ -167,7 +175,8 @@ public class CodeService extends TreeService<CodeDao, Code> {
 		}
 		return node;
 	}
-	
+
+	@DataSource(name = DataSource.fy)
 	private String calcNodePath(Code node, String sperator) {
 		StringBuffer path = new StringBuffer();
 		
@@ -195,8 +204,8 @@ public class CodeService extends TreeService<CodeDao, Code> {
 
 		return path.toString();
 	}
-	
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Code> tree(String path) {
 		Code qr = this.getNode(path, false);
 		qr.setParentIds("%"+qr.getId()+"%");
@@ -231,8 +240,8 @@ public class CodeService extends TreeService<CodeDao, Code> {
 		}
 		return list;
 	}
-	
-	
+
+	@DataSource(name = DataSource.fy)
 	public List<Code> findChildsByPath(String path) {
 		Code qr = this.getNode(path, false);
 		qr.setParentIds("%"+qr.getId()+"%");
